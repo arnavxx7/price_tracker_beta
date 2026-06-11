@@ -6,12 +6,6 @@ import asyncio
 from utils import extract_asin, extract_country_code, get_canonical_url
 
 
-CONFIG = {
-    "host": "localhost",
-    "user": "root",
-    "password": "$Am%1037$",
-    "database": "entity_info_database"
-}
 
 CURRENCY_MAPPING = {
     "$": "USD",
@@ -37,7 +31,7 @@ url2 = "https://www.amazon.com/PlayStation%C2%AE5-console-1TB-PlayStation-5/dp/B
 
 
 
-def amzn_product_info_scraper(html_content, url: str = None) -> Dict:
+def amzn_product_info_scraper(html_content, url: str = None) -> dict:
     if not html_content:
         print("[ERROR] Received empty html")
         return {}
@@ -118,22 +112,6 @@ def amzn_product_info_scraper(html_content, url: str = None) -> Dict:
 
 
 
-
-def run_scraping_job():
-    prod_id, prod_name, prod_price, prod_brand, prod_rating, prod_currency, prod_url = asyncio.run(amzn_price_scraper(url))
-    conn = mysql.connector.connect(**CONFIG)
-    cursor = conn.cursor()
-
-    insert_query = '''
-        INSERT INTO amazon_entity_info (prod_id, prod_name, prod_price, prod_brand, prod_rating, info_fetched_at, prod_currency, prod_url) VALUES (%s, %s, %s, %s, %s, NOW(), %s, %s);
-    '''
-
-    cursor.execute(insert_query, (prod_id, prod_name, prod_price, prod_brand, prod_rating, prod_currency, prod_url )) 
-    conn.commit()
-
-    if conn in locals() and conn.is_connected():
-        cursor.close()
-        conn.close()
 
 
 

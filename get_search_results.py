@@ -1,9 +1,10 @@
 import re
 from bs4 import BeautifulSoup
+from utils import get_canonical_url, extract_asin
+from urllib.parse import urljoin, urlparse
+import json
 
-
-
-def get_search_results(html_content, base_url: str = None, country_code: str = None) -> List[Dict]:
+def get_search_results(html_content, base_url: str = None, country_code: str = None) -> list[dict]:
     """
     Parse Amazon search results page HTML and extract product listings.
     
@@ -34,9 +35,9 @@ def get_search_results(html_content, base_url: str = None, country_code: str = N
 
 
     
-    if "captcha" in html_content.lower() or "api-services-support@amazon.com" in html_content:
-        print("CAPTCHA or block page detected in search results")
-        return []
+    # if "captcha" in html_content.content.lower() or "api-services-support@amazon.com" in html_content.content:
+    #     print("CAPTCHA or block page detected in search results")
+    #     return []
 
     soup = BeautifulSoup(html_content.content, "html.parser")
 
@@ -379,7 +380,7 @@ def get_search_results(html_content, base_url: str = None, country_code: str = N
 
 
 
-def parse_pagination_url(html_content, base_url: str = None) -> Optional[str]:
+def parse_pagination_url(html_content, base_url: str = None):
     """
     Extract the URL for the next page from search results pagination.
     
