@@ -65,4 +65,4 @@ def save_to_database(product_data: dict):
         cursor.close()
         conn.close()
 
-    return "[INFO] Product dara successfully saved to database"
+    return "[INFO] Product data successfully saved to database"
