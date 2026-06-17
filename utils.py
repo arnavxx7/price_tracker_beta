@@ -1,5 +1,5 @@
 import re
-import mysql.connector
+import psycopg2
 
 
 CONFIG = {
@@ -49,20 +49,25 @@ def get_canonical_url(asin: str, country_code: str, url: str):
     return canonical_url
 
 def save_to_database(product_data: dict):
-    conn = mysql.connector.connect(**CONFIG)
-    cursor = conn.cursor()
     if not product_data["asin"]:
         return "[ERROR] Product data not saved to database due to no ASIN"
 
-    insert_query = '''
-        INSERT INTO amazon_entity_info (prod_id, prod_name, prod_price, prod_brand, prod_rating, info_fetched_at, prod_currency, prod_url) VALUES (%s, %s, %s, %s, %s, NOW(), %s, %s);
-    '''
+    with psycopg2.connect("dbname=entity_info_db user=postgres password=$Am%1037$ host=localhost port=5432") as conn:
+        with conn.cursor() as cur:
+            insert_query = '''
+                 INSERT INTO amzn_product_info (asin, name, price, brand, rating, currency, url, created_at, last_checked_at) VALUES (%s, %s, %s, %s, %s, %s, %s, NOW(), NOW());
+                '''
+            cur.execute(insert_query, (product_data["asin"], product_data["name"], product_data["price"], product_data["brand_name"], product_data["rating"], product_data["currency"], product_data["prod_url"]))
+            conn.commit()
+    
+    # conn = mysql.connector.connect(**CONFIG)
+    # cursor = conn.cursor()
 
-    cursor.execute(insert_query, (product_data["asin"], product_data["name"], product_data["price"], product_data["brand_name"], product_data["rating"], product_data["currency"], product_data["prod_url"])) 
-    conn.commit()
+    # cursor.execute(insert_query, (product_data["asin"], product_data["name"], product_data["price"], product_data["brand_name"], product_data["rating"], product_data["currency"], product_data["prod_url"])) 
+    # conn.commit()
 
-    if conn in locals() and conn.is_connected():
-        cursor.close()
-        conn.close()
+    # if conn in locals() and conn.is_connected():
+    #     cursor.close()
+    #     conn.close()
 
     return "[INFO] Product data successfully saved to database"

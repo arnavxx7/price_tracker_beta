@@ -1,5 +1,4 @@
 beautifulsoup4
 curl-cffi
-playwright
 amzpy
-mysql-connector-python
+psycopg[binary]
