@@ -59,6 +59,30 @@ def save_to_database(product_data: dict):
                 '''
             cur.execute(insert_query, (product_data["asin"], product_data["name"], product_data["price"], product_data["brand_name"], product_data["rating"], product_data["currency"], product_data["prod_url"]))
             conn.commit()
+
+            cur.execute("SELECT price FROM amzn_price_history WHERE prodcut_id = '%s'", (product_data["asin"]))
+            last_price = float(cur.fetchone())
+            current_price = float(product_data["price"])
+
+            if last_price is None or last_price != current_price:
+                cur.execute("""
+                    INSERT INTO price_history (asin, price, rating, fetched_at)
+                    VALUES (%s, %s, %s, %s)
+                """, (
+                    product_data["asin"],
+                    current_price,
+                    product_data["rating"],
+                    datetime.now(timezone.utc),
+                ))
+                conn.commit()
+                print(f"[DB] Price saved: {product_data['asin']} → {product_data['currency']} {current_price}")
+                return True
+            else:
+                conn.commit()
+                print(f"[DB] Price unchanged ({current_price}), skipping insert.")
+                return False
+
+
     
     # conn = mysql.connector.connect(**CONFIG)
     # cursor = conn.cursor()

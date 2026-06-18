@@ -37,15 +37,20 @@ def amzn_product_info_scraper(html_content, url: str = None) -> dict:
         return {}
     soup = BeautifulSoup(html_content.content, "html.parser")
     prod_name_element = soup.select_one('#productTitle')
-    print(prod_name_element)
     prod_name = prod_name_element.text.strip() if prod_name_element else None
-    prod_price_whole_element = soup.select_one('.a-price-whole')
-    prod_price_fraction_element = soup.select_one('.a-price-fraction')
 
     prod_info = {}
     prod_info["name"] = prod_name
-    
-    price = None
+
+    price = None 
+    currency = None 
+
+    # Strategy 1: Standard Amazon price classes (most product pages)
+    prod_price_whole_element = soup.select_one('.a-price-whole')
+    prod_price_fraction_element = soup.select_one('.a-price-fraction')
+    currency_element = soup.select_one('.a-price-symbol')
+
+    print("strat1", (prod_price_whole_element, prod_price_fraction_element, currency_element))
 
     if prod_price_whole_element:
         prod_price_whole = prod_price_whole_element.text.strip().replace(".", "").replace(",", "")
@@ -54,30 +59,60 @@ def amzn_product_info_scraper(html_content, url: str = None) -> dict:
             price = float(f"{prod_price_whole}.{prod_price_fraction}")
         else:
             price = float(prod_price_whole)
+        if currency_element:
+            currency = CURRENCY_MAPPING.get(currency_element.text.strip())
 
-    print(price)
+    print("strat1", price, currency)
 
+    # Strategy 2: a-offscreen span (e.g. "₹69,900.00" as full string)
     if price is None:
-        price_element = soup.select_one('span.a-offscreen')
-        if price_element:
-            price_text = price_element.text.strip()
-            # Extract numeric value from price text (e.g., "$29.99" -> 29.99)
-            price_match = re.search(r'[\d,]+\.?\d*', price_text)
-            if price_match:
-                price = float(price_match.group().replace(',', ''))
+        offscreen = soup.select_one('span.a-offscreen')
+        if offscreen:
+            m = re.search(r'([₹$€¥])\s*([\d,]+\.?\d*)', offscreen.text)
+            if m:
+                currency = CURRENCY_MAPPING.get(m.group(1), m.group(1))
+                price = float(m.group(2).replace(',', ''))
+
+    print("strat2", price, currency)
+
+    # Strategy 3: UCC widget / newer buybox — plain span with currency symbol
+    if price is None:
+        for span in soup.find_all('span'):
+            text = span.text.strip()
+            m = re.match(r'^([₹$€¥])\s*([\d,]+\.?\d*)$', text)
+            if m and 'a-text-strike' not in (span.get('class') or []):
+                currency = CURRENCY_MAPPING.get(m.group(1), m.group(1))
+                price = float(m.group(2).replace(',', ''))
+                break
+
+    print("strat3", price, currency)
 
     prod_info["price"] = price
-
-    currency_element = soup.select_one('.a-price-symbol')
-    currency = currency_element.text.strip() if currency_element else None
-
-    if currency:
-        try:
-            currency = CURRENCY_MAPPING[currency]
-        except Exception as e:
-            currency = currency
-
     prod_info["currency"] = currency
+
+
+    # print(price)
+
+    # if price is None:
+    #     price_element = soup.select_one('span.a-offscreen')
+    #     if price_element:
+    #         price_text = price_element.text.strip()
+    #         # Extract numeric value from price text (e.g., "$29.99" -> 29.99)
+    #         price_match = re.search(r'[\d,]+\.?\d*', price_text)
+    #         if price_match: 
+    #             price = float(price_match.group().replace(',', ''))
+    # prod_info["price"] = price
+
+    # currency_element = soup.select_one('.a-price-symbol')
+    # currency = currency_element.text.strip() if currency_element else None
+
+    # if currency:
+    #     try:
+    #         currency = CURRENCY_MAPPING[currency]
+    #     except Exception as e:
+    #         currency = currency
+
+    # prod_info["currency"] = currency
 
     brand_element = soup.select_one('#bylineInfo')
     brand_name = None

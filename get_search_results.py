@@ -4,6 +4,13 @@ from utils import get_canonical_url, extract_asin
 from urllib.parse import urljoin, urlparse
 import json
 
+CURRENCY_MAPPING = {
+    "$": "USD",
+    "€": "EUR",
+    "₹": "INR",
+    "¥": "JPY"
+}
+
 def get_search_results(html_content, base_url: str = None, country_code: str = None) -> list[dict]:
     """
     Parse Amazon search results page HTML and extract product listings.
@@ -140,7 +147,7 @@ def get_search_results(html_content, base_url: str = None, country_code: str = N
                     price_match = re.search(r'[\d,]+\.?\d*', price_text)
                     
                     if currency_match:
-                        product_data['currency'] = currency_match.group().strip()
+                        product_data['currency'] = CURRENCY_MAPPING.get(currency_match.group().strip())
                     
                     if price_match:
                         price_str = price_match.group().replace(',', '')
@@ -171,7 +178,7 @@ def get_search_results(html_content, base_url: str = None, country_code: str = N
                             
                 # Extract currency symbol if not already found
                 if 'currency' not in product_data and container.select_one('.a-price-symbol'):
-                    product_data['currency'] = container.select_one('.a-price-symbol').text.strip()
+                    product_data['currency'] = CURRENCY_MAPPING.get(container.select_one('.a-price-symbol').text.strip())
                 
                 # Extract original price and calculate discount (if available)
                 original_price_elem = container.select_one('.a-price.a-text-price .a-offscreen')
