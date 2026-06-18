@@ -1,5 +1,5 @@
 import re
-import psycopg2
+# import psycopg2
 
 
 CONFIG = {

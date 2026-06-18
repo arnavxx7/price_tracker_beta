@@ -37,6 +37,7 @@ def amzn_product_info_scraper(html_content, url: str = None) -> dict:
         return {}
     soup = BeautifulSoup(html_content.content, "html.parser")
     prod_name_element = soup.select_one('#productTitle')
+    print(prod_name_element)
     prod_name = prod_name_element.text.strip() if prod_name_element else None
     prod_price_whole_element = soup.select_one('.a-price-whole')
     prod_price_fraction_element = soup.select_one('.a-price-fraction')
