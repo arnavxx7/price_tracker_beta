@@ -106,7 +106,7 @@ if check_url:
     print("[INFO] Product url detected")
     product_info = amzn_product_info_scraper(html_content, url)
 
-    # save_to_database(product_info)
+    save_to_database(product_info) 
 
 
     if len(product_info)==0:
@@ -160,7 +160,8 @@ else:
         
     print(f"\nSearch completed. Total products found: {len(all_products)}")
     print(all_products[0]) 
-    
+    save_to_database(all_products)
+
             
 
         

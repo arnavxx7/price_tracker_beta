@@ -1,5 +1,5 @@
 import re
-# import psycopg2
+import psycopg2
 
 
 CONFIG = {
@@ -51,44 +51,44 @@ def get_canonical_url(asin: str, country_code: str, url: str):
 def track_price_history(current_price: float, asin: str, currency: str, avlble: bool, rating: float):
      with psycopg2.connect("dbname=entity_info_db user=postgres password=$Am%1037$ host=localhost port=5432") as conn:
             with conn.cursor() as cur:
-                cur.execute("SELECT price FROM amzn_price_history WHERE prodcut_id = '%s'", (product_data["asin"]))
-                last_price = float(cur.fetchone())
 
-                cur.execute("EXISTS (SELECT 1 FROM amzn_price_history WHERE product_id = '%s')", (product_data["asin"]))
+                cur.execute("SELECT EXISTS(SELECT 1 FROM amzn_price_history WHERE asin = %s)", (asin,))
 
-                is_product_tracked = bool(cur.fetchone())
+                is_product_tracked = bool(cur.fetchone()[0])
+                print(is_product_tracked)
 
                 # if product is not tracked then add it in the table
                 if not is_product_tracked:
                     cur.execute("""
-                        INSERT INTO price_history (product_id, price, currency, is_available, rating, fetched_at)
-                        VALUES (%s, %s, %s, %s, %s, %s)
+                        INSERT INTO amzn_price_history (asin, price, currency, is_available, rating, recorded_at)
+                        VALUES (%s, %s, %s, %s, %s, NOW())
                     """, (
                         asin,
                         current_price,
                         currency,
                         avlble,
-                        rating,
-                        datetime.now(timezone.utc),
+                        rating
                     ))
                     conn.commit()
+                    print(f"Started tracking product id - {asin}")
 
-                else:    
+                else: 
+                    cur.execute("SELECT price FROM amzn_price_history WHERE asin = '%s'", (asin))
+                    last_price = float(cur.fetchone())   
 
                     if last_price is None or last_price != current_price:
                         cur.execute("""
-                            INSERT INTO price_history (product_id, price, currency, is_available, rating, fetched_at)
-                            VALUES (%s, %s, %s, %s, %s, %s)
+                            INSERT INTO amzn_price_history (asin, price, currency, is_available, rating, recorded_at)
+                            VALUES (%s, %s, %s, %s, %s, NOW())
                         """, (
                             asin,
                             current_price,
                             currency,
                             avlble,
-                            rating,
-                            datetime.now(timezone.utc),
+                            rating
                         ))
                         conn.commit()
-                        print(f"[DB] Price saved: {product_data['asin']} → {product_data['currency']} {current_price}")
+                        print(f"[DB] Price saved: {asin} → {currency} {current_price}")
                         return True
                     else:
                         conn.commit()
@@ -101,7 +101,8 @@ def save_to_database(product_data):
     if type(product_data)==dict:
         if not product_data["asin"]:
             return "[ERROR] Product data not saved to database due to no ASIN"
-
+        
+        # try:
         with psycopg2.connect("dbname=entity_info_db user=postgres password=$Am%1037$ host=localhost port=5432") as conn:
             with conn.cursor() as cur:
                 insert_query = '''
@@ -111,21 +112,33 @@ def save_to_database(product_data):
                 conn.commit()
 
                 track_price_history(product_data["price"], product_data["asin"], product_data["currency"], True, product_data["rating"])
+                return print(f"[INFO] Saved 1 product {product_data["asin"]} in db and started tracking it")
+        
+
+        # except Exception as e:
+        #     print(f"[ERROR] Could not save product id {product_data["asin"]} to db. Error - {e}")
         
     elif type(product_data)==list:
-        for prod in product_data:
-            if not prod["asin"]:
-                return "[ERROR] Product data not saved to database due to no ASIN"
+        if len(product_data)>0:
+            for prod in product_data:
+                if not prod["asin"]:
+                    return "[ERROR] Product data not saved to database due to no ASIN"
+                
+                try:
+                    with psycopg2.connect("dbname=entity_info_db user=postgres password=$Am%1037$ host=localhost port=5432") as conn:
+                        with conn.cursor() as cur:
+                            insert_query = '''
+                                INSERT INTO amzn_product_info (asin, name, price, brand, rating, currency, url, created_at, last_checked_at) VALUES (%s, %s, %s, %s, %s, %s, %s, NOW(), NOW());
+                                '''
+                            cur.execute(insert_query, (prod["asin"], prod["title"], prod["price"], None, prod["rating"], prod["currency"], prod["url"]))
+                            conn.commit()
 
-            with psycopg2.connect("dbname=entity_info_db user=postgres password=$Am%1037$ host=localhost port=5432") as conn:
-                with conn.cursor() as cur:
-                    insert_query = '''
-                        INSERT INTO amzn_product_info (asin, name, price, brand, rating, currency, url, created_at, last_checked_at) VALUES (%s, %s, %s, %s, %s, %s, %s, NOW(), NOW());
-                        '''
-                    cur.execute(insert_query, (prod["asin"], prod["title"], prod["price"], None, prod["rating"], prod["currency"], prod["url"]))
-                    conn.commit()
+                            track_price_history(prod["price"], prod["asin"], prod["currency"], True, prod["rating"])
+                            return print(f"[INFO] Saved {len(product_data)} products in db and started tracking them.")
 
-                    track_price_history(prod["price"], prod["asin"], prod["currency"], True, prod["rating"])
+                except Exception as e:
+                    print(f"[ERROR] Unable to save {len(product_data)} products in db")
+
             
 
 
