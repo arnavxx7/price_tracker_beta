@@ -370,9 +370,10 @@ def get_search_results(html_content, base_url: str = None, country_code: str = N
                 deal_element = container.select_one('span:-soup-contains("Deal")') or container.select_one('.a-badge:-soup-contains("Deal")')
                 if deal_element:
                     product_data['deal'] = True
+
                 
                 # Add the product to our results list if we have the key information
-                if product_data.get('title') and product_data.get('asin'):
+                if product_data.get('title') and product_data.get('asin') and product_data.get('price'):
                     results.append(product_data)
                 
             except Exception as e:
