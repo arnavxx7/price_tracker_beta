@@ -81,8 +81,9 @@ def track_price_history(current_price: float, asin: str, currency: str, avlble: 
                     print("---------------------------\n")
                 # if product is already tracked then add only if price has changed
                 else: 
-                    cur.execute("SELECT price FROM amzn_price_history WHERE asin = '%s'", (asin,))
-                    last_price = float(cur.fetchone()[0])   
+                    cur.execute("SELECT price FROM amzn_product_info WHERE asin = %s", (asin,))
+                    last_price = float(cur.fetchone()[0])
+                    print(f"Last price - {last_price}, Current price - {current_price}")
 
                     if last_price is None or last_price != current_price:
                         cur.execute("""
@@ -95,12 +96,25 @@ def track_price_history(current_price: float, asin: str, currency: str, avlble: 
                             avlble,
                             rating
                         ))
+                        cur.execute("""
+                            UPDATE amzn_product_info 
+                            SET price = %s,
+                                rating = %s,
+                                last_checked_at = NOW()
+                            WHERE asin = %s
+                        """, (current_price,
+                              rating,
+                              asin
+                        ))
                         conn.commit()
+
                         print(f"Detected a price change, Recorded it: {asin} → {currency} {current_price}")
+                        print("-------------------------------------\n")
                 
                     else:
                         conn.commit()
-                        print(f"Price unchanged ({current_price}), skipping insert.")
+                        print(f"{asin}: Price unchanged ({current_price}), skipping insert.")
+                        print("--------------------------------------\n")
                     
 
 
@@ -129,7 +143,7 @@ def save_to_database(product_data):
                 
                 else:
                     track_price_history(product_data.get("price"), product_data.get("asin"), product_data.get("currency"), True, product_data.get("rating"))
-                    return print(f"[INFO] Product {product_data.get("asin")} metadata available in table. Updated the price in price history.")
+                    return print(f"[INFO] Product {product_data.get("asin")} metadata available in table. Updated or started tracking the price in price history.")
         
 
         # except Exception as e:
@@ -158,10 +172,13 @@ def save_to_database(product_data):
                             conn.commit()
 
                             track_price_history(prod.get("price"), prod.get("asin"), prod.get("currency"), True, prod.get("rating"))
-                            print(f"[INFO] Saved 1 product {product_data.get("asin")} in db and started tracking it")
+                            print(f"[INFO] Saved 1 product {prod.get("asin")} in db and started tracking it\n")
 
                         else:
                             track_price_history(prod.get("price"), prod.get("asin"), prod.get("currency"), True, prod.get("rating"))
+                            print(f"[INFO] Product {prod.get("asin")} metadata available in table. Updated or started tracking the price in price history.\n")
+
+                         
 
                 
                 
