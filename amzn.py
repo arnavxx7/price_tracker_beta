@@ -13,10 +13,10 @@ import asyncio
 
 # url = "https://www.amazon.in/CP-PLUS-Outdoor-CP-URC-TC24PL3-Compatible/dp/B0FH5G1Z7P/ref=sr_1_3?sr=8-3"
 
-# url = "https://www.amazon.in/s?k=night+vision+camera"
+url = "https://www.amazon.in/s?k=night+vision+camera"
 
 # url = url3
-url = None
+# url = None
 
 # Default header template
 DEFAULT_HEADERS = {

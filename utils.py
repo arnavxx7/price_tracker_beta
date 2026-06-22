@@ -1,12 +1,16 @@
 import re
 import psycopg2
+import os
+from dotenv import load_dotenv
 
+load_dotenv()
 
 CONFIG = {
-    "host": "localhost",
-    "user": "root",
-    "password": "$Am%1037$",
-    "database": "entity_info_database"
+    "host": "aws-1-ap-south-1.pooler.supabase.com",
+    "user": "postgres.mtsadefjhnqdvmsqcjps",
+    "password": os.getenv("DB_PASSWORD"),
+    "database": "postgres",
+    "port": 5432
 }
 
 def extract_asin(url: str):
@@ -49,7 +53,7 @@ def get_canonical_url(asin: str, country_code: str, url: str):
     return canonical_url
 
 def track_price_history(current_price: float, asin: str, currency: str, avlble: bool, rating: float):
-     with psycopg2.connect("dbname=entity_info_db user=postgres password=$Am%1037$ host=localhost port=5432") as conn:
+     with psycopg2.connect(**CONFIG) as conn:
             with conn.cursor() as cur:
                 
                 cur.execute("SELECT EXISTS(SELECT 1 FROM amzn_price_history WHERE asin = %s)", (asin,))
@@ -125,7 +129,7 @@ def save_to_database(product_data):
             return "[ERROR] Product data not saved to database due to no ASIN"
         
         # try:
-        with psycopg2.connect("dbname=entity_info_db user=postgres password=$Am%1037$ host=localhost port=5432") as conn:
+        with psycopg2.connect(**CONFIG) as conn:
             with conn.cursor() as cur:
                 # check if product is in product info table to avoid adding it again
                 cur.execute("SELECT EXISTS(SELECT 1 FROM amzn_product_info WHERE asin = %s)", (product_data.get("asin"),))
@@ -157,7 +161,7 @@ def save_to_database(product_data):
                     return "[ERROR] Product data not saved to database due to no ASIN"    
 
                 print("#", i)                    
-                with psycopg2.connect("dbname=entity_info_db user=postgres password=$Am%1037$ host=localhost port=5432") as conn:
+                with psycopg2.connect(**CONFIG) as conn:
                     with conn.cursor() as cur:
 
                         cur.execute("SELECT EXISTS(SELECT 1 FROM amzn_product_info WHERE asin = %s)", (prod.get("asin"),))
@@ -179,8 +183,6 @@ def save_to_database(product_data):
                             print(f"[INFO] Product {prod.get("asin")} metadata available in table. Updated or started tracking the price in price history.\n")
 
                          
-
-                
                 
                 i=i+1
             
@@ -190,10 +192,6 @@ def save_to_database(product_data):
             #         print(f"[ERROR] Unable to save {len(product_data)} products in db")
 
             
-
-
-            
-
 
     
     # conn = mysql.connector.connect(**CONFIG)
@@ -207,3 +205,6 @@ def save_to_database(product_data):
     #     conn.close()
 
     return "[INFO] Product data successfully saved to database"
+
+
+
