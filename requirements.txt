@@ -3,4 +3,5 @@ curl-cffi
 amzpy
 playwright
 fake-useragent
-psycopg[binary]
+psycopg2
+python-dotenv
