@@ -144,13 +144,13 @@ def save_to_database(product_data):
                     return print(f"[INFO] Saved 1 product {product_data.get("asin")} in db and started tracking it")
                 
                 else:
-                    # if product metadata available in main table, get the previous values and update any null values if found
+                    # if product metadata available in main table, update the fields with latest values
                     cur.execute(
                         "SELECT name, brand, rating, currency, url, price FROM amzn_product_info WHERE asin = %s",
                         (product_data.get("asin"),)
                     )
 
-                    row = cur.fetchone()
+                    row = cur.fetchone() 
 
                     if row:
                         name, brand, rating, currency, url, price = row
@@ -163,10 +163,10 @@ def save_to_database(product_data):
                         for k in new_not_null:
                             cur.execute(f"""
                                 UPDATE amzn_product_info
-                                SET {k} = %s,
+                                SET {k} = '{new_val[k]}',
                                     last_checked_at = NOW()
-                                WHERE asin = %s
-                            """, (new_val[k], product_data.get("asin")))
+                                WHERE asin = '{product_data.get("asin")}'
+                            """)
                     conn.commit()
                     print(f"{product_data.get("asin")}: Updated the values of following fields - {new_not_null}")
                     track_price_history(product_data.get("price"), product_data.get("asin"), product_data.get("currency"), True, product_data.get("rating"))
@@ -189,7 +189,7 @@ def save_to_database(product_data):
 
                         cur.execute("SELECT EXISTS(SELECT 1 FROM amzn_product_info WHERE asin = %s)", (prod.get("asin"),))
                         product_info_in_table = bool(cur.fetchone()[0])
-
+                        # Product info is not available in main table
                         if not product_info_in_table:
                             insert_query = '''
                                 INSERT INTO amzn_product_info (asin, name, price, brand, rating, currency, url, created_at, last_checked_at) VALUES (%s, %s, %s, %s, %s, %s, %s, NOW(), NOW());
@@ -202,6 +202,32 @@ def save_to_database(product_data):
                             print(f"[INFO] Saved 1 product {prod.get("asin")} in db and started tracking it\n")
 
                         else:
+                            # if product metadata available in main table, update the values of fields with the lastest not null data
+                            cur.execute(
+                                "SELECT name, brand, rating, currency, url, price FROM amzn_product_info WHERE asin = %s",
+                                (prod.get("asin"),)
+                            )
+
+                            row = cur.fetchone()
+
+                            if row:
+                                name, brand, rating, currency, url, price = row
+                            prev_val = {"name": name, "brand": brand, "rating": rating, "currency": currency, "url": url, "price": price}
+                            new_val = {"name": prod.get("name"), "brand": prod.get("brand_name"), "rating": prod.get("rating"), "currency": prod.get("currency"), "url": prod.get("prod_url")}
+                            old_missing = [k for k, v in prev_val.items() if v is None]
+                            print(f"{prod.get("asin")}: These fields are null in existing record in database - {old_missing}")
+                            new_not_null = [k for k, v in new_val.items() if v is not None]
+                            if new_not_null:
+                                for k in new_not_null:
+                                    cur.execute(f"""
+                                        UPDATE amzn_product_info
+                                        SET {k} = {new_val[k]},
+                                            last_checked_at = NOW()
+                                        WHERE asin = {prod.get("asin")}
+                                    """)
+                            conn.commit()
+                            
+                 
                             track_price_history(prod.get("price"), prod.get("asin"), prod.get("currency"), True, prod.get("rating"))
                             print(f"[INFO] Product {prod.get("asin")} metadata available in table. Updated or started tracking the price in price history.\n")
 
