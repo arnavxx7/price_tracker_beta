@@ -87,79 +87,79 @@ async def ping_amazon(url: str):
 #         return html
     
 
+if __name__ == "__main__":
+    if not url:
+        print("[INFO] No url detected. Please enter the query for search.")
+        query = input()
+        country_code = "in"
+        url =  f"https://www.amazon.{country_code}/s?k={query.replace(' ', '+')}"
 
-if not url:
-    print("[INFO] No url detected. Please enter the query for search.")
-    query = input()
-    country_code = "in"
-    url =  f"https://www.amazon.{country_code}/s?k={query.replace(' ', '+')}"
+    # html_content = asyncio.run(ping_amazon(url))
+    html_content = asyncio.run(ping_amazon(url))
+    with open("debug_response.html", "w", encoding="utf-8") as f:
+        f.write(html_content.text)
+    print("[DEBUG] Status code:", html_content.status_code)
 
-# html_content = asyncio.run(ping_amazon(url))
-html_content = asyncio.run(ping_amazon(url))
-with open("debug_response.html", "w", encoding="utf-8") as f:
-    f.write(html_content.text)
-print("[DEBUG] Status code:", html_content.status_code)
+    check_url = re.search("/dp/(.*?)/", url)
 
-check_url = re.search("/dp/(.*?)/", url)
+    if check_url:
+        print("[INFO] Product url detected")
+        product_info = amzn_product_info_scraper(html_content, url)
 
-if check_url:
-    print("[INFO] Product url detected")
-    product_info = amzn_product_info_scraper(html_content, url)
-
-    save_to_database(product_info) 
+        save_to_database(product_info) 
 
 
-    if len(product_info)==0:
-        print("[ERROR] Product information was not fetched (or page was blocked)")
+        if len(product_info)==0:
+            print("[ERROR] Product information was not fetched (or page was blocked)")
 
-else:
-    print("[INFO] Search url detected") 
-    print("[INFO] Starting product search")
-    
-    max_pages = 5
-    current_page = 1
-
-    current_url = url
-    all_products = []
-
-    while current_url and current_page<=max_pages:
-        print(f"[INFO] Scraping search page {current_page}/{max_pages}: {current_url}")
-
-        if current_page!=1:
-            html_content = asyncio.run(ping_amazon(current_url))
-
-        if not html_content or not html_content.content:
-            print("[ERROR] Received empty html or failed to fetch search page")
-            break
-
-        country_code = extract_country_code(current_url)
-        base_url = f"https://www.amazon.{country_code}"
-
-        products = get_search_results(html_content, base_url, country_code)
-
-        # Check if we got valid results
-        if not products:
-            print(f"[ERROR] No products found on page {current_page} (or page was blocked)")
-            break
-
-        print(f"[INFO] Found {len(products)} products on page {current_page}")
-        all_products.extend(products)
-
-        # Stop if we've reached the requested number of pages
-        if current_page >= max_pages:
-            break
-            
-        # Get URL for the next page
-        next_url = parse_pagination_url(html_content, base_url)
-        if not next_url:
-            print("No next page found. End of results.")
-            break
-            
-        current_url = next_url
-        current_page += 1
+    else:
+        print("[INFO] Search url detected") 
+        print("[INFO] Starting product search")
         
-    print(f"\nSearch completed. Total products found: {len(all_products)}\n")
-    save_to_database(all_products)
+        max_pages = 5
+        current_page = 1
+
+        current_url = url
+        all_products = []
+
+        while current_url and current_page<=max_pages:
+            print(f"[INFO] Scraping search page {current_page}/{max_pages}: {current_url}")
+
+            if current_page!=1:
+                html_content = asyncio.run(ping_amazon(current_url))
+
+            if not html_content or not html_content.content:
+                print("[ERROR] Received empty html or failed to fetch search page")
+                break
+
+            country_code = extract_country_code(current_url)
+            base_url = f"https://www.amazon.{country_code}"
+
+            products = get_search_results(html_content, base_url, country_code)
+
+            # Check if we got valid results
+            if not products:
+                print(f"[ERROR] No products found on page {current_page} (or page was blocked)")
+                break
+
+            print(f"[INFO] Found {len(products)} products on page {current_page}")
+            all_products.extend(products)
+
+            # Stop if we've reached the requested number of pages
+            if current_page >= max_pages:
+                break
+                
+            # Get URL for the next page
+            next_url = parse_pagination_url(html_content, base_url)
+            if not next_url:
+                print("No next page found. End of results.")
+                break
+                
+            current_url = next_url
+            current_page += 1
+            
+        print(f"\nSearch completed. Total products found: {len(all_products)}\n")
+        save_to_database(all_products)
 
             
 

@@ -4,6 +4,7 @@ import psycopg2
 import os
 from dotenv import load_dotenv
 from get_product_info import amzn_product_info_scraper
+from utils import save_to_database
 
 
 load_dotenv()
