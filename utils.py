@@ -52,7 +52,7 @@ def get_canonical_url(asin: str, country_code: str, url: str):
 
     return canonical_url
 
-def track_price_history(current_price: float, asin: str, currency: str, avlble: bool, rating: float):
+def track_price_history(current_price: float, asin: str, currency: str, avlble: bool):
      with psycopg2.connect(**CONFIG) as conn:
             with conn.cursor() as cur:
                 
@@ -61,28 +61,27 @@ def track_price_history(current_price: float, asin: str, currency: str, avlble: 
 
                 is_product_tracked = bool(cur.fetchone()[0])
                 if is_product_tracked:
-                    print(f"Product {asin} is tracked")
+                    print(f"Price of product {asin} is tracked")
                 else: 
-                    print(f"Product {asin} is not tracked")
+                    print(f"Price of product {asin} is not tracked")
 
-                if not is_product_tracked and current_price is None:
-                    return print(f"Product {asin} not tracked since price is null")
+                # if not is_product_tracked and current_price is None:
+                #     return print(f"Product {asin} not tracked since price is null")
 
                 # if product is not tracked then add it in the table
                 if not is_product_tracked:
                     cur.execute("""
-                        INSERT INTO amzn_price_history (asin, price, currency, is_available, rating, recorded_at)
-                        VALUES (%s, %s, %s, %s, %s, NOW())
+                        INSERT INTO amzn_price_history (asin, price, currency, is_available, recorded_at)
+                        VALUES (%s, %s, %s, %s, NOW())
                     """, (
                         asin,
                         current_price,
                         currency,
-                        avlble,
-                        rating
+                        avlble
                     ))
                     conn.commit()
-                    print(f"Started tracking product id - {asin}")
-                    print("---------------------------\n")
+                    print(f"Started tracking price of product id - {asin}\n")
+                    # print("---------------------------\n")
                 # if product is already tracked then add only if price has changed
                 else: 
                     cur.execute("SELECT price FROM amzn_product_info WHERE asin = %s", (asin,))
@@ -91,14 +90,13 @@ def track_price_history(current_price: float, asin: str, currency: str, avlble: 
 
                     if last_price is None or last_price != current_price:
                         cur.execute("""
-                            INSERT INTO amzn_price_history (asin, price, currency, is_available, rating, recorded_at)
-                            VALUES (%s, %s, %s, %s, %s, NOW())
+                            INSERT INTO amzn_price_history (asin, price, currency, is_available, recorded_at)
+                            VALUES (%s, %s, %s, %s, NOW())
                         """, (
                             asin,
                             current_price,
                             currency,
-                            avlble,
-                            rating
+                            avlble
                         ))
                         cur.execute("""
                             UPDATE amzn_product_info 
@@ -110,14 +108,72 @@ def track_price_history(current_price: float, asin: str, currency: str, avlble: 
                         ))
                         conn.commit()
 
-                        print(f"Detected a price change, Recorded it: {asin} → {currency} {current_price}")
-                        print("-------------------------------------\n")
+                        print(f"Detected a price change, Recorded it: {asin} → {currency} {current_price}\n")
+                        # print("-------------------------------------\n")
                 
                     else:
                         conn.commit()
-                        print(f"{asin}: Price unchanged ({current_price}), skipping insert.")
-                        print("--------------------------------------\n")
+                        print(f"{asin}: Price unchanged ({current_price}), skipping insert.\n")
+                        # print("--------------------------------------\n")
                     
+def track_rating_history(current_rating: float, asin: str):
+    with psycopg2.connect(**CONFIG) as conn:
+        with conn.cursor() as cur:
+            
+            cur.execute("SELECT EXISTS(SELECT 1 FROM amzn_rating_history WHERE asin = %s)", (asin,))
+            # print("\n---------------------------")
+
+            is_product_tracked = bool(cur.fetchone()[0])
+            if is_product_tracked:
+                print(f"Rating of product {asin} is tracked")
+            else: 
+                print(f"Rating of product {asin} is not tracked")
+
+            # if product is not tracked then add it in the table
+            if not is_product_tracked:
+                cur.execute("""
+                    INSERT INTO amzn_rating_history (asin, rating, recorded_at)
+                    VALUES (%s, %s, NOW())
+                """, (
+                    asin,
+                    current_rating
+                ))
+                conn.commit()
+                print(f"Started tracking rating of product id - {asin}")
+                print("---------------------------\n")
+            # if product is already tracked then add only if price has changed
+            else: 
+                cur.execute("SELECT rating FROM amzn_product_info WHERE asin = %s", (asin,))
+                last_rating = float(cur.fetchone()[0])
+                print(f"Last rating - {last_rating}, Current rating - {current_rating}")
+
+                if last_rating is None or last_rating != current_rating:
+                    cur.execute("""
+                        INSERT INTO amzn_rating_history (asin, rating, recorded_at)
+                        VALUES (%s, %s, NOW())
+                    """, (
+                        asin,
+                        current_rating
+                    ))
+                    cur.execute("""
+                        UPDATE amzn_product_info 
+                        SET rating = %s,
+                            last_checked_at = NOW()
+                        WHERE asin = %s
+                    """, (current_rating,
+                            asin
+                    ))
+                    conn.commit()
+
+                    print(f"Detected a rating change, Recorded it: {asin} - {last_rating} → {current_rating}")
+                    print("-------------------------------------\n")
+            
+                else:
+                    conn.commit()
+                    print(f"{asin}: Rating unchanged ({current_rating}), skipping insert.")
+                    print("--------------------------------------\n")
+
+            
 
 
 def save_to_database(product_data):
@@ -140,7 +196,8 @@ def save_to_database(product_data):
                     cur.execute(insert_query, (product_data.get("asin"), product_data.get("name"), product_data.get("price"), product_data.get("brand_name"), product_data.get("rating"), product_data.get("currency"), product_data.get("prod_url")))
                     conn.commit()
 
-                    track_price_history(product_data.get("price"), product_data.get("asin"), product_data.get("currency"), True, product_data.get("rating"))
+                    track_price_history(product_data.get("price"), product_data.get("asin"), product_data.get("currency"), True)
+                    track_rating_history(product_data.get("rating"), product_data.get("asin"))
                     return print(f"[INFO] Saved 1 product {product_data.get("asin")} in db and started tracking it")
                 
                 else:
@@ -155,7 +212,7 @@ def save_to_database(product_data):
                     if row:
                         name, brand, rating, currency, url, price = row
                     prev_val = {"name": name, "brand": brand, "rating": rating, "currency": currency, "url": url, "price": price}
-                    new_val = {"name": product_data.get("name"), "brand": product_data.get("brand_name"), "rating": product_data.get("rating"), "currency": product_data.get("currency"), "url": product_data.get("prod_url")}
+                    new_val = {"name": product_data.get("name"), "brand": product_data.get("brand_name"), "currency": product_data.get("currency"), "url": product_data.get("prod_url")}
                     old_missing = [k for k, v in prev_val.items() if v is None]
                     print(f"{product_data.get("asin")}: These fields are null in existing record in database - {old_missing}")
                     new_not_null = [k for k, v in new_val.items() if v is not None]
@@ -169,7 +226,8 @@ def save_to_database(product_data):
                             """)
                     conn.commit()
                     print(f"{product_data.get("asin")}: Updated the values of following fields - {new_not_null}")
-                    track_price_history(product_data.get("price"), product_data.get("asin"), product_data.get("currency"), True, product_data.get("rating"))
+                    track_price_history(product_data.get("price"), product_data.get("asin"), product_data.get("currency"), True)
+                    track_rating_history(product_data.get("rating"), product_data.get("asin"))
                     return print(f"[INFO] Product {product_data.get("asin")} metadata available in table. Updated or started tracking the price in price history.")
         
 
@@ -198,7 +256,8 @@ def save_to_database(product_data):
                             cur.execute(insert_query, (prod.get("asin"), prod.get("title"), prod.get("price"), None, prod.get("rating"), prod.get("currency"), prod.get("url")))
                             conn.commit()
 
-                            track_price_history(prod.get("price"), prod.get("asin"), prod.get("currency"), True, prod.get("rating"))
+                            track_price_history(prod.get("price"), prod.get("asin"), prod.get("currency"), True)
+                            track_rating_history(prod.get("rating"), prod.get("asin"))
                             print(f"[INFO] Saved 1 product {prod.get("asin")} in db and started tracking it\n")
 
                         else:
@@ -213,7 +272,7 @@ def save_to_database(product_data):
                             if row:
                                 name, brand, rating, currency, url, price = row
                             prev_val = {"name": name, "brand": brand, "rating": rating, "currency": currency, "url": url, "price": price}
-                            new_val = {"name": prod.get("name"), "brand": prod.get("brand_name"), "rating": prod.get("rating"), "currency": prod.get("currency"), "url": prod.get("prod_url")}
+                            new_val = {"name": prod.get("name"), "brand": prod.get("brand_name"), "currency": prod.get("currency"), "url": prod.get("prod_url")}
                             old_missing = [k for k, v in prev_val.items() if v is None]
                             print(f"{prod.get("asin")}: These fields are null in existing record in database - {old_missing}")
                             new_not_null = [k for k, v in new_val.items() if v is not None]
@@ -228,7 +287,8 @@ def save_to_database(product_data):
                             conn.commit()
                             
                  
-                            track_price_history(prod.get("price"), prod.get("asin"), prod.get("currency"), True, prod.get("rating"))
+                            track_price_history(prod.get("price"), prod.get("asin"), prod.get("currency"), True)
+                            track_rating_history(prod.get("rating"), prod.get("asin"))
                             print(f"[INFO] Product {prod.get("asin")} metadata available in table. Updated or started tracking the price in price history.\n")
 
                          
