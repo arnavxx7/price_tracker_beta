@@ -10,9 +10,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-
-      - name: checkout code
-        uses: actions/checkout@v4
+      - name: checkout repo content
+        uses: actions/checkout@v2
 
       - name: setup python
         uses: actions/setup-python@v6
@@ -23,7 +22,10 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-
+      
+  script_execution:
+    runs-on: ubuntu-latest
+    steps:
       - name: execute python script 
         env:
           DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
