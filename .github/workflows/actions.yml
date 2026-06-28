@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  script_execution:
     runs-on: ubuntu-latest
     steps:
       - name: checkout repo content
@@ -23,9 +23,6 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
       
-  script_execution:
-    runs-on: ubuntu-latest
-    steps:
       - name: execute python script 
         env:
           DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
