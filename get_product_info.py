@@ -1,5 +1,4 @@
 from bs4 import BeautifulSoup
-import mysql.connector
 import re   
 from curl_cffi import requests
 import asyncio
