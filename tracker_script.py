@@ -5,6 +5,7 @@ import os
 from dotenv import load_dotenv
 from get_product_info import amzn_product_info_scraper
 from utils import save_to_database
+from app_logging import logger
 
 
 load_dotenv()
@@ -17,21 +18,30 @@ CONFIG = {
     "port": 5432
 }
 
+logger.info("Starting session")
 conn = psycopg2.connect(**CONFIG)
+logger.info(f"Connected to db - {CONFIG["database"]}")
 cur = conn.cursor()
 cur.execute("SELECT asin, url FROM amzn_product_info")
 rows = cur.fetchall()  # fetch all first, so cursor stays free for save_to_database
+num = len(rows)
+logger.info(f"Updating the fields of {num} records")
+
 
 cur.close()  # close this cursor, save_to_database will use its own connection
-
+i=1
 for asin, url in rows:
+    logger.info(f"Updating record - {i}/{num}")
     prod_html_content = asyncio.run(ping_amazon(url))
     product_info = amzn_product_info_scraper(prod_html_content, url)
 
     if len(product_info) == 0:
-        print(f"[ERROR] Product information was not fetched for {asin}")
+        logger.error(f"Product information was not fetched for {asin}, unable to update.")
         continue
 
-    save_to_database(product_info)  # commits internally
+    save_to_database(product_info, conn)
+    i = i+1
+
 
 conn.close()
+logger.info("Session completed")

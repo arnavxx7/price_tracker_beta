@@ -114,15 +114,91 @@ def amzn_product_info_scraper(html_content, url: str = None) -> dict:
 
     # prod_info["currency"] = currency
 
-    brand_element = soup.select_one('#bylineInfo')
+    # brand_element = soup.select_one('#bylineInfo')
+    # brand_name = None
+
+
+    # if brand_element:
+    #     txt = brand_element.text.strip()
+    #     match = re.search(r'visit the (.*?) store', txt, re.IGNORECASE)
+    #     if match:
+    #         brand_name = match.group(1).strip()
+
     brand_name = None
 
-
-    if brand_element:
-        txt = brand_element.text.strip()
-        match = re.search(r'visit the (.*?) store', txt, re.IGNORECASE)
+    # Method 1: Byline "Visit the X Store" or "Brand: X"
+    byline = soup.select_one('#bylineInfo')
+    if byline:
+        txt = byline.text.strip()
+        # "Visit the Nike Store"
+        match = re.search(r'visit the (.+?) store', txt, re.IGNORECASE)
         if match:
             brand_name = match.group(1).strip()
+        # "Brand: Nike"
+        if not brand_name:
+            match = re.search(r'brand[:\s]+(.+)', txt, re.IGNORECASE)
+            if match:
+                brand_name = match.group(1).strip()
+
+    # Method 2: Product details table (very reliable when present)
+    if not brand_name:
+        # Horizontal details table (most product pages)
+        for row in soup.select('#productDetails_techSpec_section_1 tr, #productDetails_detailBullets_sections1 tr'):
+            header = row.select_one('th')
+            value = row.select_one('td')
+            if header and value and 'brand' in header.text.strip().lower():
+                brand_name = value.text.strip()
+                break
+
+    # Method 3: Detail bullets (older Amazon layout)
+    if not brand_name:
+        for item in soup.select('#detailBullets_feature_div li'):
+            txt = item.text.strip()
+            if 'brand' in txt.lower():
+                parts = txt.split(':', 1)
+                if len(parts) == 2:
+                    brand_name = parts[1].strip().replace('\u200f', '').replace('\u200e', '')
+                    break
+
+    # Method 4: Brand in product overview table (common for electronics/tools)
+    if not brand_name:
+        for row in soup.select('#poExpander tr, #productOverview_feature_div tr'):
+            header = row.select_one('td:first-child, th')
+            value = row.select_one('td:last-child')
+            if header and value and 'brand' in header.text.strip().lower():
+                brand_name = value.text.strip()
+                break
+
+    # Method 5: Meta tag (clean, no parsing needed)
+    if not brand_name:
+        meta = soup.select_one('meta[name="brand"]') or \
+               soup.select_one('meta[property="og:brand"]')
+        if meta and meta.get('content'):
+            brand_name = meta['content'].strip()
+
+    # Method 6: Search result container selectors (your method 2, as last resort)
+    if not brand_name:
+        brand_selectors = [
+            '.a-row .a-size-base-plus.a-color-base',
+            '.a-size-base-plus:not([aria-label])',
+            'h2 .a-size-base-plus',
+            '.s-line-clamp-1 span',
+        ]
+        for selector in brand_selectors:
+            elem = soup.select_one(selector)
+            if elem and elem.text.strip():
+                brand_name = elem.text.strip()
+                break
+
+    # Cleanup
+    if brand_name:
+        # Remove unicode control characters Amazon sometimes injects
+        brand_name = re.sub(r'[\u200e\u200f\u00a0]', '', brand_name).strip()
+        # Remove trailing/leading punctuation
+        brand_name = brand_name.strip('.:,')
+        # If result is suspiciously long it's probably not a brand name
+        if len(brand_name) > 50:
+            brand_name = None
 
     prod_info["brand_name"] = brand_name
 

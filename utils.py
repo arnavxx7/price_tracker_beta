@@ -2,6 +2,8 @@ import re
 import psycopg2
 import os
 from dotenv import load_dotenv
+from psycopg2 import sql
+from app_logging import logger
 
 load_dotenv()
 
@@ -57,19 +59,17 @@ def track_price_history(current_price: float, asin: str, currency: str, avlble: 
             with conn.cursor() as cur:
                 
                 cur.execute("SELECT EXISTS(SELECT 1 FROM amzn_price_history WHERE asin = %s)", (asin,))
-                print("\n---------------------------")
+                # print("\n---------------------------")
 
                 is_product_tracked = bool(cur.fetchone()[0])
-                if is_product_tracked:
-                    print(f"Price of product {asin} is tracked")
-                else: 
-                    print(f"Price of product {asin} is not tracked")
 
-                # if not is_product_tracked and current_price is None:
-                #     return print(f"Product {asin} not tracked since price is null")
+                if not is_product_tracked and current_price is None:
+                    logger.error(f"{asin}: Price of product not tracked since price is null")
+                    return print(f"[ERROR]: Price of product {asin} not tracked since price is null")
 
                 # if product is not tracked then add it in the table
                 if not is_product_tracked:
+                    logger.info(f"{asin}: Price of product is not tracked")
                     cur.execute("""
                         INSERT INTO amzn_price_history (asin, price, currency, is_available, recorded_at)
                         VALUES (%s, %s, %s, %s, NOW())
@@ -80,15 +80,30 @@ def track_price_history(current_price: float, asin: str, currency: str, avlble: 
                         avlble
                     ))
                     conn.commit()
-                    print(f"Started tracking price of product id - {asin}\n")
+                    logger.info(f"{asin}: Started tracking price of product - {current_price}")
                     # print("---------------------------\n")
                 # if product is already tracked then add only if price has changed
                 else: 
+                    logger.info(f"{asin}: Price of product is tracked")
                     cur.execute("SELECT price FROM amzn_product_info WHERE asin = %s", (asin,))
-                    last_price = float(cur.fetchone()[0])
-                    print(f"Last price - {last_price}, Current price - {current_price}")
+                    try:
+                        last_price = float(cur.fetchone()[0])
+                    except Exception as e:
+                        last_price = None
+                        logger.error(f"{asin}: Previous price in record is {last_price}, getting error - {e}")
+                        # print(f"[ERROR] {asin}: Previous price is None - {e}")
+                    logger.info(f"{asin}: Last price - {last_price}, Current price - {current_price}")
+                    # print(f"Last price - {last_price}, Current price - {current_price}")
 
-                    if last_price is None or last_price != current_price:
+                    if current_price is None:
+                        logger.warning(f"{asin}: Updated price of product is {current_price}, skipping insert")
+                        return print(f"[WARN] {asin}: New price is none, skipping insert")
+                    
+                    diff = 0
+                    if last_price is not None:
+                        diff = current_price - last_price
+                    
+                    if last_price is None or diff>=1.0:
                         cur.execute("""
                             INSERT INTO amzn_price_history (asin, price, currency, is_available, recorded_at)
                             VALUES (%s, %s, %s, %s, NOW())
@@ -107,13 +122,15 @@ def track_price_history(current_price: float, asin: str, currency: str, avlble: 
                               asin
                         ))
                         conn.commit()
-
-                        print(f"Detected a price change, Recorded it: {asin} → {currency} {current_price}\n")
+                        logger.info(f"{asin}: Price change detected {last_price} → {current_price}")
+                        logger.info(f"{asin}: Successfully recorded the price change in the database")
+                        # print(f"Detected a price change, Recorded it: {asin} - {last_price} → {current_price}\n")
                         # print("-------------------------------------\n")
                 
                     else:
                         conn.commit()
-                        print(f"{asin}: Price unchanged ({current_price}), skipping insert.\n")
+                        logger.info(f"{asin}: Price unchanged (Current: {current_price}, Last: {last_price}), skipping insert.\n")
+                        # print(f"{asin}: Price unchanged ({current_price}), skipping insert.\n")
                         # print("--------------------------------------\n")
                     
 def track_rating_history(current_rating: float, asin: str):
@@ -124,13 +141,14 @@ def track_rating_history(current_rating: float, asin: str):
             # print("\n---------------------------")
 
             is_product_tracked = bool(cur.fetchone()[0])
-            if is_product_tracked:
-                print(f"Rating of product {asin} is tracked")
-            else: 
-                print(f"Rating of product {asin} is not tracked")
+
+            if not is_product_tracked and current_rating is None:
+                logger.error(f"{asin}: Rating of product not tracked since it is {current_rating}")
+                return print(f"[ERROR] {asin}: Product not tracked since rating is none")
 
             # if product is not tracked then add it in the table
             if not is_product_tracked:
+                logger.info(f"{asin}: Rating of product is not tracked")
                 cur.execute("""
                     INSERT INTO amzn_rating_history (asin, rating, recorded_at)
                     VALUES (%s, %s, NOW())
@@ -139,13 +157,24 @@ def track_rating_history(current_rating: float, asin: str):
                     current_rating
                 ))
                 conn.commit()
-                print(f"Started tracking rating of product id - {asin}")
-                print("---------------------------\n")
+                logger.info(f"{asin}: Started tracking rating of product - {current_rating}")
+                # print(f"Started tracking rating of product id - {asin}")
+                # print("---------------------------\n")
             # if product is already tracked then add only if price has changed
             else: 
+                logger.info(f"{asin}: Rating of product is tracked")
                 cur.execute("SELECT rating FROM amzn_product_info WHERE asin = %s", (asin,))
-                last_rating = float(cur.fetchone()[0])
-                print(f"Last rating - {last_rating}, Current rating - {current_rating}")
+                try:
+                    last_rating = float(cur.fetchone()[0])
+                except Exception as e:
+                    last_rating = None
+                    logger.error(f"{asin}: Previous rating in record is {last_rating}, getting error - {e}")
+                    # print(f"[ERROR] {asin}: Previous rating is None - {e}")
+                logger.info(f"{asin}: Last rating - {last_rating}, Current rating - {current_rating}")
+
+                if current_rating is None:
+                    logger.warning(f"{asin}: Updated rating of product is {current_rating}, skipping insert")
+                    return print(f"[WARN] {asin}: New rating is none, skipping insert")
 
                 if last_rating is None or last_rating != current_rating:
                     cur.execute("""
@@ -164,71 +193,86 @@ def track_rating_history(current_rating: float, asin: str):
                             asin
                     ))
                     conn.commit()
-
-                    print(f"Detected a rating change, Recorded it: {asin} - {last_rating} → {current_rating}")
-                    print("-------------------------------------\n")
+                    logger.info(f"{asin}: Detected a change in rating: {last_rating} → {current_rating}")
+                    logger.info(f"{asin}: Rating successfully updated in database")
+                    # print(f"Detected a rating change, Recorded it: {asin} - {last_rating} → {current_rating}")
+                    # print("-------------------------------------\n")
             
                 else:
                     conn.commit()
-                    print(f"{asin}: Rating unchanged ({current_rating}), skipping insert.")
-                    print("--------------------------------------\n")
+                    logger.info(f"{asin}: Rating unchanged (Current: {current_rating}, Last: {last_rating}), skipping insert.")
+                    # print(f"{asin}: Rating unchanged ({current_rating}), skipping insert.")
+                    # print("--------------------------------------\n")
 
             
 
 
-def save_to_database(product_data):
+def save_to_database(product_data, conn):
     # product url
     if type(product_data)==dict:
         if not product_data.get("asin"):
+            logger.error("Unable to save or update the product in database since ASIN was not provided")
             return "[ERROR] Product data not saved to database due to no ASIN"
         
+        logger.info(f"{product_data.get("asin")}: Saving this product")
+        
+        
         # try:
-        with psycopg2.connect(**CONFIG) as conn:
-            with conn.cursor() as cur:
-                # check if product is in product info table to avoid adding it again
-                cur.execute("SELECT EXISTS(SELECT 1 FROM amzn_product_info WHERE asin = %s)", (product_data.get("asin"),))
-                product_info_in_table = bool(cur.fetchone()[0])
+        with conn.cursor() as cur:
+            # check if product is in product info table to avoid adding it again
+            cur.execute("SELECT EXISTS(SELECT 1 FROM amzn_product_info WHERE asin = %s)", (product_data.get("asin"),))
+            product_info_in_table = bool(cur.fetchone()[0])
 
-                if not product_info_in_table:
-                    insert_query = '''
-                        INSERT INTO amzn_product_info (asin, name, price, brand, rating, currency, url, created_at, last_checked_at) VALUES (%s, %s, %s, %s, %s, %s, %s, NOW(), NOW());
-                        '''
-                    cur.execute(insert_query, (product_data.get("asin"), product_data.get("name"), product_data.get("price"), product_data.get("brand_name"), product_data.get("rating"), product_data.get("currency"), product_data.get("prod_url")))
-                    conn.commit()
 
-                    track_price_history(product_data.get("price"), product_data.get("asin"), product_data.get("currency"), True)
-                    track_rating_history(product_data.get("rating"), product_data.get("asin"))
-                    return print(f"[INFO] Saved 1 product {product_data.get("asin")} in db and started tracking it")
-                
-                else:
-                    # if product metadata available in main table, update the fields with latest values
-                    cur.execute(
-                        "SELECT name, brand, rating, currency, url, price FROM amzn_product_info WHERE asin = %s",
-                        (product_data.get("asin"),)
-                    )
+            if not product_info_in_table:
+                logger.info(f"{product_data.get("asin")}: Product metadata not available in table")
+                insert_query = '''
+                    INSERT INTO amzn_product_info (asin, name, price, brand, rating, currency, url, created_at, last_checked_at) VALUES (%s, %s, %s, %s, %s, %s, %s, NOW(), NOW());
+                    '''
+                cur.execute(insert_query, (product_data.get("asin"), product_data.get("name"), product_data.get("price"), product_data.get("brand_name"), product_data.get("rating"), product_data.get("currency"), product_data.get("prod_url")))
+                conn.commit()
 
-                    row = cur.fetchone() 
+                track_price_history(product_data.get("price"), product_data.get("asin"), product_data.get("currency"), True)
+                track_rating_history(product_data.get("rating"), product_data.get("asin"))
+                logger.info(f"{product_data.get("asin")}: Saved 1 product metadata in db")
+                # return print(f"[INFO] Saved 1 product {product_data.get("asin")} metadata in db\n")
+            
+            else:
+                # if product metadata available in main table, update the fields with latest values
+                logger.info(f"{product_data.get("asin")}: Product metadata available in table")
+                cur.execute(
+                    "SELECT name, brand, rating, currency, url, price FROM amzn_product_info WHERE asin = %s",
+                    (product_data.get("asin"),)
+                )
 
-                    if row:
-                        name, brand, rating, currency, url, price = row
-                    prev_val = {"name": name, "brand": brand, "rating": rating, "currency": currency, "url": url, "price": price}
-                    new_val = {"name": product_data.get("name"), "brand": product_data.get("brand_name"), "currency": product_data.get("currency"), "url": product_data.get("prod_url")}
-                    old_missing = [k for k, v in prev_val.items() if v is None]
-                    print(f"{product_data.get("asin")}: These fields are null in existing record in database - {old_missing}")
-                    new_not_null = [k for k, v in new_val.items() if v is not None]
-                    if new_not_null:
-                        for k in new_not_null:
-                            cur.execute(f"""
+                row = cur.fetchone() 
+
+                if row:
+                    name, brand, rating, currency, url, price = row
+                prev_val = {"name": name, "brand": brand, "rating": rating, "currency": currency, "url": url, "price": price}
+                new_val = {"name": product_data.get("name"), "brand": product_data.get("brand_name"), "currency": product_data.get("currency"), "url": product_data.get("prod_url")}
+                old_missing = [k for k, v in prev_val.items() if v is None]
+                logger.info(f"{product_data.get("asin")}: These fields are null in existing record in database - {old_missing}")
+                new_not_null = [k for k, v in new_val.items() if v is not None]
+                if new_not_null:
+                    for k in new_not_null:
+                        cur.execute(
+                            sql.SQL(
+                                """
                                 UPDATE amzn_product_info
-                                SET {k} = '{new_val[k]}',
+                                SET {column} = %s,
                                     last_checked_at = NOW()
-                                WHERE asin = '{product_data.get("asin")}'
-                            """)
-                    conn.commit()
-                    print(f"{product_data.get("asin")}: Updated the values of following fields - {new_not_null}")
-                    track_price_history(product_data.get("price"), product_data.get("asin"), product_data.get("currency"), True)
-                    track_rating_history(product_data.get("rating"), product_data.get("asin"))
-                    return print(f"[INFO] Product {product_data.get("asin")} metadata available in table. Updated or started tracking the price in price history.")
+                                WHERE asin = %s
+                            """
+                            ).format(column=sql.Identifier(k)), 
+                            (new_val[k], product_data.get("asin"))
+                        )
+                conn.commit()
+                logger.info(f"{product_data.get("asin")}: Updated the values of following fields - {new_not_null}")
+                track_price_history(product_data.get("price"), product_data.get("asin"), product_data.get("currency"), True)
+                track_rating_history(product_data.get("rating"), product_data.get("asin"))
+                logger.info(f"{product_data.get("asin")}: Updated the price and rating of product")
+                # return print(f"[INFO] Product {product_data.get("asin")} metadata available in db\n")
         
 
         # except Exception as e:
@@ -237,64 +281,76 @@ def save_to_database(product_data):
     elif type(product_data)==list:
         if len(product_data)>0:
             i=1
+            logger.info("Search url or query received")
+            logger.info(f"Saving or updating {len(product_data)} products")
             for prod in product_data:
                 if not prod.get("asin"):
+                    logger.error("Unable to save or update the product in database since ASIN was not provided")
                     return "[ERROR] Product data not saved to database due to no ASIN"    
 
-                print("#", i)                    
-                with psycopg2.connect(**CONFIG) as conn:
-                    with conn.cursor() as cur:
+                # print("#", i)                    
+                logger.info(f"##{i}/{len(product_data)}: Saving or updating product - {prod.get("asin")}")
+                with conn.cursor() as cur:
+                    cur.execute("SELECT EXISTS(SELECT 1 FROM amzn_product_info WHERE asin = %s)", (prod.get("asin"),))
+                    product_info_in_table = bool(cur.fetchone()[0])
+                    # Product info is not available in main table
+                    if not product_info_in_table:
+                        logger.info(f"{prod.get('asin')}: Product metadata is not available in table")
+                        insert_query = '''
+                            INSERT INTO amzn_product_info (asin, name, price, brand, rating, currency, url, created_at, last_checked_at) VALUES (%s, %s, %s, %s, %s, %s, %s, NOW(), NOW());
+                            '''
 
-                        cur.execute("SELECT EXISTS(SELECT 1 FROM amzn_product_info WHERE asin = %s)", (prod.get("asin"),))
-                        product_info_in_table = bool(cur.fetchone()[0])
-                        # Product info is not available in main table
-                        if not product_info_in_table:
-                            insert_query = '''
-                                INSERT INTO amzn_product_info (asin, name, price, brand, rating, currency, url, created_at, last_checked_at) VALUES (%s, %s, %s, %s, %s, %s, %s, NOW(), NOW());
-                                '''
+                        cur.execute(insert_query, (prod.get("asin"), prod.get("title"), prod.get("price"), None, prod.get("rating"), prod.get("currency"), prod.get("url")))
+                        conn.commit()
 
-                            cur.execute(insert_query, (prod.get("asin"), prod.get("title"), prod.get("price"), None, prod.get("rating"), prod.get("currency"), prod.get("url")))
-                            conn.commit()
+                        track_price_history(prod.get("price"), prod.get("asin"), prod.get("currency"), True)
+                        track_rating_history(prod.get("rating"), prod.get("asin"))
+                        logger.info(f"{prod.get('asin')}: Saved 1 product metadata in db")
+                        # print(f"[INFO] Saved 1 product {prod.get("asin")} metadata in db\n")
 
-                            track_price_history(prod.get("price"), prod.get("asin"), prod.get("currency"), True)
-                            track_rating_history(prod.get("rating"), prod.get("asin"))
-                            print(f"[INFO] Saved 1 product {prod.get("asin")} in db and started tracking it\n")
+                    else:
+                        # if product metadata available in main table, update the values of fields with the lastest not null data
+                        logger.info(f"{prod.get('asin')}: Product metadata is available in table")
+                        cur.execute(
+                            "SELECT name, brand, rating, currency, url, price FROM amzn_product_info WHERE asin = %s",
+                            (prod.get("asin"),)
+                        )
 
-                        else:
-                            # if product metadata available in main table, update the values of fields with the lastest not null data
-                            cur.execute(
-                                "SELECT name, brand, rating, currency, url, price FROM amzn_product_info WHERE asin = %s",
-                                (prod.get("asin"),)
-                            )
+                        row = cur.fetchone()
 
-                            row = cur.fetchone()
-
-                            if row:
-                                name, brand, rating, currency, url, price = row
-                            prev_val = {"name": name, "brand": brand, "rating": rating, "currency": currency, "url": url, "price": price}
-                            new_val = {"name": prod.get("name"), "brand": prod.get("brand_name"), "currency": prod.get("currency"), "url": prod.get("prod_url")}
-                            old_missing = [k for k, v in prev_val.items() if v is None]
-                            print(f"{prod.get("asin")}: These fields are null in existing record in database - {old_missing}")
-                            new_not_null = [k for k, v in new_val.items() if v is not None]
-                            if new_not_null:
-                                for k in new_not_null:
-                                    cur.execute(f"""
+                        if row:
+                            name, brand, rating, currency, url, price = row
+                        prev_val = {"name": name, "brand": brand, "rating": rating, "currency": currency, "url": url, "price": price}
+                        new_val = {"name": prod.get("name"), "brand": prod.get("brand_name"), "currency": prod.get("currency"), "url": prod.get("prod_url")}
+                        old_missing = [k for k, v in prev_val.items() if v is None]
+                        logger.info(f"{prod.get("asin")}: These fields are null in existing record in database - {old_missing}")
+                        new_not_null = [k for k, v in new_val.items() if v is not None]
+                        if new_not_null:
+                            for k in new_not_null:
+                                cur.execute(
+                                    sql.SQL(
+                                        """
                                         UPDATE amzn_product_info
-                                        SET {k} = {new_val[k]},
+                                        SET {column} = %s,
                                             last_checked_at = NOW()
-                                        WHERE asin = {prod.get("asin")}
-                                    """)
-                            conn.commit()
-                            
-                 
-                            track_price_history(prod.get("price"), prod.get("asin"), prod.get("currency"), True)
-                            track_rating_history(prod.get("rating"), prod.get("asin"))
-                            print(f"[INFO] Product {prod.get("asin")} metadata available in table. Updated or started tracking the price in price history.\n")
+                                        WHERE asin = %s
+                                    """
+                                    ).format(column=sql.Identifier(k)), 
+                                    (new_val[k], prod.get("asin"))
+                                )
+                        conn.commit()
+                        logger.info(f"{prod.get("asin")}: Updated the values of following fields - {new_not_null}")
+                        
+                
+                        track_price_history(prod.get("price"), prod.get("asin"), prod.get("currency"), True)
+                        track_rating_history(prod.get("rating"), prod.get("asin"))
+                        # print(f"[INFO] Product {prod.get("asin")} metadata available in db\n")
+                        logger.info(f"{prod.get("asin")}: Updated the price and rating of product")
 
                          
                 
                 i=i+1
-            
+            logger.info(f"Saved or updated {len(product_data)} products in db")
             return print(f"[INFO] Saved {len(product_data)} products in db and started tracking them.")
 
             # except Exception as e:

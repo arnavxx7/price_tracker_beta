@@ -6,14 +6,16 @@ from bs4 import BeautifulSoup
 from curl_cffi import requests
 from curl_cffi.requests.errors import RequestsError
 from fake_useragent import UserAgent
+import psycopg2
 import re
 import asyncio
+import os
 
 # url = "https://www.amazon.in/iPhone-16-Plus-256-GB/dp/B0DGJ8DP1M/ref=sr_1_3?crid=NWE6WD0LU1CO&dib=eyJ2IjoiMSJ9.ePpqqbL-nn7bDcnfNguz2eyoq6xgQvt9lW2fONfrgdqICdGiOBZ_JevxefI77ShsTcRYnj84OnV4_7vB_kmqLN3LlhJslPplCjnUpy--CNL36R_QF2X0oYEsgJZqUzmaMT-sfE7WUffaROlUxAx5dpBUCztJkLLhAA6jdZN2271nLd6PilH5GhvAsoh3_Kz6q-UPjpz5xRWPPz62Ji77cPvCzAF41W4W8SJSIXTr0gE.3jMd3XQptpbFZ5pzvR_59KPc9v8ZrXpRTuuV_Xj-fm4&dib_tag=se&keywords=iphone%2B17%2Bpro&qid=1780913862&sprefix=iphone%2Caps%2C289&sr=8-3&th=1"
 
 # url = "https://www.amazon.in/CP-PLUS-Outdoor-CP-URC-TC24PL3-Compatible/dp/B0FH5G1Z7P/ref=sr_1_3?sr=8-3"
 
-url = "https://www.amazon.in/s?k=night+vision+camera"
+# url = "https://www.amazon.in/s?k=night+vision+camera"
 
 # url = url3
 # url = None
@@ -30,6 +32,14 @@ DEFAULT_HEADERS = {
     'Sec-Fetch-Mode': 'navigate',
     'Sec-Fetch-Site': 'none',
     'Sec-Fetch-User': '?1',
+}
+
+CONFIG = {
+    "host": "aws-1-ap-south-1.pooler.supabase.com",
+    "user": "postgres.mtsadefjhnqdvmsqcjps",
+    "password": os.getenv("DB_PASSWORD"),
+    "database": "postgres",
+    "port": 5432
 }
 
 async def ping_amazon(url: str):
@@ -88,6 +98,10 @@ async def ping_amazon(url: str):
     
 
 if __name__ == "__main__":
+    url = None
+    # url = "https://www.amazon.in/s?k=night+vision+camera"
+    # url = "https://www.amazon.in/CP-PLUS-Outdoor-CP-URC-TC24PL3-Compatible/dp/B0FH5G1Z7P/ref=sr_1_3?sr=8-3"
+    # url = "https://www.amazon.in/iPhone-16-Plus-256-GB/dp/B0DGJ8DP1M/ref=sr_1_3?crid=NWE6WD0LU1CO&dib=eyJ2IjoiMSJ9.ePpqqbL-nn7bDcnfNguz2eyoq6xgQvt9lW2fONfrgdqICdGiOBZ_JevxefI77ShsTcRYnj84OnV4_7vB_kmqLN3LlhJslPplCjnUpy--CNL36R_QF2X0oYEsgJZqUzmaMT-sfE7WUffaROlUxAx5dpBUCztJkLLhAA6jdZN2271nLd6PilH5GhvAsoh3_Kz6q-UPjpz5xRWPPz62Ji77cPvCzAF41W4W8SJSIXTr0gE.3jMd3XQptpbFZ5pzvR_59KPc9v8ZrXpRTuuV_Xj-fm4&dib_tag=se&keywords=iphone%2B17%2Bpro&qid=1780913862&sprefix=iphone%2Caps%2C289&sr=8-3&th=1"
     if not url:
         print("[INFO] No url detected. Please enter the query for search.")
         query = input()
@@ -101,16 +115,16 @@ if __name__ == "__main__":
     print("[DEBUG] Status code:", html_content.status_code)
 
     check_url = re.search("/dp/(.*?)/", url)
+    conn = psycopg2.connect(**CONFIG)
 
     if check_url:
         print("[INFO] Product url detected")
         product_info = amzn_product_info_scraper(html_content, url)
-
-        save_to_database(product_info) 
-
-
         if len(product_info)==0:
             print("[ERROR] Product information was not fetched (or page was blocked)")
+        else:
+            save_to_database(product_info, conn) 
+        conn.close()
 
     else:
         print("[INFO] Search url detected") 
@@ -127,6 +141,7 @@ if __name__ == "__main__":
 
             if current_page!=1:
                 html_content = asyncio.run(ping_amazon(current_url))
+           
 
             if not html_content or not html_content.content:
                 print("[ERROR] Received empty html or failed to fetch search page")
@@ -159,7 +174,17 @@ if __name__ == "__main__":
             current_page += 1
             
         print(f"\nSearch completed. Total products found: {len(all_products)}\n")
-        save_to_database(all_products)
+        conn = psycopg2.connect(**CONFIG)
+        # for prod in all_products:
+        #     if len(prod)>0:
+        #         prod_html_content = asyncio.run(ping_amazon(prod["url"]))
+        #         product_info = amzn_product_info_scraper(prod_html_content, prod["url"])
+        #         if len(product_info)==0:
+        #             print("[ERROR] Product information was not fetched (or page was blocked)")
+        #         else:
+        #             save_to_database(product_info, conn) 
+        save_to_database(all_products, conn)
+        conn.close()  
 
             
 
