@@ -41,7 +41,7 @@ for asin, url in rows:
         continue
     if product_info.get("price") is None and product_info.get("rating") is None:
         with open(f"logs/{product_info.get("asin")}_debug_response.html", "w", encoding="utf-8") as f:
-            f.write(html_content.text)
+            f.write(prod_html_content.text)
 
     save_to_database(product_info, conn)
     i = i+1
