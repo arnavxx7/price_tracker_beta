@@ -49,7 +49,7 @@ def amzn_product_info_scraper(html_content, url: str = None) -> dict:
     prod_price_fraction_element = soup.select_one('.a-price-fraction')
     currency_element = soup.select_one('.a-price-symbol')
 
-    # print("strat1", (prod_price_whole_element, prod_price_fraction_element, currency_element))
+    print("strat1", (prod_price_whole_element, prod_price_fraction_element, currency_element))
 
     if prod_price_whole_element:
         prod_price_whole = prod_price_whole_element.text.strip().replace(".", "").replace(",", "")
@@ -61,7 +61,7 @@ def amzn_product_info_scraper(html_content, url: str = None) -> dict:
         if currency_element:
             currency = CURRENCY_MAPPING.get(currency_element.text.strip())
 
-    # print("strat1", price, currency)
+    print("strat1", price, currency)
 
     # Strategy 2: a-offscreen span (e.g. "₹69,900.00" as full string)
     if price is None:
@@ -72,7 +72,7 @@ def amzn_product_info_scraper(html_content, url: str = None) -> dict:
                 currency = CURRENCY_MAPPING.get(m.group(1), m.group(1))
                 price = float(m.group(2).replace(',', ''))
 
-    # print("strat2", price, currency)
+    print("strat2", price, currency)
 
     # Strategy 3: UCC widget / newer buybox — plain span with currency symbol
     if price is None:
@@ -84,7 +84,7 @@ def amzn_product_info_scraper(html_content, url: str = None) -> dict:
                 price = float(m.group(2).replace(',', ''))
                 break
 
-    # print("strat3", price, currency)
+    print("strat3", price, currency)
 
     prod_info["price"] = price
     prod_info["currency"] = currency

@@ -35,9 +35,13 @@ for asin, url in rows:
     prod_html_content = asyncio.run(ping_amazon(url))
     product_info = amzn_product_info_scraper(prod_html_content, url)
 
+
     if len(product_info) == 0:
         logger.error(f"Product information was not fetched for {asin}, unable to update.")
         continue
+    if product_info.get("price") is None and product_info.get("rating") is None:
+        with open(f"logs/{product_info.get("asin")}_debug_response.html", "w", encoding="utf-8") as f:
+            f.write(html_content.text)
 
     save_to_database(product_info, conn)
     i = i+1
