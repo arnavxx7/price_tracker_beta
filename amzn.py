@@ -6,8 +6,11 @@ from bs4 import BeautifulSoup
 from curl_cffi import requests
 from curl_cffi.requests.errors import RequestsError
 from fake_useragent import UserAgent
+from app_logging import logger
+import time
+import random
 import psycopg2
-import re
+import re                          
 import asyncio
 import os
 
@@ -60,19 +63,76 @@ async def ping_amazon(url: str):
 
     max_retries = 3
     timeout = 25
+    delay_range = (2, 5)
 
-    response = session.get(
-                    url,
-                    headers=merged_headers,
-                    timeout=timeout,
-                    allow_redirects=True
-                )
+    for attempt in range(max_retries+1):
+        try:
+            # Calculate delay with some randomization (increases with each attempt)
+            delay_factor = 1 + (attempt * 0.5)  # Exponential backoff factor
+            min_delay, max_delay = delay_range
+            delay = random.uniform(min_delay * delay_factor, max_delay * delay_factor)
+
+            print("[INFO] Pinging amazon url")
+            logger.info(f"{url}: Pinging amazon url")
+            print(f"Request attempt {attempt+1}/{max_retries+1}: GET {url} (delay: {delay:.2f}s)")
+            logger.info(f"Request attempt {attempt+1}/{max_retries+1}: GET {url} (delay: {delay:.2f}s)")
+            time.sleep(delay)
 
 
-    print("[INFO] Pinging amazon url")
+            response = session.get(
+                            url,
+                            headers=merged_headers,
+                            timeout=timeout,
+                            allow_redirects=True
+                        )
+            
+            # Handle HTTP error codes
+            if response.status_code != 200:
+                print(f"Non-200 status code: {response.status_code}")
+                
+                # Handle server errors specifically (5xx)
+                if 500 <= response.status_code < 600 and attempt < max_retries:
+                    print(f"Server error {response.status_code}, retrying...")
+                    continue
+                
+                # For other status codes, continue but warn
+                print(f"Error: Received HTTP {response.status_code} for {url}")
+
+            # Check for CAPTCHA/blocking patterns in the content
+            if "captcha" in response.text.lower() or "api-services-support@amazon.com" in response.text:
+                print("CAPTCHA or anti-bot measure detected in response")
+                
+                if attempt < max_retries:
+                    # Apply a longer delay before the next retry for anti-bot
+                    captcha_delay = delay * 3
+                    print(f"Detected anti-bot measure. Waiting {captcha_delay:.2f}s before retry")
+                    time.sleep(captcha_delay)
+                    continue
+                
+                print("Failed to bypass anti-bot measures after all retries")
+
+            # If everything is good, return the response
+            print(f"Request successful: {url} (Status: {response.status_code})")
+            return response
+
+        except RequestsError as e:
+            print(f"Network error on attempt {attempt+1}: {e}")
+            if attempt == max_retries:
+                print(f"Max retries reached. Network error: {e}")
+                return None
+            time.sleep(delay * 2)  # Longer delay after network error
+                
+        except Exception as e:
+            print(f"Unexpected error on attempt {attempt+1}: {e}")
+            if attempt == max_retries:
+                print(f"Max retries reached. Error: {e}")
+                return None
+            time.sleep(delay * 2)
+
+
     # res = await session.get(url, impersonate="chrome")
 
-    return response
+    return None
 
 # async def ping_amazon_playwright(url: str):
 #     async with async_playwright() as p:

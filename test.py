@@ -1,16 +1,16 @@
 from amzpy import AmazonScraper
 
 # Create scraper with default settings (amazon.com)
-scraper = AmazonScraper(country_code = "in")
+# scraper = AmazonScraper(country_code = "in")
 
 
 # # Fetch product details
 # url = "https://www.amazon.in/CP-PLUS-Outdoor-CP-URC-TC24PL3-Compatible/dp/B0FH5G1Z7P/ref=sr_1_3?sr=8-3"
 # product = scraper.get_product_details(url)
-products = scraper.search_products(query="wireless earbuds", max_pages=2)
+# products = scraper.search_products(query="wireless earbuds", max_pages=2)
 
-for prod in products:
-    print(prod)
+# for prod in products:
+#     print(prod)
 
 
 # if product:   
@@ -29,3 +29,8 @@ CURRENCY_MAPPING = {
 }
 
 # print(CURRENCY_MAPPING.get("₹"))
+with open("C:\\Users\\Arnav's Lappy\\Downloads\\tracker-logs-28364454346\\B0DSSXP2G6_debug_response.html", 'r', encoding='utf-8') as file:
+    html_content = file.read()
+
+if "captcha" in html_content.lower() or "api-services-support@amazon.com" in html_content.lower():
+    print("CAPTCHA or anti-bot measure detected in response")
