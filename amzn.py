@@ -182,7 +182,7 @@ if __name__ == "__main__":
         product_info = amzn_product_info_scraper(html_content, url)
         if len(product_info)==0:
             print("[ERROR] Product information was not fetched (or page was blocked)")
-        else:
+        # else:
             save_to_database(product_info, conn) 
         conn.close()
 

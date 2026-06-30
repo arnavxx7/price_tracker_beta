@@ -49,7 +49,7 @@ def amzn_product_info_scraper(html_content, url: str = None) -> dict:
     prod_price_fraction_element = soup.select_one('.a-price-fraction')
     currency_element = soup.select_one('.a-price-symbol')
 
-    # print("strat1", (prod_price_whole_element, prod_price_fraction_element, currency_element))
+    print("strat1", (prod_price_whole_element, prod_price_fraction_element, currency_element))
 
     if prod_price_whole_element:
         prod_price_whole = prod_price_whole_element.text.strip().replace(".", "").replace(",", "")
