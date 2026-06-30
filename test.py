@@ -29,3 +29,9 @@ CURRENCY_MAPPING = {
 }
 
 # print(CURRENCY_MAPPING.get("₹"))
+
+with open("C:\\Users\\Arnav's Lappy\\Downloads\\tracker-logs-28364454346\\B0GY1J37HT_debug_response.html", 'r', encoding='utf-8') as file:
+    html_content = file.read()
+
+if "captcha" in html_content.lower() or "api-services-support@amazon.com" in html_content.lower():
+    print("CAPTCHA or anti-bot measure detected in response")
