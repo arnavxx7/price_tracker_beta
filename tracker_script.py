@@ -37,7 +37,8 @@ for asin, url in rows:
 
 
     if len(product_info) == 0:
-        logger.error(f"Product information was not fetched for {asin}, unable to update.")
+        logger.error(f"{asin}: Product information was not fetched due to captcha page or other reason, unable to update.")
+        print(f"{asin}: Product information was not fetched due to captcha page or other reason, unable to update.")
         continue
     if product_info.get("price") is None and product_info.get("rating") is None:
         with open(f"logs/{product_info.get("asin")}_debug_response.html", "w", encoding="utf-8") as f:

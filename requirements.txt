@@ -5,3 +5,5 @@ playwright
 fake-useragent
 psycopg2
 python-dotenv
+fastapi
+uvicorn
