@@ -1,0 +1,10 @@
+2026-07-02 19:25:48,008 INFO: Received text: ps5
+2026-07-02 19:25:48,008 DEBUG: Using selector: SelectSelector
+2026-07-02 19:25:48,388 INFO: https://www.amazon.in/s?k=ps5: Pinging amazon url
+2026-07-02 19:25:48,388 INFO: Request attempt 1/4: GET https://www.amazon.in/s?k=ps5 (delay: 2.62s)
+2026-07-02 19:25:51,192 INFO: https://www.amazon.in/s?k=ps5: Pinging amazon url
+2026-07-02 19:25:51,192 INFO: Request attempt 2/4: GET https://www.amazon.in/s?k=ps5 (delay: 6.68s)
+2026-07-02 19:25:58,045 INFO: https://www.amazon.in/s?k=ps5: Pinging amazon url
+2026-07-02 19:25:58,045 INFO: Request attempt 3/4: GET https://www.amazon.in/s?k=ps5 (delay: 9.23s)
+2026-07-02 19:26:07,495 INFO: https://www.amazon.in/s?k=ps5: Pinging amazon url
+2026-07-02 19:26:07,495 INFO: Request attempt 4/4: GET https://www.amazon.in/s?k=ps5 (delay: 10.55s)

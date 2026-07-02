@@ -1,0 +1,83 @@
+2026-07-03 00:28:57,598 INFO: Fastapi server received this query from nextjs: ps5
+2026-07-03 00:28:57,598 INFO: Received text: ps5
+2026-07-03 00:28:57,598 DEBUG: Using selector: SelectSelector
+2026-07-03 00:28:57,844 INFO: https://www.amazon.in/s?k=ps5: Pinging amazon url
+2026-07-03 00:28:57,844 INFO: Request attempt 1/4: GET https://www.amazon.in/s?k=ps5 (delay: 3.83s)
+2026-07-03 00:29:03,108 INFO: Search url detected
+2026-07-03 00:29:03,108 INFO: Starting product search
+2026-07-03 00:29:03,108 INFO: Scraping search page 1/5: https://www.amazon.in/s?k=ps5
+2026-07-03 00:29:03,505 INFO: Found 16 products on page 1
+2026-07-03 00:29:03,659 INFO: Scraping search page 2/5: https://www.amazon.in/s?k=ps5&page=2&xpid=hHUDoyQ9NarFg&qid=1783018741&ref=sr_pg_1
+2026-07-03 00:29:03,659 DEBUG: Using selector: SelectSelector
+2026-07-03 00:29:04,040 INFO: https://www.amazon.in/s?k=ps5&page=2&xpid=hHUDoyQ9NarFg&qid=1783018741&ref=sr_pg_1: Pinging amazon url
+2026-07-03 00:29:04,040 INFO: Request attempt 1/4: GET https://www.amazon.in/s?k=ps5&page=2&xpid=hHUDoyQ9NarFg&qid=1783018741&ref=sr_pg_1 (delay: 4.55s)
+2026-07-03 00:29:08,792 INFO: https://www.amazon.in/s?k=ps5&page=2&xpid=hHUDoyQ9NarFg&qid=1783018741&ref=sr_pg_1: Pinging amazon url
+2026-07-03 00:29:08,792 INFO: Request attempt 2/4: GET https://www.amazon.in/s?k=ps5&page=2&xpid=hHUDoyQ9NarFg&qid=1783018741&ref=sr_pg_1 (delay: 5.96s)
+2026-07-03 00:29:14,936 INFO: https://www.amazon.in/s?k=ps5&page=2&xpid=hHUDoyQ9NarFg&qid=1783018741&ref=sr_pg_1: Pinging amazon url
+2026-07-03 00:29:14,938 INFO: Request attempt 3/4: GET https://www.amazon.in/s?k=ps5&page=2&xpid=hHUDoyQ9NarFg&qid=1783018741&ref=sr_pg_1 (delay: 8.80s)
+2026-07-03 00:29:25,322 INFO: Found 16 products on page 2
+2026-07-03 00:29:25,593 INFO: Scraping search page 3/5: https://www.amazon.in/s?k=ps5&page=3&qid=1783018763&xpid=hHUDoyQ9NarFg&ref=sr_pg_2
+2026-07-03 00:29:25,593 DEBUG: Using selector: SelectSelector
+2026-07-03 00:29:25,966 INFO: https://www.amazon.in/s?k=ps5&page=3&qid=1783018763&xpid=hHUDoyQ9NarFg&ref=sr_pg_2: Pinging amazon url
+2026-07-03 00:29:25,968 INFO: Request attempt 1/4: GET https://www.amazon.in/s?k=ps5&page=3&qid=1783018763&xpid=hHUDoyQ9NarFg&ref=sr_pg_2 (delay: 4.92s)
+2026-07-03 00:29:32,370 INFO: Found 16 products on page 3
+2026-07-03 00:29:32,651 INFO: Scraping search page 4/5: https://www.amazon.in/s?k=ps5&page=4&qid=1783018770&xpid=hHUDoyQ9NarFg&ref=sr_pg_3
+2026-07-03 00:29:32,651 DEBUG: Using selector: SelectSelector
+2026-07-03 00:29:32,808 INFO: https://www.amazon.in/s?k=ps5&page=4&qid=1783018770&xpid=hHUDoyQ9NarFg&ref=sr_pg_3: Pinging amazon url
+2026-07-03 00:29:32,808 INFO: Request attempt 1/4: GET https://www.amazon.in/s?k=ps5&page=4&qid=1783018770&xpid=hHUDoyQ9NarFg&ref=sr_pg_3 (delay: 4.14s)
+2026-07-03 00:29:37,151 INFO: https://www.amazon.in/s?k=ps5&page=4&qid=1783018770&xpid=hHUDoyQ9NarFg&ref=sr_pg_3: Pinging amazon url
+2026-07-03 00:29:37,157 INFO: Request attempt 2/4: GET https://www.amazon.in/s?k=ps5&page=4&qid=1783018770&xpid=hHUDoyQ9NarFg&ref=sr_pg_3 (delay: 3.17s)
+2026-07-03 00:29:40,640 INFO: https://www.amazon.in/s?k=ps5&page=4&qid=1783018770&xpid=hHUDoyQ9NarFg&ref=sr_pg_3: Pinging amazon url
+2026-07-03 00:29:40,642 INFO: Request attempt 3/4: GET https://www.amazon.in/s?k=ps5&page=4&qid=1783018770&xpid=hHUDoyQ9NarFg&ref=sr_pg_3 (delay: 5.03s)
+2026-07-03 00:29:45,861 INFO: https://www.amazon.in/s?k=ps5&page=4&qid=1783018770&xpid=hHUDoyQ9NarFg&ref=sr_pg_3: Pinging amazon url
+2026-07-03 00:29:45,861 INFO: Request attempt 4/4: GET https://www.amazon.in/s?k=ps5&page=4&qid=1783018770&xpid=hHUDoyQ9NarFg&ref=sr_pg_3 (delay: 9.99s)
+2026-07-03 00:29:56,019 ERROR: Received empty html or failed to fetch search page
+2026-07-03 00:29:56,021 INFO: Search completed. Total products found: 48
+
+2026-07-03 00:37:40,965 INFO: Fastapi server received this query from nextjs: https://www.amazon.in/Apple-iPad-Air-32-78-13%E2%80%B3/dp/B0GQV9SD7P/ref=lp_4363895031_1_4
+2026-07-03 00:37:40,965 INFO: Received an url: https://www.amazon.in/Apple-iPad-Air-32-78-13%E2%80%B3/dp/B0GQV9SD7P/ref=lp_4363895031_1_4
+2026-07-03 00:37:40,965 DEBUG: Using selector: SelectSelector
+2026-07-03 00:37:41,182 INFO: https://www.amazon.in/Apple-iPad-Air-32-78-13%E2%80%B3/dp/B0GQV9SD7P/ref=lp_4363895031_1_4: Pinging amazon url
+2026-07-03 00:37:41,182 INFO: Request attempt 1/4: GET https://www.amazon.in/Apple-iPad-Air-32-78-13%E2%80%B3/dp/B0GQV9SD7P/ref=lp_4363895031_1_4 (delay: 3.60s)
+2026-07-03 00:37:47,150 INFO: Product url detected
+2026-07-03 00:41:39,478 INFO: Fastapi server received this query from nextjs: https://amazon.in/dp/B0GQV9SD7P
+2026-07-03 00:41:39,478 INFO: Received an url: https://amazon.in/dp/B0GQV9SD7P
+2026-07-03 00:41:39,478 DEBUG: Using selector: SelectSelector
+2026-07-03 00:41:39,880 INFO: https://amazon.in/dp/B0GQV9SD7P: Pinging amazon url
+2026-07-03 00:41:39,880 INFO: Request attempt 1/4: GET https://amazon.in/dp/B0GQV9SD7P (delay: 4.40s)
+2026-07-03 00:41:58,618 INFO: https://amazon.in/dp/B0GQV9SD7P: Pinging amazon url
+2026-07-03 00:41:58,618 INFO: Request attempt 2/4: GET https://amazon.in/dp/B0GQV9SD7P (delay: 5.41s)
+2026-07-03 00:42:20,883 INFO: https://amazon.in/dp/B0GQV9SD7P: Pinging amazon url
+2026-07-03 00:42:20,883 INFO: Request attempt 3/4: GET https://amazon.in/dp/B0GQV9SD7P (delay: 5.87s)
+2026-07-03 00:42:45,023 INFO: https://amazon.in/dp/B0GQV9SD7P: Pinging amazon url
+2026-07-03 00:42:45,023 INFO: Request attempt 4/4: GET https://amazon.in/dp/B0GQV9SD7P (delay: 10.32s)
+2026-07-03 00:42:56,219 INFO: Search url detected
+2026-07-03 00:42:56,219 INFO: Starting product search
+2026-07-03 00:42:56,219 INFO: Scraping search page 1/5: https://amazon.in/dp/B0GQV9SD7P
+2026-07-03 00:42:56,219 ERROR: Received empty html or failed to fetch search page
+2026-07-03 00:42:56,219 INFO: Search completed. Total products found: 0
+
+2026-07-03 00:43:40,260 INFO: Fastapi server received this query from nextjs: https://amazon.in/dp/B0GQV9SD7P
+2026-07-03 00:43:40,260 INFO: Received an url: https://amazon.in/dp/B0GQV9SD7P
+2026-07-03 00:43:40,260 DEBUG: Using selector: SelectSelector
+2026-07-03 00:43:40,632 INFO: https://amazon.in/dp/B0GQV9SD7P: Pinging amazon url
+2026-07-03 00:43:40,632 INFO: Request attempt 1/4: GET https://amazon.in/dp/B0GQV9SD7P (delay: 2.60s)
+2026-07-03 00:43:46,435 INFO: Search url detected
+2026-07-03 00:43:46,435 INFO: Starting product search
+2026-07-03 00:43:46,435 INFO: Scraping search page 1/5: https://amazon.in/dp/B0GQV9SD7P
+2026-07-03 00:43:46,662 ERROR: No products found on page 1 (or page was blocked)
+2026-07-03 00:43:46,663 INFO: Search completed. Total products found: 0
+
+2026-07-03 00:44:42,547 INFO: Fastapi server received this query from nextjs: https://www.amazon.in/Haier-Inverter-Refrigerator-HES-690SS-P-Convertible/dp/B0BZ12FPM1/ref=sr_1_5?_encoding=UTF8&rps=1&s=kitchen&sr=1-5
+2026-07-03 00:44:42,547 INFO: Received an url: https://www.amazon.in/Haier-Inverter-Refrigerator-HES-690SS-P-Convertible/dp/B0BZ12FPM1/ref=sr_1_5?_encoding=UTF8&rps=1&s=kitchen&sr=1-5
+2026-07-03 00:44:42,547 DEBUG: Using selector: SelectSelector
+2026-07-03 00:44:43,072 INFO: https://www.amazon.in/Haier-Inverter-Refrigerator-HES-690SS-P-Convertible/dp/B0BZ12FPM1/ref=sr_1_5?_encoding=UTF8&rps=1&s=kitchen&sr=1-5: Pinging amazon url
+2026-07-03 00:44:43,074 INFO: Request attempt 1/4: GET https://www.amazon.in/Haier-Inverter-Refrigerator-HES-690SS-P-Convertible/dp/B0BZ12FPM1/ref=sr_1_5?_encoding=UTF8&rps=1&s=kitchen&sr=1-5 (delay: 2.92s)
+2026-07-03 00:44:55,109 INFO: https://www.amazon.in/Haier-Inverter-Refrigerator-HES-690SS-P-Convertible/dp/B0BZ12FPM1/ref=sr_1_5?_encoding=UTF8&rps=1&s=kitchen&sr=1-5: Pinging amazon url
+2026-07-03 00:44:55,109 INFO: Request attempt 2/4: GET https://www.amazon.in/Haier-Inverter-Refrigerator-HES-690SS-P-Convertible/dp/B0BZ12FPM1/ref=sr_1_5?_encoding=UTF8&rps=1&s=kitchen&sr=1-5 (delay: 5.74s)
+2026-07-03 00:45:18,540 INFO: https://www.amazon.in/Haier-Inverter-Refrigerator-HES-690SS-P-Convertible/dp/B0BZ12FPM1/ref=sr_1_5?_encoding=UTF8&rps=1&s=kitchen&sr=1-5: Pinging amazon url
+2026-07-03 00:45:18,540 INFO: Request attempt 3/4: GET https://www.amazon.in/Haier-Inverter-Refrigerator-HES-690SS-P-Convertible/dp/B0BZ12FPM1/ref=sr_1_5?_encoding=UTF8&rps=1&s=kitchen&sr=1-5 (delay: 9.62s)
+2026-07-03 00:45:57,396 INFO: https://www.amazon.in/Haier-Inverter-Refrigerator-HES-690SS-P-Convertible/dp/B0BZ12FPM1/ref=sr_1_5?_encoding=UTF8&rps=1&s=kitchen&sr=1-5: Pinging amazon url
+2026-07-03 00:45:57,396 INFO: Request attempt 4/4: GET https://www.amazon.in/Haier-Inverter-Refrigerator-HES-690SS-P-Convertible/dp/B0BZ12FPM1/ref=sr_1_5?_encoding=UTF8&rps=1&s=kitchen&sr=1-5 (delay: 7.43s)
+2026-07-03 00:46:05,380 INFO: Product url detected
+2026-07-03 00:46:05,380 ERROR: None: Product information was not fetched due to captcha page or other reason, unable to update.
