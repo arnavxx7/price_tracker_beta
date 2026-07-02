@@ -1,9 +1,11 @@
 "use client"
 import Image from "next/image";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
   const [query, setQuery] = useState("");
+  const router = useRouter();
 
   async function handleSearch() {
     if (!query.trim()) return;
@@ -14,8 +16,20 @@ export default function Home() {
     // Parse the response
     const data = await res.json();
     console.log("Data from fastapi:", data);
+    if (data.status === "error") {
+      console.log("Received error when fetching data from url")
+      // setError(data.details);
+      return;
+    }
 
-    // router.push(`/search?q=${encodeURIComponent(query)}`);
+    if (data["url-type"] === "search") {
+      sessionStorage.setItem("searchResults", JSON.stringify(data.content));
+      router.push(`/search?q=${encodeURIComponent(query)}`);
+    } else if (data["url-type"] === "product") {
+      sessionStorage.setItem("productData", JSON.stringify(data.content));
+      router.push(`/products?url=${encodeURIComponent(query)}`);
+    }
+
   }
 
   function handleKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {

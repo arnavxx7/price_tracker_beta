@@ -84,7 +84,8 @@ def search_query(q: str):
             return {
                 "status": "success",
                 "details": f"Received product details for: {product_info.get("asin")}",
-                "content-type": type(product_info)
+                "url-type": "product"
+                "content-type": type(product_info),
                 "content": product_info
             }
             
@@ -155,8 +156,9 @@ def search_query(q: str):
         save_to_database(all_products, conn)
         conn.close() 
         return {
-            "status": "succes",
-            "details": f"Found {len(all_products)} products from search pages",
+            "status": "success",
+            "details": f"Found {len(all_products)} products from amazon search pages for query: {q}",
+            "url-type": "search",
             "content-type": type(all_products),
             "content": all_products
         } 
