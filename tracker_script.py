@@ -1,4 +1,4 @@
-from amzn import ping_amazon
+from amzn import ping_amazon2
 import asyncio
 import psycopg2
 import os
@@ -32,7 +32,7 @@ cur.close()  # close this cursor, save_to_database will use its own connection
 i=1
 for asin, url in rows:
     logger.info(f"Updating record - {i}/{num}")
-    prod_html_content = asyncio.run(ping_amazon(url))
+    prod_html_content = asyncio.run(ping_amazon2(url))
     product_info = amzn_product_info_scraper(prod_html_content, url)
 
 
