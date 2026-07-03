@@ -12,10 +12,9 @@ export default function Home() {
     console.log("Searching:", query);
     // Send the query to your local Next.js API route
     const res = await fetch(`/api/search_query?q=${encodeURIComponent(query)}`);
-    console.log(res);
     // Parse the response
     const data = await res.json();
-    console.log("Data from fastapi:", data);
+    console.log("Response from fastapi:", data);
     if (data.status === "error") {
       console.log("Received error when fetching data from url")
       // setError(data.details);

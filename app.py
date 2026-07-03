@@ -1,4 +1,4 @@
-from amzn import ping_amazon
+from amzn import ping_amazon2
 from get_product_info import amzn_product_info_scraper
 from get_search_results import get_search_results, parse_pagination_url
 from app_logging import logger
@@ -58,7 +58,7 @@ def search_query(q: str):
         country_code = "in"
         url =  f"https://www.amazon.{country_code}/s?k={q.replace(' ', '+')}"
 
-    html_content = asyncio.run(ping_amazon(url))
+    html_content = asyncio.run(ping_amazon2(url))
     check_url = re.search("/dp/(.*?)/", url) # check if url is product or search 
 
     conn = psycopg2.connect(**CONFIG)
@@ -110,7 +110,7 @@ def search_query(q: str):
             logger.info(f"Scraping search page {current_page}/{max_pages}: {current_url}")
 
             if current_page!=1:
-                html_content = asyncio.run(ping_amazon(current_url))
+                html_content = asyncio.run(ping_amazon2(current_url))
            
 
             if not html_content or not html_content.content:

@@ -1,5 +1,0 @@
-2026-07-02 16:13:20,258 DEBUG: Using proactor: IocpProactor
-2026-07-02 16:13:20,498 INFO: : Pinging amazon url
-2026-07-02 16:13:20,499 INFO: Request attempt 1/4: GET  (delay: 3.40s)
-2026-07-02 16:13:30,688 INFO: : Pinging amazon url
-2026-07-02 16:13:30,689 INFO: Request attempt 2/4: GET  (delay: 4.42s)

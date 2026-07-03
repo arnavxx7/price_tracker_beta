@@ -99,11 +99,11 @@ def track_price_history(current_price: float, asin: str, currency: str, avlble: 
                         logger.warning(f"{asin}: Updated price of product is {current_price}, skipping insert")
                         return print(f"[WARN] {asin}: New price is none, skipping insert")
                     
-                    diff = 0
-                    if last_price is not None:
-                        diff = current_price - last_price
+                    # diff = 0
+                    # if last_price is not None:
+                    #     diff = current_price - last_price
                     
-                    if last_price is None or diff>=1.0:
+                    if last_price is None or current_price!=last_price:
                         cur.execute("""
                             INSERT INTO amzn_price_history (asin, price, currency, is_available, recorded_at)
                             VALUES (%s, %s, %s, %s, NOW())

@@ -24,7 +24,8 @@ const CURRENCY_SYMBOLS: Record<string, string> = {
 
 export default function ProductPage() {
   const searchParams = useSearchParams();
-  const prod_url = searchParams.get("q") ?? "";
+  const prod_url = searchParams.get("url") ?? "";
+  console.log(prod_url)
 
   const [product, setProduct] = useState<Product | null>(null);
   const [loading, setLoading] = useState(false);
@@ -40,6 +41,7 @@ export default function ProductPage() {
       try {
         //  get response from fastapi for product url
         const res = sessionStorage.getItem("productData");
+        console.log(res)
         if (res) {
           setProduct(JSON.parse(res));
         } else {
@@ -65,7 +67,8 @@ export default function ProductPage() {
   const currencySymbol = product?.currency
     ? (CURRENCY_SYMBOLS[product.currency] ?? product.currency)
     : "";
-
+  
+  console.log("Product details: ", product)
   return (
     <>
       <style>{`

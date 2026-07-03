@@ -1,6 +1,3 @@
-from get_product_info import amzn_product_info_scraper
-from utils import extract_country_code, save_to_database
-from get_search_results import get_search_results, parse_pagination_url
 from playwright.async_api import async_playwright
 from bs4 import BeautifulSoup
 from curl_cffi import requests
@@ -9,9 +6,6 @@ from fake_useragent import UserAgent
 from app_logging import logger
 import time
 import random
-import psycopg2
-import re                          
-import asyncio
 import os
 
 
@@ -135,6 +129,93 @@ async def ping_amazon(url: str):
     # res = await session.get(url, impersonate="chrome")
 
     return None
+
+async def ping_amazon2(url: str):
+    max_retries = 3
+    timeout = 30
+
+    for attempt in range(max_retries + 1):
+        try:
+            # Fresh session per attempt
+            session = requests.Session()
+
+            # Let curl_cffi handle UA + TLS fingerprint — don't override it
+            session.impersonate = "chrome120"
+            print("[INFO] Pinging amazon url")
+            logger.info(f"{url}: Pinging amazon url")
+            
+
+            # Step 1 — warm up with homepage to get cookies
+            # (only on first attempt to avoid hammering)
+            if attempt == 0:
+                warmup_delay = random.uniform(1.5, 3.0)
+                time.sleep(warmup_delay)
+
+                session.get(
+                    "https://www.amazon.in/",
+                    headers=DEFAULT_HEADERS,
+                    timeout=timeout,
+                    allow_redirects=True
+                )
+                print(f"Warmup request completed cookies acquired, delay - {warmup_delay}")
+                logger.info("Warm-up request completed, cookies acquired")
+
+            # Step 2 — hit the actual target URL
+            # Add Referer to look like user navigated from homepage
+            request_headers = DEFAULT_HEADERS.copy()
+            request_headers["Referer"] = "https://www.amazon.in/"
+
+            delay = random.uniform(2, 5) * (1 + attempt * 0.5)
+            if attempt > 0:
+                print(f"Retry attempt {attempt + 1}/{max_retries + 1}, waiting {delay:.2f}s")
+                logger.info(f"Retry attempt {attempt + 1}/{max_retries + 1}, waiting {delay:.2f}s")
+                time.sleep(delay)
+            
+            
+            logger.info(f"Attempt {attempt + 1}: GET {url}")
+            print(f"Attempt {attempt + 1}: GET {url}")
+            response = session.get(
+                url,
+                headers=request_headers,
+                timeout=timeout,
+                allow_redirects=True
+            )
+
+            if response.status_code != 200:
+                logger.warning(f"Non-200 status: {response.status_code}")
+                if 500 <= response.status_code < 600 and attempt < max_retries:
+                    continue
+
+            # CAPTCHA check
+            if "captcha" in response.text.lower() or "api-services-support@amazon.com" in response.text:
+                print(f"CAPTCHA detected on attempt {attempt + 1}")
+                logger.warning(f"CAPTCHA detected on attempt {attempt + 1}")
+                if attempt < max_retries:
+                    # Long delay + fresh session on next attempt
+                    time.sleep(random.uniform(15, 30))
+                    continue
+                print("Failed to bypass CAPTCHA after all retries")
+                logger.error("Failed to bypass CAPTCHA after all retries")
+                return None
+
+            logger.info(f"Success: {url} (status {response.status_code})")
+            print(f"Success: {url} (status {response.status_code})")
+            return response
+                
+        except RequestsError as e:
+            logger.error(f"Network error on attempt {attempt + 1}: {e}")
+            if attempt == max_retries:
+                return None
+            time.sleep(random.uniform(5, 10))
+
+        except Exception as e:
+            logger.error(f"Unexpected error on attempt {attempt + 1}: {e}")
+            if attempt == max_retries:
+                return None
+            time.sleep(random.uniform(5, 10))
+        
+    return None
+
 
 # async def ping_amazon_playwright(url: str):
 #     async with async_playwright() as p:

@@ -6,7 +6,7 @@ export async function GET(req: NextRequest) {
     const query = req.nextUrl.searchParams.get("q")
 
     console.log("This is the query received from pages.tsx here on route.ts: ", query)
-    console.log("This is the python api url", process.env.PYTHON_API_URL)
+    // console.log("This is the python api url", process.env.PYTHON_API_URL)
     // Forward the request to your FastAPI backend
     const res = await fetch(
     `http://localhost:8000/api/search_query?q=${encodeURIComponent(query as string)}`,
@@ -17,10 +17,10 @@ export async function GET(req: NextRequest) {
         },
     },
     );
-    console.log("This is data received from fastapi before json", res)
+    // console.log("This is data received from fastapi before json", res)
 
     const data = await res.json();
-    console.log("This the data received from fastapi", data)
+    console.log("This is the status of data received @route.ts from fastapi", data.status)
 
     // Send the FastAPI response back to the Next.js frontend
     return NextResponse.json(data);
