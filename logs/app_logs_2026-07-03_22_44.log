@@ -1,0 +1,7 @@
+2026-07-03 22:44:39,222 INFO: Starting session
+2026-07-03 22:44:39,322 INFO: Connected to db - postgres
+2026-07-03 22:44:39,354 INFO: Updating the fields of 265 records
+2026-07-03 22:44:39,354 INFO: Updating record - 1/265
+2026-07-03 22:44:39,354 DEBUG: Using proactor: IocpProactor
+2026-07-03 22:44:39,434 INFO: https://amazon.in/dp/B08XQY5GG4: Pinging amazon url
+2026-07-03 22:44:39,434 INFO: Request attempt 1/4: GET https://amazon.in/dp/B08XQY5GG4 (delay: 3.50s)

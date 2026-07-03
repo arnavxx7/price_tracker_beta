@@ -11,10 +11,10 @@ from app_logging import logger
 load_dotenv()
 
 CONFIG = {
-    "host": os.getenv("DB_HOSTNAME"),
-    "user": os.getenv("DB_USERNAME"),
+    "host": "aws-1-ap-south-1.pooler.supabase.com",
+    "user": "postgres.mtsadefjhnqdvmsqcjps",
     "password": os.getenv("DB_PASSWORD"),
-    "database": os.getenv("DB_NAME"),
+    "database": "postgres",
     "port": 5432
 }
 
