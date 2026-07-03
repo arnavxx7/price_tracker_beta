@@ -190,10 +190,10 @@ async def ping_amazon2(url: str):
             if "captcha" in response.text.lower() or "api-services-support@amazon.com" in response.text:
                 print(f"CAPTCHA detected on attempt {attempt + 1}")
                 logger.warning(f"CAPTCHA detected on attempt {attempt + 1}")
-                if attempt < max_retries:
-                    # Long delay + fresh session on next attempt
-                    time.sleep(random.uniform(15, 30))
-                    continue
+                # if attempt < max_retries:
+                #     # Long delay + fresh session on next attempt
+                #     time.sleep(random.uniform(15, 30))
+                #     continue
                 print("Failed to bypass CAPTCHA after all retries")
                 logger.error("Failed to bypass CAPTCHA after all retries")
                 return None
