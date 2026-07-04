@@ -6,7 +6,7 @@ export async function GET(req: NextRequest) {
     const query = req.nextUrl.searchParams.get("q")
 
     console.log("This is the query received from pages.tsx here on route.ts: ", query)
-    // console.log("This is the python api url", process.env.PYTHON_API_URL)
+    console.log("This is the python api url", process.env.PYTHON_API_URL)
     // Forward the request to your FastAPI backend
     const res = await fetch(
     `http://localhost:8000/api/search_query?q=${encodeURIComponent(query as string)}`,

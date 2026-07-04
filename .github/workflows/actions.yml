@@ -26,6 +26,13 @@ jobs:
       - name: execute python script 
         env:
           DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          DB_NAME: ${{ secrets.DB_NAME }}
+          DB_HOSTNAME: ${{ secrets.DB_HOSTNAME }}
+          DB_USERNAME: ${{ secrets.DB_USERNAME }}
+          PROXY_USERNAME: ${{ secrets.PROXY_USERNAME }}
+          PROXY_HOSTNAME: ${{ secrets.PROXY_HOSTNAME }}
+          PROXY_PASSWORD: ${{ secrets.PROXY_PASSWORD }}
+          PROXY_PORT:  ${{ secrets.PROXY_PORT }}
         run: python tracker_script.py
 
       - name: Upload logs
