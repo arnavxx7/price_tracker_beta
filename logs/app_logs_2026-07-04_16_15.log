@@ -1,0 +1,1825 @@
+2026-07-04 16:16:11,070 INFO: Fastapi server received this query from nextjs: leather bags
+2026-07-04 16:16:11,071 INFO: Received text: leather bags
+2026-07-04 16:16:11,071 DEBUG: Using selector: SelectSelector
+2026-07-04 16:16:11,074 INFO: https://www.amazon.com/s?k=leather+bags: Pinging amazon url
+2026-07-04 16:16:14,789 INFO: Warm-up request completed, cookies acquired, delay - 1.8514069459013793
+2026-07-04 16:16:14,789 INFO: Attempt 1: GET https://www.amazon.com/s?k=leather+bags
+2026-07-04 16:16:19,415 INFO: Success: https://www.amazon.com/s?k=leather+bags (status 200)
+2026-07-04 16:16:19,415 INFO: Estimated size of response - 2649.5546875 KB
+2026-07-04 16:16:19,516 INFO: Search url detected
+2026-07-04 16:16:19,516 INFO: Starting product search
+2026-07-04 16:16:19,516 INFO: Scraping search page 1/5: https://www.amazon.com/s?k=leather+bags
+2026-07-04 16:16:21,754 INFO: Found 48 products on page 1
+2026-07-04 16:16:22,108 INFO: Scraping search page 2/5: https://www.amazon.com/s?k=leather+bags&page=2&xpid=2eyKyto7_oln0&qid=1783161977&ref=sr_pg_1
+2026-07-04 16:16:22,108 DEBUG: Using selector: SelectSelector
+2026-07-04 16:16:22,108 INFO: https://www.amazon.com/s?k=leather+bags&page=2&xpid=2eyKyto7_oln0&qid=1783161977&ref=sr_pg_1: Pinging amazon url
+2026-07-04 16:16:26,475 INFO: Warm-up request completed, cookies acquired, delay - 2.3135475445382556
+2026-07-04 16:16:26,475 INFO: Attempt 1: GET https://www.amazon.com/s?k=leather+bags&page=2&xpid=2eyKyto7_oln0&qid=1783161977&ref=sr_pg_1
+2026-07-04 16:16:30,265 INFO: Success: https://www.amazon.com/s?k=leather+bags&page=2&xpid=2eyKyto7_oln0&qid=1783161977&ref=sr_pg_1 (status 200)
+2026-07-04 16:16:30,265 INFO: Estimated size of response - 2721.216796875 KB
+2026-07-04 16:16:30,999 INFO: Found 48 products on page 2
+2026-07-04 16:16:31,345 INFO: Scraping search page 3/5: https://www.amazon.com/s?k=leather+bags&page=3&qid=1783161988&xpid=2eyKyto7_oln0&ref=sr_pg_2
+2026-07-04 16:16:31,345 DEBUG: Using selector: SelectSelector
+2026-07-04 16:16:31,346 INFO: https://www.amazon.com/s?k=leather+bags&page=3&qid=1783161988&xpid=2eyKyto7_oln0&ref=sr_pg_2: Pinging amazon url
+2026-07-04 16:16:35,021 INFO: Warm-up request completed, cookies acquired, delay - 1.5552553296573457
+2026-07-04 16:16:35,021 INFO: Attempt 1: GET https://www.amazon.com/s?k=leather+bags&page=3&qid=1783161988&xpid=2eyKyto7_oln0&ref=sr_pg_2
+2026-07-04 16:16:38,619 INFO: Success: https://www.amazon.com/s?k=leather+bags&page=3&qid=1783161988&xpid=2eyKyto7_oln0&ref=sr_pg_2 (status 200)
+2026-07-04 16:16:38,619 INFO: Estimated size of response - 2840.9765625 KB
+2026-07-04 16:16:39,455 INFO: Found 48 products on page 3
+2026-07-04 16:16:39,800 INFO: Scraping search page 4/5: https://www.amazon.com/s?k=leather+bags&page=4&qid=1783161996&xpid=2eyKyto7_oln0&ref=sr_pg_3
+2026-07-04 16:16:39,800 DEBUG: Using selector: SelectSelector
+2026-07-04 16:16:39,801 INFO: https://www.amazon.com/s?k=leather+bags&page=4&qid=1783161996&xpid=2eyKyto7_oln0&ref=sr_pg_3: Pinging amazon url
+2026-07-04 16:16:43,813 INFO: Warm-up request completed, cookies acquired, delay - 2.7113478097950257
+2026-07-04 16:16:43,813 INFO: Attempt 1: GET https://www.amazon.com/s?k=leather+bags&page=4&qid=1783161996&xpid=2eyKyto7_oln0&ref=sr_pg_3
+2026-07-04 16:16:47,561 INFO: Success: https://www.amazon.com/s?k=leather+bags&page=4&qid=1783161996&xpid=2eyKyto7_oln0&ref=sr_pg_3 (status 200)
+2026-07-04 16:16:47,561 INFO: Estimated size of response - 2248.6669921875 KB
+2026-07-04 16:16:48,308 INFO: Found 48 products on page 4
+2026-07-04 16:16:48,538 INFO: Scraping search page 5/5: https://www.amazon.com/s?k=leather+bags&page=5&qid=1783162005&xpid=2eyKyto7_oln0&ref=sr_pg_4
+2026-07-04 16:16:48,538 DEBUG: Using selector: SelectSelector
+2026-07-04 16:16:48,538 INFO: https://www.amazon.com/s?k=leather+bags&page=5&qid=1783162005&xpid=2eyKyto7_oln0&ref=sr_pg_4: Pinging amazon url
+2026-07-04 16:16:53,717 INFO: Warm-up request completed, cookies acquired, delay - 1.8191456841922224
+2026-07-04 16:16:53,717 INFO: Attempt 1: GET https://www.amazon.com/s?k=leather+bags&page=5&qid=1783162005&xpid=2eyKyto7_oln0&ref=sr_pg_4
+2026-07-04 16:16:57,033 INFO: Success: https://www.amazon.com/s?k=leather+bags&page=5&qid=1783162005&xpid=2eyKyto7_oln0&ref=sr_pg_4 (status 200)
+2026-07-04 16:16:57,033 INFO: Estimated size of response - 2617.4482421875 KB
+2026-07-04 16:16:57,855 INFO: Found 48 products on page 5
+2026-07-04 16:16:57,855 INFO: Search completed. Total products found: 240
+
+2026-07-04 16:16:57,855 INFO: Search url or query received
+2026-07-04 16:16:57,855 INFO: Saving or updating 240 products
+2026-07-04 16:16:57,855 INFO: ##1/240: Saving or updating product - B0FS18GR2Y
+2026-07-04 16:16:57,873 INFO: B0FS18GR2Y: Product metadata is not available in table
+2026-07-04 16:16:57,957 INFO: B0FS18GR2Y: Price of product is not tracked
+2026-07-04 16:16:57,957 INFO: B0FS18GR2Y: Started tracking price of product - 39.98
+2026-07-04 16:16:58,021 INFO: B0FS18GR2Y: Rating of product is not tracked
+2026-07-04 16:16:58,042 INFO: B0FS18GR2Y: Started tracking rating of product - 4.6
+2026-07-04 16:16:58,042 INFO: B0FS18GR2Y: Saved 1 product metadata in db
+2026-07-04 16:16:58,042 INFO: ##2/240: Saving or updating product - B0CNZHFYLC
+2026-07-04 16:16:58,053 INFO: B0CNZHFYLC: Product metadata is not available in table
+2026-07-04 16:16:58,117 INFO: B0CNZHFYLC: Price of product is not tracked
+2026-07-04 16:16:58,141 INFO: B0CNZHFYLC: Started tracking price of product - 28.9
+2026-07-04 16:16:58,203 INFO: B0CNZHFYLC: Rating of product is not tracked
+2026-07-04 16:16:58,219 INFO: B0CNZHFYLC: Started tracking rating of product - 4.6
+2026-07-04 16:16:58,219 INFO: B0CNZHFYLC: Saved 1 product metadata in db
+2026-07-04 16:16:58,219 INFO: ##3/240: Saving or updating product - B0CTWGZ6TT
+2026-07-04 16:16:58,253 INFO: B0CTWGZ6TT: Product metadata is not available in table
+2026-07-04 16:16:58,318 INFO: B0CTWGZ6TT: Price of product is not tracked
+2026-07-04 16:16:58,318 INFO: B0CTWGZ6TT: Started tracking price of product - 295.0
+2026-07-04 16:16:58,366 INFO: B0CTWGZ6TT: Rating of product is not tracked
+2026-07-04 16:16:58,382 INFO: B0CTWGZ6TT: Started tracking rating of product - 4.6
+2026-07-04 16:16:58,382 INFO: B0CTWGZ6TT: Saved 1 product metadata in db
+2026-07-04 16:16:58,382 INFO: ##4/240: Saving or updating product - B07BDGB442
+2026-07-04 16:16:58,840 INFO: B07BDGB442: Product metadata is not available in table
+2026-07-04 16:16:58,888 INFO: B07BDGB442: Price of product is not tracked
+2026-07-04 16:16:58,904 INFO: B07BDGB442: Started tracking price of product - 49.99
+2026-07-04 16:16:58,968 INFO: B07BDGB442: Rating of product is not tracked
+2026-07-04 16:16:58,984 INFO: B07BDGB442: Started tracking rating of product - 4.6
+2026-07-04 16:16:58,984 INFO: B07BDGB442: Saved 1 product metadata in db
+2026-07-04 16:16:58,984 INFO: ##5/240: Saving or updating product - B075VSR5CZ
+2026-07-04 16:16:58,984 INFO: B075VSR5CZ: Product metadata is not available in table
+2026-07-04 16:16:59,049 INFO: B075VSR5CZ: Price of product is not tracked
+2026-07-04 16:16:59,081 INFO: B075VSR5CZ: Started tracking price of product - 69.99
+2026-07-04 16:16:59,136 INFO: B075VSR5CZ: Rating of product is not tracked
+2026-07-04 16:16:59,147 INFO: B075VSR5CZ: Started tracking rating of product - 4.4
+2026-07-04 16:16:59,149 INFO: B075VSR5CZ: Saved 1 product metadata in db
+2026-07-04 16:16:59,149 INFO: ##6/240: Saving or updating product - B0F69XFTT3
+2026-07-04 16:16:59,160 INFO: B0F69XFTT3: Product metadata is not available in table
+2026-07-04 16:16:59,226 INFO: B0F69XFTT3: Price of product is not tracked
+2026-07-04 16:16:59,236 INFO: B0F69XFTT3: Started tracking price of product - 106.0
+2026-07-04 16:16:59,311 INFO: B0F69XFTT3: Rating of product is not tracked
+2026-07-04 16:16:59,324 INFO: B0F69XFTT3: Started tracking rating of product - 4.3
+2026-07-04 16:16:59,324 INFO: B0F69XFTT3: Saved 1 product metadata in db
+2026-07-04 16:16:59,325 INFO: ##7/240: Saving or updating product - B0D73HS34Y
+2026-07-04 16:16:59,329 INFO: B0D73HS34Y: Product metadata is not available in table
+2026-07-04 16:16:59,391 INFO: B0D73HS34Y: Price of product is not tracked
+2026-07-04 16:16:59,410 INFO: B0D73HS34Y: Started tracking price of product - 35.99
+2026-07-04 16:16:59,488 INFO: B0D73HS34Y: Rating of product is not tracked
+2026-07-04 16:16:59,500 INFO: B0D73HS34Y: Started tracking rating of product - 4.5
+2026-07-04 16:16:59,500 INFO: B0D73HS34Y: Saved 1 product metadata in db
+2026-07-04 16:16:59,500 INFO: ##8/240: Saving or updating product - B0DLWJY544
+2026-07-04 16:16:59,504 INFO: B0DLWJY544: Product metadata is not available in table
+2026-07-04 16:16:59,574 INFO: B0DLWJY544: Price of product is not tracked
+2026-07-04 16:16:59,584 INFO: B0DLWJY544: Started tracking price of product - 31.47
+2026-07-04 16:16:59,663 INFO: B0DLWJY544: Rating of product is not tracked
+2026-07-04 16:16:59,678 INFO: B0DLWJY544: Started tracking rating of product - 4.4
+2026-07-04 16:16:59,678 INFO: B0DLWJY544: Saved 1 product metadata in db
+2026-07-04 16:16:59,678 INFO: ##9/240: Saving or updating product - B085Q2NMPT
+2026-07-04 16:16:59,678 INFO: B085Q2NMPT: Product metadata is not available in table
+2026-07-04 16:16:59,745 INFO: B085Q2NMPT: Price of product is not tracked
+2026-07-04 16:16:59,754 INFO: B085Q2NMPT: Started tracking price of product - 29.99
+2026-07-04 16:16:59,800 INFO: B085Q2NMPT: Rating of product is not tracked
+2026-07-04 16:16:59,810 INFO: B085Q2NMPT: Started tracking rating of product - 4.5
+2026-07-04 16:16:59,810 INFO: B085Q2NMPT: Saved 1 product metadata in db
+2026-07-04 16:16:59,810 INFO: ##10/240: Saving or updating product - B08R3X5LGD
+2026-07-04 16:16:59,820 INFO: B08R3X5LGD: Product metadata is not available in table
+2026-07-04 16:16:59,876 INFO: B08R3X5LGD: Price of product is not tracked
+2026-07-04 16:16:59,892 INFO: B08R3X5LGD: Started tracking price of product - 59.99
+2026-07-04 16:16:59,940 INFO: B08R3X5LGD: Rating of product is not tracked
+2026-07-04 16:16:59,956 INFO: B08R3X5LGD: Started tracking rating of product - 4.4
+2026-07-04 16:16:59,956 INFO: B08R3X5LGD: Saved 1 product metadata in db
+2026-07-04 16:16:59,956 INFO: ##11/240: Saving or updating product - B0FWKVCYXG
+2026-07-04 16:16:59,974 INFO: B0FWKVCYXG: Product metadata is not available in table
+2026-07-04 16:17:00,036 INFO: B0FWKVCYXG: Price of product is not tracked
+2026-07-04 16:17:00,052 INFO: B0FWKVCYXG: Started tracking price of product - 135.0
+2026-07-04 16:17:00,100 INFO: B0FWKVCYXG: Rating of product is not tracked
+2026-07-04 16:17:00,116 INFO: B0FWKVCYXG: Started tracking rating of product - 4.6
+2026-07-04 16:17:00,116 INFO: B0FWKVCYXG: Saved 1 product metadata in db
+2026-07-04 16:17:00,116 INFO: ##12/240: Saving or updating product - B0DP61Y1C5
+2026-07-04 16:17:00,126 INFO: B0DP61Y1C5: Product metadata is not available in table
+2026-07-04 16:17:00,180 INFO: B0DP61Y1C5: Price of product is not tracked
+2026-07-04 16:17:00,196 INFO: B0DP61Y1C5: Started tracking price of product - 59.6
+2026-07-04 16:17:00,243 INFO: B0DP61Y1C5: Rating of product is not tracked
+2026-07-04 16:17:00,259 INFO: B0DP61Y1C5: Started tracking rating of product - 4.6
+2026-07-04 16:17:00,260 INFO: B0DP61Y1C5: Saved 1 product metadata in db
+2026-07-04 16:17:00,260 INFO: ##13/240: Saving or updating product - B07XW14CLQ
+2026-07-04 16:17:00,269 INFO: B07XW14CLQ: Product metadata is not available in table
+2026-07-04 16:17:00,328 INFO: B07XW14CLQ: Price of product is not tracked
+2026-07-04 16:17:00,328 INFO: B07XW14CLQ: Started tracking price of product - 129.99
+2026-07-04 16:17:00,392 INFO: B07XW14CLQ: Rating of product is not tracked
+2026-07-04 16:17:00,408 INFO: B07XW14CLQ: Started tracking rating of product - 4.5
+2026-07-04 16:17:00,408 INFO: B07XW14CLQ: Saved 1 product metadata in db
+2026-07-04 16:17:00,408 INFO: ##14/240: Saving or updating product - B073558TLB
+2026-07-04 16:17:00,424 INFO: B073558TLB: Product metadata is not available in table
+2026-07-04 16:17:00,480 INFO: B073558TLB: Price of product is not tracked
+2026-07-04 16:17:00,488 INFO: B073558TLB: Started tracking price of product - 33.99
+2026-07-04 16:17:00,536 INFO: B073558TLB: Rating of product is not tracked
+2026-07-04 16:17:00,553 INFO: B073558TLB: Started tracking rating of product - 4.7
+2026-07-04 16:17:00,553 INFO: B073558TLB: Saved 1 product metadata in db
+2026-07-04 16:17:00,553 INFO: ##15/240: Saving or updating product - B07XX8FGR6
+2026-07-04 16:17:00,553 INFO: B07XX8FGR6: Product metadata is not available in table
+2026-07-04 16:17:00,633 INFO: B07XX8FGR6: Price of product is not tracked
+2026-07-04 16:17:00,649 INFO: B07XX8FGR6: Started tracking price of product - 62.99
+2026-07-04 16:17:00,698 INFO: B07XX8FGR6: Rating of product is not tracked
+2026-07-04 16:17:00,714 INFO: B07XX8FGR6: Started tracking rating of product - 4.3
+2026-07-04 16:17:00,714 INFO: B07XX8FGR6: Saved 1 product metadata in db
+2026-07-04 16:17:00,714 INFO: ##16/240: Saving or updating product - B0F2TF9X6F
+2026-07-04 16:17:00,714 INFO: B0F2TF9X6F: Product metadata is not available in table
+2026-07-04 16:17:00,778 INFO: B0F2TF9X6F: Price of product is not tracked
+2026-07-04 16:17:00,783 INFO: B0F2TF9X6F: Started tracking price of product - 37.79
+2026-07-04 16:17:00,848 INFO: B0F2TF9X6F: Rating of product is not tracked
+2026-07-04 16:17:00,848 INFO: B0F2TF9X6F: Started tracking rating of product - 4.8
+2026-07-04 16:17:00,848 INFO: B0F2TF9X6F: Saved 1 product metadata in db
+2026-07-04 16:17:00,848 INFO: ##17/240: Saving or updating product - B0DN59PKS3
+2026-07-04 16:17:00,864 INFO: B0DN59PKS3: Product metadata is not available in table
+2026-07-04 16:17:00,929 INFO: B0DN59PKS3: Price of product is not tracked
+2026-07-04 16:17:00,934 INFO: B0DN59PKS3: Started tracking price of product - 14.99
+2026-07-04 16:17:00,984 INFO: B0DN59PKS3: Rating of product is not tracked
+2026-07-04 16:17:00,994 INFO: B0DN59PKS3: Started tracking rating of product - 4.3
+2026-07-04 16:17:00,994 INFO: B0DN59PKS3: Saved 1 product metadata in db
+2026-07-04 16:17:00,994 INFO: ##18/240: Saving or updating product - B09QSVL5LS
+2026-07-04 16:17:01,012 INFO: B09QSVL5LS: Product metadata is not available in table
+2026-07-04 16:17:01,074 INFO: B09QSVL5LS: Price of product is not tracked
+2026-07-04 16:17:01,090 INFO: B09QSVL5LS: Started tracking price of product - 28.9
+2026-07-04 16:17:01,138 INFO: B09QSVL5LS: Rating of product is not tracked
+2026-07-04 16:17:01,154 INFO: B09QSVL5LS: Started tracking rating of product - 4.7
+2026-07-04 16:17:01,154 INFO: B09QSVL5LS: Saved 1 product metadata in db
+2026-07-04 16:17:01,154 INFO: ##19/240: Saving or updating product - B0BYS7VHMN
+2026-07-04 16:17:01,154 INFO: B0BYS7VHMN: Product metadata is not available in table
+2026-07-04 16:17:01,218 INFO: B0BYS7VHMN: Price of product is not tracked
+2026-07-04 16:17:01,218 INFO: B0BYS7VHMN: Started tracking price of product - 36.99
+2026-07-04 16:17:01,292 INFO: B0BYS7VHMN: Rating of product is not tracked
+2026-07-04 16:17:01,301 INFO: B0BYS7VHMN: Started tracking rating of product - 4.6
+2026-07-04 16:17:01,301 INFO: B0BYS7VHMN: Saved 1 product metadata in db
+2026-07-04 16:17:01,301 INFO: ##20/240: Saving or updating product - B0DF7MSVV4
+2026-07-04 16:17:01,301 INFO: B0DF7MSVV4: Product metadata is not available in table
+2026-07-04 16:17:01,370 INFO: B0DF7MSVV4: Price of product is not tracked
+2026-07-04 16:17:01,381 INFO: B0DF7MSVV4: Started tracking price of product - 36.0
+2026-07-04 16:17:01,439 INFO: B0DF7MSVV4: Rating of product is not tracked
+2026-07-04 16:17:01,449 INFO: B0DF7MSVV4: Started tracking rating of product - 4.4
+2026-07-04 16:17:01,449 INFO: B0DF7MSVV4: Saved 1 product metadata in db
+2026-07-04 16:17:01,449 INFO: ##21/240: Saving or updating product - B0756VCN94
+2026-07-04 16:17:01,449 INFO: B0756VCN94: Product metadata is not available in table
+2026-07-04 16:17:01,546 INFO: B0756VCN94: Price of product is not tracked
+2026-07-04 16:17:01,562 INFO: B0756VCN94: Started tracking price of product - 26.98
+2026-07-04 16:17:01,610 INFO: B0756VCN94: Rating of product is not tracked
+2026-07-04 16:17:01,626 INFO: B0756VCN94: Started tracking rating of product - 4.3
+2026-07-04 16:17:01,626 INFO: B0756VCN94: Saved 1 product metadata in db
+2026-07-04 16:17:01,626 INFO: ##22/240: Saving or updating product - B01N69YAAT
+2026-07-04 16:17:01,643 INFO: B01N69YAAT: Product metadata is not available in table
+2026-07-04 16:17:01,707 INFO: B01N69YAAT: Price of product is not tracked
+2026-07-04 16:17:01,723 INFO: B01N69YAAT: Started tracking price of product - 114.99
+2026-07-04 16:17:01,771 INFO: B01N69YAAT: Rating of product is not tracked
+2026-07-04 16:17:01,790 INFO: B01N69YAAT: Started tracking rating of product - 4.7
+2026-07-04 16:17:01,791 INFO: B01N69YAAT: Saved 1 product metadata in db
+2026-07-04 16:17:01,791 INFO: ##23/240: Saving or updating product - B01KS9OYTK
+2026-07-04 16:17:01,800 INFO: B01KS9OYTK: Product metadata is not available in table
+2026-07-04 16:17:01,863 INFO: B01KS9OYTK: Price of product is not tracked
+2026-07-04 16:17:01,873 INFO: B01KS9OYTK: Started tracking price of product - 94.99
+2026-07-04 16:17:01,923 INFO: B01KS9OYTK: Rating of product is not tracked
+2026-07-04 16:17:01,939 INFO: B01KS9OYTK: Started tracking rating of product - 4.7
+2026-07-04 16:17:01,945 INFO: B01KS9OYTK: Saved 1 product metadata in db
+2026-07-04 16:17:01,945 INFO: ##24/240: Saving or updating product - B0FWKVHJNQ
+2026-07-04 16:17:01,945 INFO: B0FWKVHJNQ: Product metadata is not available in table
+2026-07-04 16:17:02,004 INFO: B0FWKVHJNQ: Price of product is not tracked
+2026-07-04 16:17:02,020 INFO: B0FWKVHJNQ: Started tracking price of product - 95.0
+2026-07-04 16:17:02,067 INFO: B0FWKVHJNQ: Rating of product is not tracked
+2026-07-04 16:17:02,083 INFO: B0FWKVHJNQ: Started tracking rating of product - 4.3
+2026-07-04 16:17:02,083 INFO: B0FWKVHJNQ: Saved 1 product metadata in db
+2026-07-04 16:17:02,083 INFO: ##25/240: Saving or updating product - B01LK3VAGI
+2026-07-04 16:17:02,096 INFO: B01LK3VAGI: Product metadata is not available in table
+2026-07-04 16:17:02,147 INFO: B01LK3VAGI: Price of product is not tracked
+2026-07-04 16:17:02,163 INFO: B01LK3VAGI: Started tracking price of product - 31.49
+2026-07-04 16:17:02,218 INFO: B01LK3VAGI: Rating of product is not tracked
+2026-07-04 16:17:02,226 INFO: B01LK3VAGI: Started tracking rating of product - 4.8
+2026-07-04 16:17:02,226 INFO: B01LK3VAGI: Saved 1 product metadata in db
+2026-07-04 16:17:02,226 INFO: ##26/240: Saving or updating product - B07PXWCDTT
+2026-07-04 16:17:02,238 INFO: B07PXWCDTT: Product metadata is not available in table
+2026-07-04 16:17:02,296 INFO: B07PXWCDTT: Price of product is not tracked
+2026-07-04 16:17:02,306 INFO: B07PXWCDTT: Started tracking price of product - 86.99
+2026-07-04 16:17:02,357 INFO: B07PXWCDTT: Rating of product is not tracked
+2026-07-04 16:17:02,377 INFO: B07PXWCDTT: Started tracking rating of product - 4.5
+2026-07-04 16:17:02,378 INFO: B07PXWCDTT: Saved 1 product metadata in db
+2026-07-04 16:17:02,378 INFO: ##27/240: Saving or updating product - B0F6T5M1DN
+2026-07-04 16:17:02,387 INFO: B0F6T5M1DN: Product metadata is not available in table
+2026-07-04 16:17:02,458 INFO: B0F6T5M1DN: Price of product is not tracked
+2026-07-04 16:17:02,480 INFO: B0F6T5M1DN: Started tracking price of product - 49.99
+2026-07-04 16:17:02,568 INFO: B0F6T5M1DN: Rating of product is not tracked
+2026-07-04 16:17:02,570 INFO: B0F6T5M1DN: Started tracking rating of product - 4.8
+2026-07-04 16:17:02,570 INFO: B0F6T5M1DN: Saved 1 product metadata in db
+2026-07-04 16:17:02,570 INFO: ##28/240: Saving or updating product - B0F69NZFVG
+2026-07-04 16:17:02,586 INFO: B0F69NZFVG: Product metadata is not available in table
+2026-07-04 16:17:02,634 INFO: B0F69NZFVG: Price of product is not tracked
+2026-07-04 16:17:02,651 INFO: B0F69NZFVG: Started tracking price of product - 118.0
+2026-07-04 16:17:02,706 INFO: B0F69NZFVG: Rating of product is not tracked
+2026-07-04 16:17:02,714 INFO: B0F69NZFVG: Started tracking rating of product - 4.2
+2026-07-04 16:17:02,714 INFO: B0F69NZFVG: Saved 1 product metadata in db
+2026-07-04 16:17:02,714 INFO: ##29/240: Saving or updating product - B0FMKBKK85
+2026-07-04 16:17:02,714 INFO: B0FMKBKK85: Product metadata is not available in table
+2026-07-04 16:17:02,811 INFO: B0FMKBKK85: Price of product is not tracked
+2026-07-04 16:17:02,814 INFO: B0FMKBKK85: Started tracking price of product - 59.99
+2026-07-04 16:17:02,861 INFO: B0FMKBKK85: Rating of product is not tracked
+2026-07-04 16:17:02,877 INFO: B0FMKBKK85: Started tracking rating of product - 4.6
+2026-07-04 16:17:02,877 INFO: B0FMKBKK85: Saved 1 product metadata in db
+2026-07-04 16:17:02,877 INFO: ##30/240: Saving or updating product - B0FWFYYV9S
+2026-07-04 16:17:02,889 INFO: B0FWFYYV9S: Product metadata is not available in table
+2026-07-04 16:17:02,953 INFO: B0FWFYYV9S: Price of product is not tracked
+2026-07-04 16:17:02,963 INFO: B0FWFYYV9S: Started tracking price of product - 139.0
+2026-07-04 16:17:03,018 INFO: B0FWFYYV9S: Rating of product is not tracked
+2026-07-04 16:17:03,034 INFO: B0FWFYYV9S: Started tracking rating of product - 4.7
+2026-07-04 16:17:03,034 INFO: B0FWFYYV9S: Saved 1 product metadata in db
+2026-07-04 16:17:03,034 INFO: ##31/240: Saving or updating product - B07XW171F9
+2026-07-04 16:17:03,051 INFO: B07XW171F9: Product metadata is not available in table
+2026-07-04 16:17:03,113 INFO: B07XW171F9: Price of product is not tracked
+2026-07-04 16:17:03,123 INFO: B07XW171F9: Started tracking price of product - 150.49
+2026-07-04 16:17:03,182 INFO: B07XW171F9: Rating of product is not tracked
+2026-07-04 16:17:03,195 INFO: B07XW171F9: Started tracking rating of product - 4.5
+2026-07-04 16:17:03,195 INFO: B07XW171F9: Saved 1 product metadata in db
+2026-07-04 16:17:03,195 INFO: ##32/240: Saving or updating product - B0CJJDQWZ4
+2026-07-04 16:17:03,206 INFO: B0CJJDQWZ4: Product metadata is not available in table
+2026-07-04 16:17:03,287 INFO: B0CJJDQWZ4: Price of product is not tracked
+2026-07-04 16:17:03,297 INFO: B0CJJDQWZ4: Started tracking price of product - 129.99
+2026-07-04 16:17:03,356 INFO: B0CJJDQWZ4: Rating of product is not tracked
+2026-07-04 16:17:03,371 INFO: B0CJJDQWZ4: Started tracking rating of product - 4.3
+2026-07-04 16:17:03,371 INFO: B0CJJDQWZ4: Saved 1 product metadata in db
+2026-07-04 16:17:03,371 INFO: ##33/240: Saving or updating product - B0BRR6Q2ZD
+2026-07-04 16:17:03,383 INFO: B0BRR6Q2ZD: Product metadata is not available in table
+2026-07-04 16:17:03,440 INFO: B0BRR6Q2ZD: Price of product is not tracked
+2026-07-04 16:17:03,463 INFO: B0BRR6Q2ZD: Started tracking price of product - 23.99
+2026-07-04 16:17:03,525 INFO: B0BRR6Q2ZD: Rating of product is not tracked
+2026-07-04 16:17:03,534 INFO: B0BRR6Q2ZD: Started tracking rating of product - 4.7
+2026-07-04 16:17:03,535 INFO: B0BRR6Q2ZD: Saved 1 product metadata in db
+2026-07-04 16:17:03,535 INFO: ##34/240: Saving or updating product - B01LVURXJM
+2026-07-04 16:17:03,543 INFO: B01LVURXJM: Product metadata is not available in table
+2026-07-04 16:17:03,612 INFO: B01LVURXJM: Price of product is not tracked
+2026-07-04 16:17:03,622 INFO: B01LVURXJM: Started tracking price of product - 117.99
+2026-07-04 16:17:03,677 INFO: B01LVURXJM: Rating of product is not tracked
+2026-07-04 16:17:03,692 INFO: B01LVURXJM: Started tracking rating of product - 4.7
+2026-07-04 16:17:03,692 INFO: B01LVURXJM: Saved 1 product metadata in db
+2026-07-04 16:17:03,692 INFO: ##35/240: Saving or updating product - B00GT3EDRS
+2026-07-04 16:17:03,705 INFO: B00GT3EDRS: Product metadata is not available in table
+2026-07-04 16:17:03,775 INFO: B00GT3EDRS: Price of product is not tracked
+2026-07-04 16:17:03,790 INFO: B00GT3EDRS: Started tracking price of product - 39.99
+2026-07-04 16:17:03,843 INFO: B00GT3EDRS: Rating of product is not tracked
+2026-07-04 16:17:03,845 INFO: B00GT3EDRS: Started tracking rating of product - 4.6
+2026-07-04 16:17:03,845 INFO: B00GT3EDRS: Saved 1 product metadata in db
+2026-07-04 16:17:03,845 INFO: ##36/240: Saving or updating product - B0GSQ71PK6
+2026-07-04 16:17:03,861 INFO: B0GSQ71PK6: Product metadata is not available in table
+2026-07-04 16:17:03,911 INFO: B0GSQ71PK6: Price of product is not tracked
+2026-07-04 16:17:03,926 INFO: B0GSQ71PK6: Started tracking price of product - 25.64
+2026-07-04 16:17:03,973 INFO: B0GSQ71PK6: Rating of product is not tracked
+2026-07-04 16:17:03,990 INFO: B0GSQ71PK6: Started tracking rating of product - 4.4
+2026-07-04 16:17:03,990 INFO: B0GSQ71PK6: Saved 1 product metadata in db
+2026-07-04 16:17:03,990 INFO: ##37/240: Saving or updating product - B07RXH5K2R
+2026-07-04 16:17:03,990 INFO: B07RXH5K2R: Product metadata is not available in table
+2026-07-04 16:17:04,059 INFO: B07RXH5K2R: Price of product is not tracked
+2026-07-04 16:17:04,072 INFO: B07RXH5K2R: Started tracking price of product - 103.99
+2026-07-04 16:17:04,124 INFO: B07RXH5K2R: Rating of product is not tracked
+2026-07-04 16:17:04,140 INFO: B07RXH5K2R: Started tracking rating of product - 4.6
+2026-07-04 16:17:04,140 INFO: B07RXH5K2R: Saved 1 product metadata in db
+2026-07-04 16:17:04,140 INFO: ##38/240: Saving or updating product - B00YOB975U
+2026-07-04 16:17:04,157 INFO: B00YOB975U: Product metadata is not available in table
+2026-07-04 16:17:04,224 INFO: B00YOB975U: Price of product is not tracked
+2026-07-04 16:17:04,224 INFO: B00YOB975U: Started tracking price of product - 66.24
+2026-07-04 16:17:04,297 INFO: B00YOB975U: Rating of product is not tracked
+2026-07-04 16:17:04,310 INFO: B00YOB975U: Started tracking rating of product - 4.4
+2026-07-04 16:17:04,310 INFO: B00YOB975U: Saved 1 product metadata in db
+2026-07-04 16:17:04,310 INFO: ##39/240: Saving or updating product - B0DH29P236
+2026-07-04 16:17:04,323 INFO: B0DH29P236: Product metadata is not available in table
+2026-07-04 16:17:04,390 INFO: B0DH29P236: Price of product is not tracked
+2026-07-04 16:17:04,407 INFO: B0DH29P236: Started tracking price of product - 50.73
+2026-07-04 16:17:04,457 INFO: B0DH29P236: Rating of product is not tracked
+2026-07-04 16:17:04,476 INFO: B0DH29P236: Started tracking rating of product - 4.5
+2026-07-04 16:17:04,476 INFO: B0DH29P236: Saved 1 product metadata in db
+2026-07-04 16:17:04,476 INFO: ##40/240: Saving or updating product - B0FQ5KL3GP
+2026-07-04 16:17:04,490 INFO: B0FQ5KL3GP: Product metadata is not available in table
+2026-07-04 16:17:04,556 INFO: B0FQ5KL3GP: Price of product is not tracked
+2026-07-04 16:17:04,573 INFO: B0FQ5KL3GP: Started tracking price of product - 45.99
+2026-07-04 16:17:04,624 INFO: B0FQ5KL3GP: Rating of product is not tracked
+2026-07-04 16:17:04,627 INFO: B0FQ5KL3GP: Started tracking rating of product - 4.7
+2026-07-04 16:17:04,627 INFO: B0FQ5KL3GP: Saved 1 product metadata in db
+2026-07-04 16:17:04,627 INFO: ##41/240: Saving or updating product - B09PVFN7JD
+2026-07-04 16:17:04,643 INFO: B09PVFN7JD: Product metadata is not available in table
+2026-07-04 16:17:04,710 INFO: B09PVFN7JD: Price of product is not tracked
+2026-07-04 16:17:04,725 INFO: B09PVFN7JD: Started tracking price of product - 44.99
+2026-07-04 16:17:04,767 INFO: B09PVFN7JD: Rating of product is not tracked
+2026-07-04 16:17:04,780 INFO: B09PVFN7JD: Started tracking rating of product - 4.2
+2026-07-04 16:17:04,781 INFO: B09PVFN7JD: Saved 1 product metadata in db
+2026-07-04 16:17:04,781 INFO: ##42/240: Saving or updating product - B01ENSBKF8
+2026-07-04 16:17:04,791 INFO: B01ENSBKF8: Product metadata is not available in table
+2026-07-04 16:17:04,872 INFO: B01ENSBKF8: Price of product is not tracked
+2026-07-04 16:17:04,883 INFO: B01ENSBKF8: Started tracking price of product - 59.99
+2026-07-04 16:17:04,931 INFO: B01ENSBKF8: Rating of product is not tracked
+2026-07-04 16:17:04,937 INFO: B01ENSBKF8: Started tracking rating of product - 4.7
+2026-07-04 16:17:04,937 INFO: B01ENSBKF8: Saved 1 product metadata in db
+2026-07-04 16:17:04,937 INFO: ##43/240: Saving or updating product - B0C5LC519H
+2026-07-04 16:17:04,954 INFO: B0C5LC519H: Product metadata is not available in table
+2026-07-04 16:17:05,018 INFO: B0C5LC519H: Price of product is not tracked
+2026-07-04 16:17:05,041 INFO: B0C5LC519H: Started tracking price of product - 17.98
+2026-07-04 16:17:05,122 INFO: B0C5LC519H: Rating of product is not tracked
+2026-07-04 16:17:05,133 INFO: B0C5LC519H: Started tracking rating of product - 4.7
+2026-07-04 16:17:05,133 INFO: B0C5LC519H: Saved 1 product metadata in db
+2026-07-04 16:17:05,133 INFO: ##44/240: Saving or updating product - B07BHC4Q2S
+2026-07-04 16:17:05,148 INFO: B07BHC4Q2S: Product metadata is not available in table
+2026-07-04 16:17:05,194 INFO: B07BHC4Q2S: Price of product is not tracked
+2026-07-04 16:17:05,213 INFO: B07BHC4Q2S: Started tracking price of product - 21.99
+2026-07-04 16:17:05,273 INFO: B07BHC4Q2S: Rating of product is not tracked
+2026-07-04 16:17:05,291 INFO: B07BHC4Q2S: Started tracking rating of product - 4.4
+2026-07-04 16:17:05,292 INFO: B07BHC4Q2S: Saved 1 product metadata in db
+2026-07-04 16:17:05,292 INFO: ##45/240: Saving or updating product - B0G8W5355V
+2026-07-04 16:17:05,303 INFO: B0G8W5355V: Product metadata is not available in table
+2026-07-04 16:17:05,371 INFO: B0G8W5355V: Price of product is not tracked
+2026-07-04 16:17:05,387 INFO: B0G8W5355V: Started tracking price of product - 59.99
+2026-07-04 16:17:05,435 INFO: B0G8W5355V: Rating of product is not tracked
+2026-07-04 16:17:05,451 INFO: B0G8W5355V: Started tracking rating of product - 4.6
+2026-07-04 16:17:05,451 INFO: B0G8W5355V: Saved 1 product metadata in db
+2026-07-04 16:17:05,451 INFO: ##46/240: Saving or updating product - B094QC3HYQ
+2026-07-04 16:17:05,467 INFO: B094QC3HYQ: Product metadata is not available in table
+2026-07-04 16:17:05,525 INFO: B094QC3HYQ: Price of product is not tracked
+2026-07-04 16:17:05,534 INFO: B094QC3HYQ: Started tracking price of product - 143.0
+2026-07-04 16:17:05,599 INFO: B094QC3HYQ: Rating of product is not tracked
+2026-07-04 16:17:05,613 INFO: B094QC3HYQ: Started tracking rating of product - 4.6
+2026-07-04 16:17:05,613 INFO: B094QC3HYQ: Saved 1 product metadata in db
+2026-07-04 16:17:05,613 INFO: ##47/240: Saving or updating product - B0GWCRTKZX
+2026-07-04 16:17:05,629 INFO: B0GWCRTKZX: Product metadata is not available in table
+2026-07-04 16:17:05,685 INFO: B0GWCRTKZX: Price of product is not tracked
+2026-07-04 16:17:05,693 INFO: B0GWCRTKZX: Started tracking price of product - 66.99
+2026-07-04 16:17:05,739 INFO: B0GWCRTKZX: Rating of product is not tracked
+2026-07-04 16:17:05,752 INFO: B0GWCRTKZX: Started tracking rating of product - 4.9
+2026-07-04 16:17:05,752 INFO: B0GWCRTKZX: Saved 1 product metadata in db
+2026-07-04 16:17:05,752 INFO: ##48/240: Saving or updating product - B08Z5J8CG6
+2026-07-04 16:17:05,760 INFO: B08Z5J8CG6: Product metadata is not available in table
+2026-07-04 16:17:05,799 INFO: B08Z5J8CG6: Price of product is not tracked
+2026-07-04 16:17:05,816 INFO: B08Z5J8CG6: Started tracking price of product - 42.99
+2026-07-04 16:17:05,868 INFO: B08Z5J8CG6: Rating of product is not tracked
+2026-07-04 16:17:05,882 INFO: B08Z5J8CG6: Started tracking rating of product - 4.5
+2026-07-04 16:17:05,882 INFO: B08Z5J8CG6: Saved 1 product metadata in db
+2026-07-04 16:17:05,882 INFO: ##49/240: Saving or updating product - B01ENSBKF8
+2026-07-04 16:17:05,891 INFO: B01ENSBKF8: Product metadata is available in table
+2026-07-04 16:17:05,898 INFO: B01ENSBKF8: These fields are null in existing record in database - ['brand']
+2026-07-04 16:17:05,899 INFO: B01ENSBKF8: Updated the values of following fields - ['currency']
+2026-07-04 16:17:05,967 INFO: B01ENSBKF8: Price of product is tracked
+2026-07-04 16:17:05,967 INFO: B01ENSBKF8: Last price - 60.0, Current price - 59.99
+2026-07-04 16:17:05,982 INFO: B01ENSBKF8: Price change detected 60.0 \u2192 59.99
+2026-07-04 16:17:05,982 INFO: B01ENSBKF8: Successfully recorded the price change in the database
+2026-07-04 16:17:06,049 INFO: B01ENSBKF8: Rating of product is tracked
+2026-07-04 16:17:06,049 INFO: B01ENSBKF8: Last rating - 4.7, Current rating - 4.7
+2026-07-04 16:17:06,049 INFO: B01ENSBKF8: Rating unchanged (Current: 4.7, Last: 4.7), skipping insert.
+2026-07-04 16:17:06,049 INFO: B01ENSBKF8: Updated the price and rating of product
+2026-07-04 16:17:06,049 INFO: ##50/240: Saving or updating product - B01MZAWUB9
+2026-07-04 16:17:06,066 INFO: B01MZAWUB9: Product metadata is not available in table
+2026-07-04 16:17:06,135 INFO: B01MZAWUB9: Price of product is not tracked
+2026-07-04 16:17:06,149 INFO: B01MZAWUB9: Started tracking price of product - 39.99
+2026-07-04 16:17:06,198 INFO: B01MZAWUB9: Rating of product is not tracked
+2026-07-04 16:17:06,216 INFO: B01MZAWUB9: Started tracking rating of product - 4.6
+2026-07-04 16:17:06,216 INFO: B01MZAWUB9: Saved 1 product metadata in db
+2026-07-04 16:17:06,216 INFO: ##51/240: Saving or updating product - B0FH6TCXRY
+2026-07-04 16:17:06,216 INFO: B0FH6TCXRY: Product metadata is not available in table
+2026-07-04 16:17:06,269 INFO: B0FH6TCXRY: Price of product is not tracked
+2026-07-04 16:17:06,288 INFO: B0FH6TCXRY: Started tracking price of product - 59.99
+2026-07-04 16:17:06,321 INFO: B0FH6TCXRY: Rating of product is not tracked
+2026-07-04 16:17:06,338 INFO: B0FH6TCXRY: Started tracking rating of product - 4.1
+2026-07-04 16:17:06,338 INFO: B0FH6TCXRY: Saved 1 product metadata in db
+2026-07-04 16:17:06,338 INFO: ##52/240: Saving or updating product - B089NGYKVB
+2026-07-04 16:17:06,349 INFO: B089NGYKVB: Product metadata is not available in table
+2026-07-04 16:17:06,421 INFO: B089NGYKVB: Price of product is not tracked
+2026-07-04 16:17:06,431 INFO: B089NGYKVB: Started tracking price of product - 169.99
+2026-07-04 16:17:06,500 INFO: B089NGYKVB: Rating of product is not tracked
+2026-07-04 16:17:06,511 INFO: B089NGYKVB: Started tracking rating of product - 4.7
+2026-07-04 16:17:06,511 INFO: B089NGYKVB: Saved 1 product metadata in db
+2026-07-04 16:17:06,511 INFO: ##53/240: Saving or updating product - B00FN9IV86
+2026-07-04 16:17:06,515 INFO: B00FN9IV86: Product metadata is not available in table
+2026-07-04 16:17:06,563 INFO: B00FN9IV86: Price of product is not tracked
+2026-07-04 16:17:06,588 INFO: B00FN9IV86: Started tracking price of product - 89.99
+2026-07-04 16:17:06,653 INFO: B00FN9IV86: Rating of product is not tracked
+2026-07-04 16:17:06,667 INFO: B00FN9IV86: Started tracking rating of product - 4.7
+2026-07-04 16:17:06,667 INFO: B00FN9IV86: Saved 1 product metadata in db
+2026-07-04 16:17:06,667 INFO: ##54/240: Saving or updating product - B0FPG3V5ZS
+2026-07-04 16:17:06,670 INFO: B0FPG3V5ZS: Product metadata is not available in table
+2026-07-04 16:17:06,748 INFO: B0FPG3V5ZS: Price of product is not tracked
+2026-07-04 16:17:06,748 INFO: B0FPG3V5ZS: Started tracking price of product - 59.99
+2026-07-04 16:17:06,820 INFO: B0FPG3V5ZS: Rating of product is not tracked
+2026-07-04 16:17:06,837 INFO: B0FPG3V5ZS: Started tracking rating of product - 4.6
+2026-07-04 16:17:06,837 INFO: B0FPG3V5ZS: Saved 1 product metadata in db
+2026-07-04 16:17:06,837 INFO: ##55/240: Saving or updating product - B09XXF3RJG
+2026-07-04 16:17:06,846 INFO: B09XXF3RJG: Product metadata is not available in table
+2026-07-04 16:17:06,920 INFO: B09XXF3RJG: Price of product is not tracked
+2026-07-04 16:17:06,932 INFO: B09XXF3RJG: Started tracking price of product - 22.49
+2026-07-04 16:17:06,984 INFO: B09XXF3RJG: Rating of product is not tracked
+2026-07-04 16:17:06,999 INFO: B09XXF3RJG: Started tracking rating of product - 4.3
+2026-07-04 16:17:07,000 INFO: B09XXF3RJG: Saved 1 product metadata in db
+2026-07-04 16:17:07,000 INFO: ##56/240: Saving or updating product - B083RPRMGS
+2026-07-04 16:17:07,002 INFO: B083RPRMGS: Product metadata is not available in table
+2026-07-04 16:17:07,081 INFO: B083RPRMGS: Price of product is not tracked
+2026-07-04 16:17:07,081 INFO: B083RPRMGS: Started tracking price of product - 43.99
+2026-07-04 16:17:07,141 INFO: B083RPRMGS: Rating of product is not tracked
+2026-07-04 16:17:07,152 INFO: B083RPRMGS: Started tracking rating of product - 4.6
+2026-07-04 16:17:07,152 INFO: B083RPRMGS: Saved 1 product metadata in db
+2026-07-04 16:17:07,152 INFO: ##57/240: Saving or updating product - B0D46CXLTR
+2026-07-04 16:17:07,164 INFO: B0D46CXLTR: Product metadata is not available in table
+2026-07-04 16:17:07,216 INFO: B0D46CXLTR: Price of product is not tracked
+2026-07-04 16:17:07,226 INFO: B0D46CXLTR: Started tracking price of product - 49.99
+2026-07-04 16:17:07,299 INFO: B0D46CXLTR: Rating of product is not tracked
+2026-07-04 16:17:07,309 INFO: B0D46CXLTR: Started tracking rating of product - 4.5
+2026-07-04 16:17:07,310 INFO: B0D46CXLTR: Saved 1 product metadata in db
+2026-07-04 16:17:07,310 INFO: ##58/240: Saving or updating product - B083SJZFPS
+2026-07-04 16:17:07,317 INFO: B083SJZFPS: Product metadata is not available in table
+2026-07-04 16:17:07,373 INFO: B083SJZFPS: Price of product is not tracked
+2026-07-04 16:17:07,382 INFO: B083SJZFPS: Started tracking price of product - 89.99
+2026-07-04 16:17:07,437 INFO: B083SJZFPS: Rating of product is not tracked
+2026-07-04 16:17:07,449 INFO: B083SJZFPS: Started tracking rating of product - 4.7
+2026-07-04 16:17:07,451 INFO: B083SJZFPS: Saved 1 product metadata in db
+2026-07-04 16:17:07,451 INFO: ##59/240: Saving or updating product - B0BWF6ZQVT
+2026-07-04 16:17:07,455 INFO: B0BWF6ZQVT: Product metadata is not available in table
+2026-07-04 16:17:07,732 INFO: B0BWF6ZQVT: Price of product is not tracked
+2026-07-04 16:17:07,748 INFO: B0BWF6ZQVT: Started tracking price of product - 23.98
+2026-07-04 16:17:07,800 INFO: B0BWF6ZQVT: Rating of product is not tracked
+2026-07-04 16:17:07,811 INFO: B0BWF6ZQVT: Started tracking rating of product - 4.7
+2026-07-04 16:17:07,812 INFO: B0BWF6ZQVT: Saved 1 product metadata in db
+2026-07-04 16:17:07,812 INFO: ##60/240: Saving or updating product - B0G8W5355V
+2026-07-04 16:17:07,815 INFO: B0G8W5355V: Product metadata is available in table
+2026-07-04 16:17:07,815 INFO: B0G8W5355V: These fields are null in existing record in database - ['brand']
+2026-07-04 16:17:07,830 INFO: B0G8W5355V: Updated the values of following fields - ['currency']
+2026-07-04 16:17:07,878 INFO: B0G8W5355V: Price of product is tracked
+2026-07-04 16:17:07,894 INFO: B0G8W5355V: Last price - 60.0, Current price - 59.99
+2026-07-04 16:17:07,910 INFO: B0G8W5355V: Price change detected 60.0 \u2192 59.99
+2026-07-04 16:17:07,910 INFO: B0G8W5355V: Successfully recorded the price change in the database
+2026-07-04 16:17:07,960 INFO: B0G8W5355V: Rating of product is tracked
+2026-07-04 16:17:07,960 INFO: B0G8W5355V: Last rating - 4.6, Current rating - 4.6
+2026-07-04 16:17:07,975 INFO: B0G8W5355V: Rating unchanged (Current: 4.6, Last: 4.6), skipping insert.
+2026-07-04 16:17:07,975 INFO: B0G8W5355V: Updated the price and rating of product
+2026-07-04 16:17:07,975 INFO: ##61/240: Saving or updating product - B0CQC7P5HH
+2026-07-04 16:17:07,975 INFO: B0CQC7P5HH: Product metadata is not available in table
+2026-07-04 16:17:08,043 INFO: B0CQC7P5HH: Price of product is not tracked
+2026-07-04 16:17:08,061 INFO: B0CQC7P5HH: Started tracking price of product - 17.99
+2026-07-04 16:17:08,125 INFO: B0CQC7P5HH: Rating of product is not tracked
+2026-07-04 16:17:08,141 INFO: B0CQC7P5HH: Started tracking rating of product - 4.4
+2026-07-04 16:17:08,141 INFO: B0CQC7P5HH: Saved 1 product metadata in db
+2026-07-04 16:17:08,141 INFO: ##62/240: Saving or updating product - B0FG2VHM49
+2026-07-04 16:17:08,141 INFO: B0FG2VHM49: Product metadata is not available in table
+2026-07-04 16:17:08,226 INFO: B0FG2VHM49: Price of product is not tracked
+2026-07-04 16:17:08,235 INFO: B0FG2VHM49: Started tracking price of product - 63.97
+2026-07-04 16:17:08,310 INFO: B0FG2VHM49: Rating of product is not tracked
+2026-07-04 16:17:08,320 INFO: B0FG2VHM49: Started tracking rating of product - 4.6
+2026-07-04 16:17:08,320 INFO: B0FG2VHM49: Saved 1 product metadata in db
+2026-07-04 16:17:08,320 INFO: ##63/240: Saving or updating product - B0BRFG1B8M
+2026-07-04 16:17:08,328 INFO: B0BRFG1B8M: Product metadata is not available in table
+2026-07-04 16:17:08,400 INFO: B0BRFG1B8M: Price of product is not tracked
+2026-07-04 16:17:08,408 INFO: B0BRFG1B8M: Started tracking price of product - 69.99
+2026-07-04 16:17:08,477 INFO: B0BRFG1B8M: Rating of product is not tracked
+2026-07-04 16:17:08,492 INFO: B0BRFG1B8M: Started tracking rating of product - 4.6
+2026-07-04 16:17:08,492 INFO: B0BRFG1B8M: Saved 1 product metadata in db
+2026-07-04 16:17:08,493 INFO: ##64/240: Saving or updating product - B0FLK5FKWP
+2026-07-04 16:17:08,503 INFO: B0FLK5FKWP: Product metadata is not available in table
+2026-07-04 16:17:08,547 INFO: B0FLK5FKWP: Price of product is not tracked
+2026-07-04 16:17:08,561 INFO: B0FLK5FKWP: Started tracking price of product - 89.98
+2026-07-04 16:17:08,627 INFO: B0FLK5FKWP: Rating of product is not tracked
+2026-07-04 16:17:08,643 INFO: B0FLK5FKWP: Started tracking rating of product - 4.7
+2026-07-04 16:17:08,643 INFO: B0FLK5FKWP: Saved 1 product metadata in db
+2026-07-04 16:17:08,643 INFO: ##65/240: Saving or updating product - B0CM6BT91X
+2026-07-04 16:17:08,643 INFO: B0CM6BT91X: Product metadata is not available in table
+2026-07-04 16:17:08,723 INFO: B0CM6BT91X: Price of product is not tracked
+2026-07-04 16:17:08,740 INFO: B0CM6BT91X: Started tracking price of product - 49.99
+2026-07-04 16:17:08,788 INFO: B0CM6BT91X: Rating of product is not tracked
+2026-07-04 16:17:08,804 INFO: B0CM6BT91X: Started tracking rating of product - 4.8
+2026-07-04 16:17:08,804 INFO: B0CM6BT91X: Saved 1 product metadata in db
+2026-07-04 16:17:08,804 INFO: ##66/240: Saving or updating product - B0D7MGHSXN
+2026-07-04 16:17:08,820 INFO: B0D7MGHSXN: Product metadata is not available in table
+2026-07-04 16:17:08,890 INFO: B0D7MGHSXN: Price of product is not tracked
+2026-07-04 16:17:08,905 INFO: B0D7MGHSXN: Started tracking price of product - 39.99
+2026-07-04 16:17:08,971 INFO: B0D7MGHSXN: Rating of product is not tracked
+2026-07-04 16:17:08,992 INFO: B0D7MGHSXN: Started tracking rating of product - 4.5
+2026-07-04 16:17:08,993 INFO: B0D7MGHSXN: Saved 1 product metadata in db
+2026-07-04 16:17:08,993 INFO: ##67/240: Saving or updating product - B09YXB5DXX
+2026-07-04 16:17:09,003 INFO: B09YXB5DXX: Product metadata is not available in table
+2026-07-04 16:17:09,072 INFO: B09YXB5DXX: Price of product is not tracked
+2026-07-04 16:17:09,100 INFO: B09YXB5DXX: Started tracking price of product - 149.99
+2026-07-04 16:17:09,173 INFO: B09YXB5DXX: Rating of product is not tracked
+2026-07-04 16:17:09,187 INFO: B09YXB5DXX: Started tracking rating of product - 4.3
+2026-07-04 16:17:09,187 INFO: B09YXB5DXX: Saved 1 product metadata in db
+2026-07-04 16:17:09,187 INFO: ##68/240: Saving or updating product - B0D3HJPN7W
+2026-07-04 16:17:09,214 INFO: B0D3HJPN7W: Product metadata is not available in table
+2026-07-04 16:17:09,303 INFO: B0D3HJPN7W: Price of product is not tracked
+2026-07-04 16:17:09,314 INFO: B0D3HJPN7W: Started tracking price of product - 45.99
+2026-07-04 16:17:09,352 INFO: B0D3HJPN7W: Rating of product is not tracked
+2026-07-04 16:17:09,371 INFO: B0D3HJPN7W: Started tracking rating of product - 4.3
+2026-07-04 16:17:09,371 INFO: B0D3HJPN7W: Saved 1 product metadata in db
+2026-07-04 16:17:09,371 INFO: ##69/240: Saving or updating product - B0C4PLCWTJ
+2026-07-04 16:17:09,380 INFO: B0C4PLCWTJ: Product metadata is not available in table
+2026-07-04 16:17:09,437 INFO: B0C4PLCWTJ: Price of product is not tracked
+2026-07-04 16:17:09,456 INFO: B0C4PLCWTJ: Started tracking price of product - 30.39
+2026-07-04 16:17:09,516 INFO: B0C4PLCWTJ: Rating of product is not tracked
+2026-07-04 16:17:09,528 INFO: B0C4PLCWTJ: Started tracking rating of product - 4.5
+2026-07-04 16:17:09,528 INFO: B0C4PLCWTJ: Saved 1 product metadata in db
+2026-07-04 16:17:09,528 INFO: ##70/240: Saving or updating product - B0FR4QRW25
+2026-07-04 16:17:09,535 INFO: B0FR4QRW25: Product metadata is not available in table
+2026-07-04 16:17:09,609 INFO: B0FR4QRW25: Price of product is not tracked
+2026-07-04 16:17:09,620 INFO: B0FR4QRW25: Started tracking price of product - 28.78
+2026-07-04 16:17:09,652 INFO: B0FR4QRW25: Rating of product is not tracked
+2026-07-04 16:17:09,671 INFO: B0FR4QRW25: Started tracking rating of product - 4.8
+2026-07-04 16:17:09,672 INFO: B0FR4QRW25: Saved 1 product metadata in db
+2026-07-04 16:17:09,672 INFO: ##71/240: Saving or updating product - B00GT5NIF4
+2026-07-04 16:17:09,681 INFO: B00GT5NIF4: Product metadata is not available in table
+2026-07-04 16:17:09,759 INFO: B00GT5NIF4: Price of product is not tracked
+2026-07-04 16:17:09,770 INFO: B00GT5NIF4: Started tracking price of product - 64.79
+2026-07-04 16:17:09,833 INFO: B00GT5NIF4: Rating of product is not tracked
+2026-07-04 16:17:09,856 INFO: B00GT5NIF4: Started tracking rating of product - 4.6
+2026-07-04 16:17:09,857 INFO: B00GT5NIF4: Saved 1 product metadata in db
+2026-07-04 16:17:09,857 INFO: ##72/240: Saving or updating product - B08BL76TLP
+2026-07-04 16:17:09,866 INFO: B08BL76TLP: Product metadata is not available in table
+2026-07-04 16:17:09,939 INFO: B08BL76TLP: Price of product is not tracked
+2026-07-04 16:17:09,950 INFO: B08BL76TLP: Started tracking price of product - 69.94
+2026-07-04 16:17:10,003 INFO: B08BL76TLP: Rating of product is not tracked
+2026-07-04 16:17:10,016 INFO: B08BL76TLP: Started tracking rating of product - 4.4
+2026-07-04 16:17:10,016 INFO: B08BL76TLP: Saved 1 product metadata in db
+2026-07-04 16:17:10,016 INFO: ##73/240: Saving or updating product - B07F1SFZNV
+2026-07-04 16:17:10,025 INFO: B07F1SFZNV: Product metadata is not available in table
+2026-07-04 16:17:10,096 INFO: B07F1SFZNV: Price of product is not tracked
+2026-07-04 16:17:10,109 INFO: B07F1SFZNV: Started tracking price of product - 89.99
+2026-07-04 16:17:10,147 INFO: B07F1SFZNV: Rating of product is not tracked
+2026-07-04 16:17:10,147 INFO: B07F1SFZNV: Started tracking rating of product - 4.6
+2026-07-04 16:17:10,147 INFO: B07F1SFZNV: Saved 1 product metadata in db
+2026-07-04 16:17:10,163 INFO: ##74/240: Saving or updating product - B09YVCWZXQ
+2026-07-04 16:17:10,163 INFO: B09YVCWZXQ: Product metadata is not available in table
+2026-07-04 16:17:10,243 INFO: B09YVCWZXQ: Price of product is not tracked
+2026-07-04 16:17:10,243 INFO: B09YVCWZXQ: Started tracking price of product - 21.84
+2026-07-04 16:17:10,327 INFO: B09YVCWZXQ: Rating of product is not tracked
+2026-07-04 16:17:10,341 INFO: B09YVCWZXQ: Started tracking rating of product - 4.4
+2026-07-04 16:17:10,342 INFO: B09YVCWZXQ: Saved 1 product metadata in db
+2026-07-04 16:17:10,342 INFO: ##75/240: Saving or updating product - B0CG9FZX57
+2026-07-04 16:17:10,355 INFO: B0CG9FZX57: Product metadata is not available in table
+2026-07-04 16:17:10,419 INFO: B0CG9FZX57: Price of product is not tracked
+2026-07-04 16:17:10,436 INFO: B0CG9FZX57: Started tracking price of product - 36.99
+2026-07-04 16:17:10,514 INFO: B0CG9FZX57: Rating of product is not tracked
+2026-07-04 16:17:10,532 INFO: B0CG9FZX57: Started tracking rating of product - 4.6
+2026-07-04 16:17:10,533 INFO: B0CG9FZX57: Saved 1 product metadata in db
+2026-07-04 16:17:10,533 INFO: ##76/240: Saving or updating product - B0825YPC78
+2026-07-04 16:17:10,561 INFO: B0825YPC78: Product metadata is not available in table
+2026-07-04 16:17:10,614 INFO: B0825YPC78: Price of product is not tracked
+2026-07-04 16:17:10,646 INFO: B0825YPC78: Started tracking price of product - 116.09
+2026-07-04 16:17:10,695 INFO: B0825YPC78: Rating of product is not tracked
+2026-07-04 16:17:10,711 INFO: B0825YPC78: Started tracking rating of product - 4.6
+2026-07-04 16:17:10,711 INFO: B0825YPC78: Saved 1 product metadata in db
+2026-07-04 16:17:10,711 INFO: ##77/240: Saving or updating product - B09DC92DJ3
+2026-07-04 16:17:10,711 INFO: B09DC92DJ3: Product metadata is not available in table
+2026-07-04 16:17:10,799 INFO: B09DC92DJ3: Price of product is not tracked
+2026-07-04 16:17:10,810 INFO: B09DC92DJ3: Started tracking price of product - 40.99
+2026-07-04 16:17:10,870 INFO: B09DC92DJ3: Rating of product is not tracked
+2026-07-04 16:17:10,870 INFO: B09DC92DJ3: Started tracking rating of product - 4.5
+2026-07-04 16:17:10,870 INFO: B09DC92DJ3: Saved 1 product metadata in db
+2026-07-04 16:17:10,870 INFO: ##78/240: Saving or updating product - B004AK9Z2K
+2026-07-04 16:17:10,889 INFO: B004AK9Z2K: Product metadata is not available in table
+2026-07-04 16:17:10,991 INFO: B004AK9Z2K: Price of product is not tracked
+2026-07-04 16:17:10,998 INFO: B004AK9Z2K: Started tracking price of product - 199.99
+2026-07-04 16:17:11,082 INFO: B004AK9Z2K: Rating of product is not tracked
+2026-07-04 16:17:11,092 INFO: B004AK9Z2K: Started tracking rating of product - 4.6
+2026-07-04 16:17:11,092 INFO: B004AK9Z2K: Saved 1 product metadata in db
+2026-07-04 16:17:11,092 INFO: ##79/240: Saving or updating product - B015SH3RI6
+2026-07-04 16:17:11,100 INFO: B015SH3RI6: Product metadata is not available in table
+2026-07-04 16:17:11,175 INFO: B015SH3RI6: Price of product is not tracked
+2026-07-04 16:17:11,186 INFO: B015SH3RI6: Started tracking price of product - 149.45
+2026-07-04 16:17:11,265 INFO: B015SH3RI6: Rating of product is not tracked
+2026-07-04 16:17:11,282 INFO: B015SH3RI6: Started tracking rating of product - 4.7
+2026-07-04 16:17:11,283 INFO: B015SH3RI6: Saved 1 product metadata in db
+2026-07-04 16:17:11,283 INFO: ##80/240: Saving or updating product - B0DQ2KP9PC
+2026-07-04 16:17:11,293 INFO: B0DQ2KP9PC: Product metadata is not available in table
+2026-07-04 16:17:11,370 INFO: B0DQ2KP9PC: Price of product is not tracked
+2026-07-04 16:17:11,370 INFO: B0DQ2KP9PC: Started tracking price of product - 398.0
+2026-07-04 16:17:11,406 INFO: B0DQ2KP9PC: Rating of product is not tracked
+2026-07-04 16:17:11,423 INFO: B0DQ2KP9PC: Started tracking rating of product - 4.2
+2026-07-04 16:17:11,423 INFO: B0DQ2KP9PC: Saved 1 product metadata in db
+2026-07-04 16:17:11,423 INFO: ##81/240: Saving or updating product - B0F69FHFSB
+2026-07-04 16:17:11,437 INFO: B0F69FHFSB: Product metadata is not available in table
+2026-07-04 16:17:11,504 INFO: B0F69FHFSB: Price of product is not tracked
+2026-07-04 16:17:11,504 INFO: B0F69FHFSB: Started tracking price of product - 132.0
+2026-07-04 16:17:11,563 INFO: B0F69FHFSB: Rating of product is not tracked
+2026-07-04 16:17:11,573 INFO: B0F69FHFSB: Started tracking rating of product - 4.2
+2026-07-04 16:17:11,573 INFO: B0F69FHFSB: Saved 1 product metadata in db
+2026-07-04 16:17:11,573 INFO: ##82/240: Saving or updating product - B09Q6HNYYB
+2026-07-04 16:17:11,586 INFO: B09Q6HNYYB: Product metadata is not available in table
+2026-07-04 16:17:11,653 INFO: B09Q6HNYYB: Price of product is not tracked
+2026-07-04 16:17:11,670 INFO: B09Q6HNYYB: Started tracking price of product - 79.0
+2026-07-04 16:17:11,718 INFO: B09Q6HNYYB: Rating of product is not tracked
+2026-07-04 16:17:11,718 INFO: B09Q6HNYYB: Started tracking rating of product - 4.5
+2026-07-04 16:17:11,734 INFO: B09Q6HNYYB: Saved 1 product metadata in db
+2026-07-04 16:17:11,734 INFO: ##83/240: Saving or updating product - B0GMFFR65R
+2026-07-04 16:17:11,751 INFO: B0GMFFR65R: Product metadata is not available in table
+2026-07-04 16:17:11,801 INFO: B0GMFFR65R: Price of product is not tracked
+2026-07-04 16:17:11,816 INFO: B0GMFFR65R: Started tracking price of product - 36.99
+2026-07-04 16:17:11,868 INFO: B0GMFFR65R: Rating of product is not tracked
+2026-07-04 16:17:11,883 INFO: B0GMFFR65R: Started tracking rating of product - 4.4
+2026-07-04 16:17:11,884 INFO: B0GMFFR65R: Saved 1 product metadata in db
+2026-07-04 16:17:11,885 INFO: ##84/240: Saving or updating product - B071RKHL7X
+2026-07-04 16:17:11,885 INFO: B071RKHL7X: Product metadata is not available in table
+2026-07-04 16:17:11,951 INFO: B071RKHL7X: Price of product is not tracked
+2026-07-04 16:17:11,968 INFO: B071RKHL7X: Started tracking price of product - 129.99
+2026-07-04 16:17:12,018 INFO: B071RKHL7X: Rating of product is not tracked
+2026-07-04 16:17:12,035 INFO: B071RKHL7X: Started tracking rating of product - 4.7
+2026-07-04 16:17:12,035 INFO: B071RKHL7X: Saved 1 product metadata in db
+2026-07-04 16:17:12,035 INFO: ##85/240: Saving or updating product - B07WP554NT
+2026-07-04 16:17:12,035 INFO: B07WP554NT: Product metadata is not available in table
+2026-07-04 16:17:12,103 INFO: B07WP554NT: Price of product is not tracked
+2026-07-04 16:17:12,103 INFO: B07WP554NT: Started tracking price of product - 98.99
+2026-07-04 16:17:12,153 INFO: B07WP554NT: Rating of product is not tracked
+2026-07-04 16:17:12,168 INFO: B07WP554NT: Started tracking rating of product - 4.6
+2026-07-04 16:17:12,168 INFO: B07WP554NT: Saved 1 product metadata in db
+2026-07-04 16:17:12,168 INFO: ##86/240: Saving or updating product - B0G5MYVX7Y
+2026-07-04 16:17:12,185 INFO: B0G5MYVX7Y: Product metadata is not available in table
+2026-07-04 16:17:12,235 INFO: B0G5MYVX7Y: Price of product is not tracked
+2026-07-04 16:17:12,235 INFO: B0G5MYVX7Y: Started tracking price of product - 25.48
+2026-07-04 16:17:12,305 INFO: B0G5MYVX7Y: Rating of product is not tracked
+2026-07-04 16:17:12,317 INFO: B0G5MYVX7Y: Started tracking rating of product - 4.7
+2026-07-04 16:17:12,317 INFO: B0G5MYVX7Y: Saved 1 product metadata in db
+2026-07-04 16:17:12,317 INFO: ##87/240: Saving or updating product - B0D633ZQK1
+2026-07-04 16:17:12,318 INFO: B0D633ZQK1: Product metadata is not available in table
+2026-07-04 16:17:12,386 INFO: B0D633ZQK1: Price of product is not tracked
+2026-07-04 16:17:12,406 INFO: B0D633ZQK1: Started tracking price of product - 32.99
+2026-07-04 16:17:12,458 INFO: B0D633ZQK1: Rating of product is not tracked
+2026-07-04 16:17:12,469 INFO: B0D633ZQK1: Started tracking rating of product - 4.5
+2026-07-04 16:17:12,469 INFO: B0D633ZQK1: Saved 1 product metadata in db
+2026-07-04 16:17:12,469 INFO: ##88/240: Saving or updating product - B0F61Z19V8
+2026-07-04 16:17:12,478 INFO: B0F61Z19V8: Product metadata is not available in table
+2026-07-04 16:17:12,536 INFO: B0F61Z19V8: Price of product is not tracked
+2026-07-04 16:17:12,537 INFO: B0F61Z19V8: Started tracking price of product - 35.99
+2026-07-04 16:17:12,585 INFO: B0F61Z19V8: Rating of product is not tracked
+2026-07-04 16:17:12,585 INFO: B0F61Z19V8: Started tracking rating of product - 4.7
+2026-07-04 16:17:12,585 INFO: B0F61Z19V8: Saved 1 product metadata in db
+2026-07-04 16:17:12,585 INFO: ##89/240: Saving or updating product - B07L5PXTXR
+2026-07-04 16:17:12,602 INFO: B07L5PXTXR: Product metadata is not available in table
+2026-07-04 16:17:12,669 INFO: B07L5PXTXR: Price of product is not tracked
+2026-07-04 16:17:12,686 INFO: B07L5PXTXR: Started tracking price of product - 152.23
+2026-07-04 16:17:12,735 INFO: B07L5PXTXR: Rating of product is not tracked
+2026-07-04 16:17:12,735 INFO: B07L5PXTXR: Started tracking rating of product - 4.5
+2026-07-04 16:17:12,735 INFO: B07L5PXTXR: Saved 1 product metadata in db
+2026-07-04 16:17:12,750 INFO: ##90/240: Saving or updating product - B07YBR1GNF
+2026-07-04 16:17:12,760 INFO: B07YBR1GNF: Product metadata is not available in table
+2026-07-04 16:17:12,818 INFO: B07YBR1GNF: Price of product is not tracked
+2026-07-04 16:17:12,835 INFO: B07YBR1GNF: Started tracking price of product - 57.15
+2026-07-04 16:17:12,868 INFO: B07YBR1GNF: Rating of product is not tracked
+2026-07-04 16:17:12,885 INFO: B07YBR1GNF: Started tracking rating of product - 4.4
+2026-07-04 16:17:12,885 INFO: B07YBR1GNF: Saved 1 product metadata in db
+2026-07-04 16:17:12,885 INFO: ##91/240: Saving or updating product - B096XGJ1XF
+2026-07-04 16:17:12,902 INFO: B096XGJ1XF: Product metadata is not available in table
+2026-07-04 16:17:12,969 INFO: B096XGJ1XF: Price of product is not tracked
+2026-07-04 16:17:12,986 INFO: B096XGJ1XF: Started tracking price of product - 129.99
+2026-07-04 16:17:13,035 INFO: B096XGJ1XF: Rating of product is not tracked
+2026-07-04 16:17:13,052 INFO: B096XGJ1XF: Started tracking rating of product - 4.6
+2026-07-04 16:17:13,052 INFO: B096XGJ1XF: Saved 1 product metadata in db
+2026-07-04 16:17:13,052 INFO: ##92/240: Saving or updating product - B01IHGO90U
+2026-07-04 16:17:13,052 INFO: B01IHGO90U: Product metadata is not available in table
+2026-07-04 16:17:13,114 INFO: B01IHGO90U: Price of product is not tracked
+2026-07-04 16:17:13,119 INFO: B01IHGO90U: Started tracking price of product - 69.95
+2026-07-04 16:17:13,168 INFO: B01IHGO90U: Rating of product is not tracked
+2026-07-04 16:17:13,168 INFO: B01IHGO90U: Started tracking rating of product - 4.5
+2026-07-04 16:17:13,168 INFO: B01IHGO90U: Saved 1 product metadata in db
+2026-07-04 16:17:13,168 INFO: ##93/240: Saving or updating product - B0CH9VB7P9
+2026-07-04 16:17:13,185 INFO: B0CH9VB7P9: Product metadata is not available in table
+2026-07-04 16:17:13,235 INFO: B0CH9VB7P9: Price of product is not tracked
+2026-07-04 16:17:13,251 INFO: B0CH9VB7P9: Started tracking price of product - 37.86
+2026-07-04 16:17:13,302 INFO: B0CH9VB7P9: Rating of product is not tracked
+2026-07-04 16:17:13,319 INFO: B0CH9VB7P9: Started tracking rating of product - 4.6
+2026-07-04 16:17:13,319 INFO: B0CH9VB7P9: Saved 1 product metadata in db
+2026-07-04 16:17:13,319 INFO: ##94/240: Saving or updating product - B07DKHC9DM
+2026-07-04 16:17:13,319 INFO: B07DKHC9DM: Product metadata is not available in table
+2026-07-04 16:17:13,388 INFO: B07DKHC9DM: Price of product is not tracked
+2026-07-04 16:17:13,406 INFO: B07DKHC9DM: Started tracking price of product - 168.0
+2026-07-04 16:17:13,451 INFO: B07DKHC9DM: Rating of product is not tracked
+2026-07-04 16:17:13,460 INFO: B07DKHC9DM: Started tracking rating of product - 4.8
+2026-07-04 16:17:13,461 INFO: B07DKHC9DM: Saved 1 product metadata in db
+2026-07-04 16:17:13,461 INFO: ##95/240: Saving or updating product - B0F8PD7HJX
+2026-07-04 16:17:13,467 INFO: B0F8PD7HJX: Product metadata is not available in table
+2026-07-04 16:17:13,532 INFO: B0F8PD7HJX: Price of product is not tracked
+2026-07-04 16:17:13,548 INFO: B0F8PD7HJX: Started tracking price of product - 129.0
+2026-07-04 16:17:13,604 INFO: B0F8PD7HJX: Rating of product is not tracked
+2026-07-04 16:17:13,613 INFO: B0F8PD7HJX: Started tracking rating of product - 4.6
+2026-07-04 16:17:13,613 INFO: B0F8PD7HJX: Saved 1 product metadata in db
+2026-07-04 16:17:13,613 INFO: ##96/240: Saving or updating product - B07FHZ6TPD
+2026-07-04 16:17:13,623 INFO: B07FHZ6TPD: Product metadata is not available in table
+2026-07-04 16:17:13,687 INFO: B07FHZ6TPD: Price of product is not tracked
+2026-07-04 16:17:13,724 INFO: B07FHZ6TPD: Started tracking price of product - 55.99
+2026-07-04 16:17:13,799 INFO: B07FHZ6TPD: Rating of product is not tracked
+2026-07-04 16:17:13,810 INFO: B07FHZ6TPD: Started tracking rating of product - 4.5
+2026-07-04 16:17:13,810 INFO: B07FHZ6TPD: Saved 1 product metadata in db
+2026-07-04 16:17:13,810 INFO: ##97/240: Saving or updating product - B0GMFFR65R
+2026-07-04 16:17:13,820 INFO: B0GMFFR65R: Product metadata is available in table
+2026-07-04 16:17:13,826 INFO: B0GMFFR65R: These fields are null in existing record in database - ['brand']
+2026-07-04 16:17:13,837 INFO: B0GMFFR65R: Updated the values of following fields - ['currency']
+2026-07-04 16:17:13,891 INFO: B0GMFFR65R: Price of product is tracked
+2026-07-04 16:17:13,896 INFO: B0GMFFR65R: Last price - 37.0, Current price - 36.99
+2026-07-04 16:17:13,907 INFO: B0GMFFR65R: Price change detected 37.0 \u2192 36.99
+2026-07-04 16:17:13,907 INFO: B0GMFFR65R: Successfully recorded the price change in the database
+2026-07-04 16:17:14,003 INFO: B0GMFFR65R: Rating of product is tracked
+2026-07-04 16:17:14,010 INFO: B0GMFFR65R: Last rating - 4.4, Current rating - 4.4
+2026-07-04 16:17:14,014 INFO: B0GMFFR65R: Rating unchanged (Current: 4.4, Last: 4.4), skipping insert.
+2026-07-04 16:17:14,015 INFO: B0GMFFR65R: Updated the price and rating of product
+2026-07-04 16:17:14,015 INFO: ##98/240: Saving or updating product - B096XGJ1XF
+2026-07-04 16:17:14,033 INFO: B096XGJ1XF: Product metadata is available in table
+2026-07-04 16:17:14,037 INFO: B096XGJ1XF: These fields are null in existing record in database - ['brand']
+2026-07-04 16:17:14,039 INFO: B096XGJ1XF: Updated the values of following fields - ['currency']
+2026-07-04 16:17:14,102 INFO: B096XGJ1XF: Price of product is tracked
+2026-07-04 16:17:14,118 INFO: B096XGJ1XF: Last price - 130.0, Current price - 129.99
+2026-07-04 16:17:14,135 INFO: B096XGJ1XF: Price change detected 130.0 \u2192 129.99
+2026-07-04 16:17:14,135 INFO: B096XGJ1XF: Successfully recorded the price change in the database
+2026-07-04 16:17:14,206 INFO: B096XGJ1XF: Rating of product is tracked
+2026-07-04 16:17:14,210 INFO: B096XGJ1XF: Last rating - 4.6, Current rating - 4.6
+2026-07-04 16:17:14,215 INFO: B096XGJ1XF: Rating unchanged (Current: 4.6, Last: 4.6), skipping insert.
+2026-07-04 16:17:14,215 INFO: B096XGJ1XF: Updated the price and rating of product
+2026-07-04 16:17:14,216 INFO: ##99/240: Saving or updating product - B07L5PXTXR
+2026-07-04 16:17:14,226 INFO: B07L5PXTXR: Product metadata is available in table
+2026-07-04 16:17:14,231 INFO: B07L5PXTXR: These fields are null in existing record in database - ['brand']
+2026-07-04 16:17:14,241 INFO: B07L5PXTXR: Updated the values of following fields - ['currency']
+2026-07-04 16:17:14,370 INFO: B07L5PXTXR: Price of product is tracked
+2026-07-04 16:17:14,376 INFO: B07L5PXTXR: Last price - 152.0, Current price - 152.25
+2026-07-04 16:17:14,391 INFO: B07L5PXTXR: Price change detected 152.0 \u2192 152.25
+2026-07-04 16:17:14,392 INFO: B07L5PXTXR: Successfully recorded the price change in the database
+2026-07-04 16:17:14,450 INFO: B07L5PXTXR: Rating of product is tracked
+2026-07-04 16:17:14,466 INFO: B07L5PXTXR: Last rating - 4.5, Current rating - 4.5
+2026-07-04 16:17:14,466 INFO: B07L5PXTXR: Rating unchanged (Current: 4.5, Last: 4.5), skipping insert.
+2026-07-04 16:17:14,466 INFO: B07L5PXTXR: Updated the price and rating of product
+2026-07-04 16:17:14,466 INFO: ##100/240: Saving or updating product - B0F61Z19V8
+2026-07-04 16:17:14,483 INFO: B0F61Z19V8: Product metadata is available in table
+2026-07-04 16:17:14,483 INFO: B0F61Z19V8: These fields are null in existing record in database - ['brand']
+2026-07-04 16:17:14,483 INFO: B0F61Z19V8: Updated the values of following fields - ['currency']
+2026-07-04 16:17:14,563 INFO: B0F61Z19V8: Price of product is tracked
+2026-07-04 16:17:14,568 INFO: B0F61Z19V8: Last price - 36.0, Current price - 35.99
+2026-07-04 16:17:14,585 INFO: B0F61Z19V8: Price change detected 36.0 \u2192 35.99
+2026-07-04 16:17:14,585 INFO: B0F61Z19V8: Successfully recorded the price change in the database
+2026-07-04 16:17:14,651 INFO: B0F61Z19V8: Rating of product is tracked
+2026-07-04 16:17:14,656 INFO: B0F61Z19V8: Last rating - 4.7, Current rating - 4.7
+2026-07-04 16:17:14,661 INFO: B0F61Z19V8: Rating unchanged (Current: 4.7, Last: 4.7), skipping insert.
+2026-07-04 16:17:14,661 INFO: B0F61Z19V8: Updated the price and rating of product
+2026-07-04 16:17:14,661 INFO: ##101/240: Saving or updating product - B07MT5VRTF
+2026-07-04 16:17:14,671 INFO: B07MT5VRTF: Product metadata is not available in table
+2026-07-04 16:17:14,736 INFO: B07MT5VRTF: Price of product is not tracked
+2026-07-04 16:17:14,746 INFO: B07MT5VRTF: Started tracking price of product - 65.0
+2026-07-04 16:17:14,813 INFO: B07MT5VRTF: Rating of product is not tracked
+2026-07-04 16:17:14,824 INFO: B07MT5VRTF: Started tracking rating of product - 4.5
+2026-07-04 16:17:14,825 INFO: B07MT5VRTF: Saved 1 product metadata in db
+2026-07-04 16:17:14,825 INFO: ##102/240: Saving or updating product - B07FHZ6TPD
+2026-07-04 16:17:14,834 INFO: B07FHZ6TPD: Product metadata is available in table
+2026-07-04 16:17:14,839 INFO: B07FHZ6TPD: These fields are null in existing record in database - ['brand']
+2026-07-04 16:17:14,848 INFO: B07FHZ6TPD: Updated the values of following fields - ['currency']
+2026-07-04 16:17:14,890 INFO: B07FHZ6TPD: Price of product is tracked
+2026-07-04 16:17:14,894 INFO: B07FHZ6TPD: Last price - 56.0, Current price - 55.99
+2026-07-04 16:17:14,909 INFO: B07FHZ6TPD: Price change detected 56.0 \u2192 55.99
+2026-07-04 16:17:14,909 INFO: B07FHZ6TPD: Successfully recorded the price change in the database
+2026-07-04 16:17:14,978 INFO: B07FHZ6TPD: Rating of product is tracked
+2026-07-04 16:17:14,983 INFO: B07FHZ6TPD: Last rating - 4.5, Current rating - 4.5
+2026-07-04 16:17:14,985 INFO: B07FHZ6TPD: Rating unchanged (Current: 4.5, Last: 4.5), skipping insert.
+2026-07-04 16:17:14,985 INFO: B07FHZ6TPD: Updated the price and rating of product
+2026-07-04 16:17:14,985 INFO: ##103/240: Saving or updating product - B07VMRKC5F
+2026-07-04 16:17:14,985 INFO: B07VMRKC5F: Product metadata is not available in table
+2026-07-04 16:17:15,058 INFO: B07VMRKC5F: Price of product is not tracked
+2026-07-04 16:17:15,069 INFO: B07VMRKC5F: Started tracking price of product - 43.99
+2026-07-04 16:17:15,131 INFO: B07VMRKC5F: Rating of product is not tracked
+2026-07-04 16:17:15,141 INFO: B07VMRKC5F: Started tracking rating of product - 4.4
+2026-07-04 16:17:15,142 INFO: B07VMRKC5F: Saved 1 product metadata in db
+2026-07-04 16:17:15,142 INFO: ##104/240: Saving or updating product - B07NRY2DKV
+2026-07-04 16:17:15,151 INFO: B07NRY2DKV: Product metadata is not available in table
+2026-07-04 16:17:15,218 INFO: B07NRY2DKV: Price of product is not tracked
+2026-07-04 16:17:15,243 INFO: B07NRY2DKV: Started tracking price of product - 49.49
+2026-07-04 16:17:15,289 INFO: B07NRY2DKV: Rating of product is not tracked
+2026-07-04 16:17:15,300 INFO: B07NRY2DKV: Started tracking rating of product - 4.3
+2026-07-04 16:17:15,300 INFO: B07NRY2DKV: Saved 1 product metadata in db
+2026-07-04 16:17:15,300 INFO: ##105/240: Saving or updating product - B078BX25RR
+2026-07-04 16:17:15,311 INFO: B078BX25RR: Product metadata is not available in table
+2026-07-04 16:17:15,392 INFO: B078BX25RR: Price of product is not tracked
+2026-07-04 16:17:15,402 INFO: B078BX25RR: Started tracking price of product - 57.59
+2026-07-04 16:17:15,460 INFO: B078BX25RR: Rating of product is not tracked
+2026-07-04 16:17:15,471 INFO: B078BX25RR: Started tracking rating of product - 4.4
+2026-07-04 16:17:15,471 INFO: B078BX25RR: Saved 1 product metadata in db
+2026-07-04 16:17:15,471 INFO: ##106/240: Saving or updating product - B014F6OE1U
+2026-07-04 16:17:15,481 INFO: B014F6OE1U: Product metadata is not available in table
+2026-07-04 16:17:15,536 INFO: B014F6OE1U: Price of product is not tracked
+2026-07-04 16:17:15,551 INFO: B014F6OE1U: Started tracking price of product - 70.0
+2026-07-04 16:17:15,612 INFO: B014F6OE1U: Rating of product is not tracked
+2026-07-04 16:17:15,624 INFO: B014F6OE1U: Started tracking rating of product - 4.3
+2026-07-04 16:17:15,624 INFO: B014F6OE1U: Saved 1 product metadata in db
+2026-07-04 16:17:15,625 INFO: ##107/240: Saving or updating product - B0GGGQFKX8
+2026-07-04 16:17:15,642 INFO: B0GGGQFKX8: Product metadata is not available in table
+2026-07-04 16:17:15,711 INFO: B0GGGQFKX8: Price of product is not tracked
+2026-07-04 16:17:15,722 INFO: B0GGGQFKX8: Started tracking price of product - 26.99
+2026-07-04 16:17:15,773 INFO: B0GGGQFKX8: Rating of product is not tracked
+2026-07-04 16:17:15,784 INFO: B0GGGQFKX8: Started tracking rating of product - 4.8
+2026-07-04 16:17:15,785 INFO: B0GGGQFKX8: Saved 1 product metadata in db
+2026-07-04 16:17:15,785 INFO: ##108/240: Saving or updating product - B0DJLTZLMJ
+2026-07-04 16:17:15,794 INFO: B0DJLTZLMJ: Product metadata is not available in table
+2026-07-04 16:17:15,870 INFO: B0DJLTZLMJ: Price of product is not tracked
+2026-07-04 16:17:15,872 INFO: B0DJLTZLMJ: Started tracking price of product - 27.98
+2026-07-04 16:17:15,940 INFO: B0DJLTZLMJ: Rating of product is not tracked
+2026-07-04 16:17:15,952 INFO: B0DJLTZLMJ: Started tracking rating of product - 4.7
+2026-07-04 16:17:15,952 INFO: B0DJLTZLMJ: Saved 1 product metadata in db
+2026-07-04 16:17:15,952 INFO: ##109/240: Saving or updating product - B0FH6RR91L
+2026-07-04 16:17:15,968 INFO: B0FH6RR91L: Product metadata is not available in table
+2026-07-04 16:17:16,019 INFO: B0FH6RR91L: Price of product is not tracked
+2026-07-04 16:17:16,019 INFO: B0FH6RR91L: Started tracking price of product - 59.99
+2026-07-04 16:17:16,091 INFO: B0FH6RR91L: Rating of product is not tracked
+2026-07-04 16:17:16,101 INFO: B0FH6RR91L: Started tracking rating of product - 4.1
+2026-07-04 16:17:16,101 INFO: B0FH6RR91L: Saved 1 product metadata in db
+2026-07-04 16:17:16,101 INFO: ##110/240: Saving or updating product - B09YLTCL71
+2026-07-04 16:17:16,103 INFO: B09YLTCL71: Product metadata is not available in table
+2026-07-04 16:17:16,185 INFO: B09YLTCL71: Price of product is not tracked
+2026-07-04 16:17:16,192 INFO: B09YLTCL71: Started tracking price of product - 19.99
+2026-07-04 16:17:16,253 INFO: B09YLTCL71: Rating of product is not tracked
+2026-07-04 16:17:16,270 INFO: B09YLTCL71: Started tracking rating of product - 4.3
+2026-07-04 16:17:16,270 INFO: B09YLTCL71: Saved 1 product metadata in db
+2026-07-04 16:17:16,270 INFO: ##111/240: Saving or updating product - B0CN66355P
+2026-07-04 16:17:16,285 INFO: B0CN66355P: Product metadata is not available in table
+2026-07-04 16:17:16,352 INFO: B0CN66355P: Price of product is not tracked
+2026-07-04 16:17:16,369 INFO: B0CN66355P: Started tracking price of product - 26.99
+2026-07-04 16:17:16,419 INFO: B0CN66355P: Rating of product is not tracked
+2026-07-04 16:17:16,419 INFO: B0CN66355P: Started tracking rating of product - 4.7
+2026-07-04 16:17:16,419 INFO: B0CN66355P: Saved 1 product metadata in db
+2026-07-04 16:17:16,419 INFO: ##112/240: Saving or updating product - B0FB3FFVLZ
+2026-07-04 16:17:16,441 INFO: B0FB3FFVLZ: Product metadata is not available in table
+2026-07-04 16:17:16,502 INFO: B0FB3FFVLZ: Price of product is not tracked
+2026-07-04 16:17:16,502 INFO: B0FB3FFVLZ: Started tracking price of product - 39.99
+2026-07-04 16:17:16,570 INFO: B0FB3FFVLZ: Rating of product is not tracked
+2026-07-04 16:17:16,586 INFO: B0FB3FFVLZ: Started tracking rating of product - 4.8
+2026-07-04 16:17:16,586 INFO: B0FB3FFVLZ: Saved 1 product metadata in db
+2026-07-04 16:17:16,586 INFO: ##113/240: Saving or updating product - B0C9ZPXD5X
+2026-07-04 16:17:16,602 INFO: B0C9ZPXD5X: Product metadata is not available in table
+2026-07-04 16:17:16,671 INFO: B0C9ZPXD5X: Price of product is not tracked
+2026-07-04 16:17:16,686 INFO: B0C9ZPXD5X: Started tracking price of product - 31.99
+2026-07-04 16:17:16,738 INFO: B0C9ZPXD5X: Rating of product is not tracked
+2026-07-04 16:17:16,748 INFO: B0C9ZPXD5X: Started tracking rating of product - 4.7
+2026-07-04 16:17:16,748 INFO: B0C9ZPXD5X: Saved 1 product metadata in db
+2026-07-04 16:17:16,749 INFO: ##114/240: Saving or updating product - B08MD827Q5
+2026-07-04 16:17:16,760 INFO: B08MD827Q5: Product metadata is not available in table
+2026-07-04 16:17:16,816 INFO: B08MD827Q5: Price of product is not tracked
+2026-07-04 16:17:16,832 INFO: B08MD827Q5: Started tracking price of product - 39.99
+2026-07-04 16:17:16,880 INFO: B08MD827Q5: Rating of product is not tracked
+2026-07-04 16:17:16,899 INFO: B08MD827Q5: Started tracking rating of product - 4.5
+2026-07-04 16:17:16,899 INFO: B08MD827Q5: Saved 1 product metadata in db
+2026-07-04 16:17:16,899 INFO: ##115/240: Saving or updating product - B08HLMQ6Z8
+2026-07-04 16:17:16,899 INFO: B08HLMQ6Z8: Product metadata is not available in table
+2026-07-04 16:17:16,993 INFO: B08HLMQ6Z8: Price of product is not tracked
+2026-07-04 16:17:17,000 INFO: B08HLMQ6Z8: Started tracking price of product - 39.99
+2026-07-04 16:17:17,058 INFO: B08HLMQ6Z8: Rating of product is not tracked
+2026-07-04 16:17:17,074 INFO: B08HLMQ6Z8: Started tracking rating of product - 4.6
+2026-07-04 16:17:17,074 INFO: B08HLMQ6Z8: Saved 1 product metadata in db
+2026-07-04 16:17:17,074 INFO: ##116/240: Saving or updating product - B0F2TCMRLS
+2026-07-04 16:17:17,089 INFO: B0F2TCMRLS: Product metadata is not available in table
+2026-07-04 16:17:17,153 INFO: B0F2TCMRLS: Price of product is not tracked
+2026-07-04 16:17:17,169 INFO: B0F2TCMRLS: Started tracking price of product - 45.89
+2026-07-04 16:17:17,217 INFO: B0F2TCMRLS: Rating of product is not tracked
+2026-07-04 16:17:17,233 INFO: B0F2TCMRLS: Started tracking rating of product - 4.8
+2026-07-04 16:17:17,233 INFO: B0F2TCMRLS: Saved 1 product metadata in db
+2026-07-04 16:17:17,233 INFO: ##117/240: Saving or updating product - B07QF5ZGWQ
+2026-07-04 16:17:17,243 INFO: B07QF5ZGWQ: Product metadata is not available in table
+2026-07-04 16:17:17,312 INFO: B07QF5ZGWQ: Price of product is not tracked
+2026-07-04 16:17:17,312 INFO: B07QF5ZGWQ: Started tracking price of product - 25.64
+2026-07-04 16:17:17,376 INFO: B07QF5ZGWQ: Rating of product is not tracked
+2026-07-04 16:17:17,392 INFO: B07QF5ZGWQ: Started tracking rating of product - 4.6
+2026-07-04 16:17:17,392 INFO: B07QF5ZGWQ: Saved 1 product metadata in db
+2026-07-04 16:17:17,392 INFO: ##118/240: Saving or updating product - B0FDG7DT2G
+2026-07-04 16:17:17,405 INFO: B0FDG7DT2G: Product metadata is not available in table
+2026-07-04 16:17:17,457 INFO: B0FDG7DT2G: Price of product is not tracked
+2026-07-04 16:17:17,473 INFO: B0FDG7DT2G: Started tracking price of product - 32.99
+2026-07-04 16:17:17,521 INFO: B0FDG7DT2G: Rating of product is not tracked
+2026-07-04 16:17:17,537 INFO: B0FDG7DT2G: Started tracking rating of product - 4.8
+2026-07-04 16:17:17,537 INFO: B0FDG7DT2G: Saved 1 product metadata in db
+2026-07-04 16:17:17,537 INFO: ##119/240: Saving or updating product - B0GKXFNF6G
+2026-07-04 16:17:17,547 INFO: B0GKXFNF6G: Product metadata is not available in table
+2026-07-04 16:17:17,607 INFO: B0GKXFNF6G: Price of product is not tracked
+2026-07-04 16:17:17,617 INFO: B0GKXFNF6G: Started tracking price of product - 29.98
+2026-07-04 16:17:17,681 INFO: B0GKXFNF6G: Rating of product is not tracked
+2026-07-04 16:17:17,697 INFO: B0GKXFNF6G: Started tracking rating of product - 4.7
+2026-07-04 16:17:17,697 INFO: B0GKXFNF6G: Saved 1 product metadata in db
+2026-07-04 16:17:17,697 INFO: ##120/240: Saving or updating product - B071NMYSQ4
+2026-07-04 16:17:17,709 INFO: B071NMYSQ4: Product metadata is not available in table
+2026-07-04 16:17:17,761 INFO: B071NMYSQ4: Price of product is not tracked
+2026-07-04 16:17:17,777 INFO: B071NMYSQ4: Started tracking price of product - 54.0
+2026-07-04 16:17:17,840 INFO: B071NMYSQ4: Rating of product is not tracked
+2026-07-04 16:17:17,859 INFO: B071NMYSQ4: Started tracking rating of product - 4.3
+2026-07-04 16:17:17,859 INFO: B071NMYSQ4: Saved 1 product metadata in db
+2026-07-04 16:17:17,859 INFO: ##121/240: Saving or updating product - B0FF1VFZ5Q
+2026-07-04 16:17:17,872 INFO: B0FF1VFZ5Q: Product metadata is not available in table
+2026-07-04 16:17:17,936 INFO: B0FF1VFZ5Q: Price of product is not tracked
+2026-07-04 16:17:17,960 INFO: B0FF1VFZ5Q: Started tracking price of product - 9.99
+2026-07-04 16:17:18,016 INFO: B0FF1VFZ5Q: Rating of product is not tracked
+2026-07-04 16:17:18,040 INFO: B0FF1VFZ5Q: Started tracking rating of product - 4.2
+2026-07-04 16:17:18,042 INFO: B0FF1VFZ5Q: Saved 1 product metadata in db
+2026-07-04 16:17:18,042 INFO: ##122/240: Saving or updating product - B07DLMZ4C7
+2026-07-04 16:17:18,050 INFO: B07DLMZ4C7: Product metadata is not available in table
+2026-07-04 16:17:18,095 INFO: B07DLMZ4C7: Price of product is not tracked
+2026-07-04 16:17:18,111 INFO: B07DLMZ4C7: Started tracking price of product - 122.5
+2026-07-04 16:17:18,162 INFO: B07DLMZ4C7: Rating of product is not tracked
+2026-07-04 16:17:18,175 INFO: B07DLMZ4C7: Started tracking rating of product - 4.6
+2026-07-04 16:17:18,175 INFO: B07DLMZ4C7: Saved 1 product metadata in db
+2026-07-04 16:17:18,175 INFO: ##123/240: Saving or updating product - B0CWV4FV5B
+2026-07-04 16:17:18,192 INFO: B0CWV4FV5B: Product metadata is not available in table
+2026-07-04 16:17:18,263 INFO: B0CWV4FV5B: Price of product is not tracked
+2026-07-04 16:17:18,272 INFO: B0CWV4FV5B: Started tracking price of product - 64.59
+2026-07-04 16:17:18,331 INFO: B0CWV4FV5B: Rating of product is not tracked
+2026-07-04 16:17:18,343 INFO: B0CWV4FV5B: Started tracking rating of product - 4.5
+2026-07-04 16:17:18,345 INFO: B0CWV4FV5B: Saved 1 product metadata in db
+2026-07-04 16:17:18,345 INFO: ##124/240: Saving or updating product - B000UN267C
+2026-07-04 16:17:18,353 INFO: B000UN267C: Product metadata is not available in table
+2026-07-04 16:17:18,430 INFO: B000UN267C: Price of product is not tracked
+2026-07-04 16:17:18,430 INFO: B000UN267C: Started tracking price of product - 159.99
+2026-07-04 16:17:18,511 INFO: B000UN267C: Rating of product is not tracked
+2026-07-04 16:17:18,527 INFO: B000UN267C: Started tracking rating of product - 4.5
+2026-07-04 16:17:18,527 INFO: B000UN267C: Saved 1 product metadata in db
+2026-07-04 16:17:18,527 INFO: ##125/240: Saving or updating product - B07V9N2KRH
+2026-07-04 16:17:18,527 INFO: B07V9N2KRH: Product metadata is not available in table
+2026-07-04 16:17:18,599 INFO: B07V9N2KRH: Price of product is not tracked
+2026-07-04 16:17:18,613 INFO: B07V9N2KRH: Started tracking price of product - 64.99
+2026-07-04 16:17:18,638 INFO: B07V9N2KRH: Rating of product is not tracked
+2026-07-04 16:17:18,654 INFO: B07V9N2KRH: Started tracking rating of product - 4.6
+2026-07-04 16:17:18,654 INFO: B07V9N2KRH: Saved 1 product metadata in db
+2026-07-04 16:17:18,654 INFO: ##126/240: Saving or updating product - B078C4TDKP
+2026-07-04 16:17:18,672 INFO: B078C4TDKP: Product metadata is not available in table
+2026-07-04 16:17:18,733 INFO: B078C4TDKP: Price of product is not tracked
+2026-07-04 16:17:18,750 INFO: B078C4TDKP: Started tracking price of product - 143.99
+2026-07-04 16:17:18,819 INFO: B078C4TDKP: Rating of product is not tracked
+2026-07-04 16:17:18,830 INFO: B078C4TDKP: Started tracking rating of product - 4.8
+2026-07-04 16:17:18,830 INFO: B078C4TDKP: Saved 1 product metadata in db
+2026-07-04 16:17:18,830 INFO: ##127/240: Saving or updating product - B0FT2QJZRQ
+2026-07-04 16:17:18,868 INFO: B0FT2QJZRQ: Product metadata is not available in table
+2026-07-04 16:17:18,942 INFO: B0FT2QJZRQ: Price of product is not tracked
+2026-07-04 16:17:18,958 INFO: B0FT2QJZRQ: Started tracking price of product - 39.98
+2026-07-04 16:17:19,038 INFO: B0FT2QJZRQ: Rating of product is not tracked
+2026-07-04 16:17:19,055 INFO: B0FT2QJZRQ: Started tracking rating of product - 4.6
+2026-07-04 16:17:19,055 INFO: B0FT2QJZRQ: Saved 1 product metadata in db
+2026-07-04 16:17:19,055 INFO: ##128/240: Saving or updating product - B07P77K6WS
+2026-07-04 16:17:19,071 INFO: B07P77K6WS: Product metadata is not available in table
+2026-07-04 16:17:19,151 INFO: B07P77K6WS: Price of product is not tracked
+2026-07-04 16:17:19,151 INFO: B07P77K6WS: Started tracking price of product - 72.99
+2026-07-04 16:17:19,223 INFO: B07P77K6WS: Rating of product is not tracked
+2026-07-04 16:17:19,232 INFO: B07P77K6WS: Started tracking rating of product - 4.0
+2026-07-04 16:17:19,232 INFO: B07P77K6WS: Saved 1 product metadata in db
+2026-07-04 16:17:19,232 INFO: ##129/240: Saving or updating product - B0G72DZ51F
+2026-07-04 16:17:19,248 INFO: B0G72DZ51F: Product metadata is not available in table
+2026-07-04 16:17:19,328 INFO: B0G72DZ51F: Price of product is not tracked
+2026-07-04 16:17:19,344 INFO: B0G72DZ51F: Started tracking price of product - 26.99
+2026-07-04 16:17:19,392 INFO: B0G72DZ51F: Rating of product is not tracked
+2026-07-04 16:17:19,408 INFO: B0G72DZ51F: Started tracking rating of product - 4.5
+2026-07-04 16:17:19,408 INFO: B0G72DZ51F: Saved 1 product metadata in db
+2026-07-04 16:17:19,408 INFO: ##130/240: Saving or updating product - B0FSXLLLGJ
+2026-07-04 16:17:19,425 INFO: B0FSXLLLGJ: Product metadata is not available in table
+2026-07-04 16:17:19,488 INFO: B0FSXLLLGJ: Price of product is not tracked
+2026-07-04 16:17:19,504 INFO: B0FSXLLLGJ: Started tracking price of product - 25.64
+2026-07-04 16:17:19,553 INFO: B0FSXLLLGJ: Rating of product is not tracked
+2026-07-04 16:17:19,569 INFO: B0FSXLLLGJ: Started tracking rating of product - 4.8
+2026-07-04 16:17:19,569 INFO: B0FSXLLLGJ: Saved 1 product metadata in db
+2026-07-04 16:17:19,569 INFO: ##131/240: Saving or updating product - B01MG243J2
+2026-07-04 16:17:19,577 INFO: B01MG243J2: Product metadata is not available in table
+2026-07-04 16:17:19,633 INFO: B01MG243J2: Price of product is not tracked
+2026-07-04 16:17:19,649 INFO: B01MG243J2: Started tracking price of product - 35.99
+2026-07-04 16:17:19,697 INFO: B01MG243J2: Rating of product is not tracked
+2026-07-04 16:17:19,697 INFO: B01MG243J2: Started tracking rating of product - 4.5
+2026-07-04 16:17:19,697 INFO: B01MG243J2: Saved 1 product metadata in db
+2026-07-04 16:17:19,697 INFO: ##132/240: Saving or updating product - B0GXRY5TRP
+2026-07-04 16:17:19,714 INFO: B0GXRY5TRP: Product metadata is not available in table
+2026-07-04 16:17:19,779 INFO: B0GXRY5TRP: Price of product is not tracked
+2026-07-04 16:17:19,794 INFO: B0GXRY5TRP: Started tracking price of product - 49.99
+2026-07-04 16:17:19,842 INFO: B0GXRY5TRP: Rating of product is not tracked
+2026-07-04 16:17:19,842 INFO: B0GXRY5TRP: Started tracking rating of product - 5.0
+2026-07-04 16:17:19,842 INFO: B0GXRY5TRP: Saved 1 product metadata in db
+2026-07-04 16:17:19,842 INFO: ##133/240: Saving or updating product - B08RY68WSJ
+2026-07-04 16:17:19,858 INFO: B08RY68WSJ: Product metadata is not available in table
+2026-07-04 16:17:19,923 INFO: B08RY68WSJ: Price of product is not tracked
+2026-07-04 16:17:19,939 INFO: B08RY68WSJ: Started tracking price of product - 39.99
+2026-07-04 16:17:19,987 INFO: B08RY68WSJ: Rating of product is not tracked
+2026-07-04 16:17:19,987 INFO: B08RY68WSJ: Started tracking rating of product - 4.6
+2026-07-04 16:17:20,004 INFO: B08RY68WSJ: Saved 1 product metadata in db
+2026-07-04 16:17:20,004 INFO: ##134/240: Saving or updating product - B07N541J2P
+2026-07-04 16:17:20,004 INFO: B07N541J2P: Product metadata is not available in table
+2026-07-04 16:17:20,068 INFO: B07N541J2P: Price of product is not tracked
+2026-07-04 16:17:20,084 INFO: B07N541J2P: Started tracking price of product - 139.99
+2026-07-04 16:17:20,132 INFO: B07N541J2P: Rating of product is not tracked
+2026-07-04 16:17:20,149 INFO: B07N541J2P: Started tracking rating of product - 4.6
+2026-07-04 16:17:20,149 INFO: B07N541J2P: Saved 1 product metadata in db
+2026-07-04 16:17:20,149 INFO: ##135/240: Saving or updating product - B07KYFRN21
+2026-07-04 16:17:20,149 INFO: B07KYFRN21: Product metadata is not available in table
+2026-07-04 16:17:20,213 INFO: B07KYFRN21: Price of product is not tracked
+2026-07-04 16:17:20,213 INFO: B07KYFRN21: Started tracking price of product - 75.99
+2026-07-04 16:17:20,278 INFO: B07KYFRN21: Rating of product is not tracked
+2026-07-04 16:17:20,294 INFO: B07KYFRN21: Started tracking rating of product - 4.3
+2026-07-04 16:17:20,294 INFO: B07KYFRN21: Saved 1 product metadata in db
+2026-07-04 16:17:20,294 INFO: ##136/240: Saving or updating product - B0BLDZC6MS
+2026-07-04 16:17:20,298 INFO: B0BLDZC6MS: Product metadata is not available in table
+2026-07-04 16:17:20,358 INFO: B0BLDZC6MS: Price of product is not tracked
+2026-07-04 16:17:20,374 INFO: B0BLDZC6MS: Started tracking price of product - 88.8
+2026-07-04 16:17:20,422 INFO: B0BLDZC6MS: Rating of product is not tracked
+2026-07-04 16:17:20,438 INFO: B0BLDZC6MS: Started tracking rating of product - 4.7
+2026-07-04 16:17:20,438 INFO: B0BLDZC6MS: Saved 1 product metadata in db
+2026-07-04 16:17:20,438 INFO: ##137/240: Saving or updating product - B0FQTRP4DM
+2026-07-04 16:17:20,455 INFO: B0FQTRP4DM: Product metadata is not available in table
+2026-07-04 16:17:20,519 INFO: B0FQTRP4DM: Price of product is not tracked
+2026-07-04 16:17:20,519 INFO: B0FQTRP4DM: Started tracking price of product - 12.99
+2026-07-04 16:17:20,583 INFO: B0FQTRP4DM: Rating of product is not tracked
+2026-07-04 16:17:20,602 INFO: B0FQTRP4DM: Started tracking rating of product - 4.5
+2026-07-04 16:17:20,602 INFO: B0FQTRP4DM: Saved 1 product metadata in db
+2026-07-04 16:17:20,602 INFO: ##138/240: Saving or updating product - B0CJT85Q6N
+2026-07-04 16:17:20,602 INFO: B0CJT85Q6N: Product metadata is not available in table
+2026-07-04 16:17:20,663 INFO: B0CJT85Q6N: Price of product is not tracked
+2026-07-04 16:17:20,680 INFO: B0CJT85Q6N: Started tracking price of product - 63.99
+2026-07-04 16:17:20,728 INFO: B0CJT85Q6N: Rating of product is not tracked
+2026-07-04 16:17:20,728 INFO: B0CJT85Q6N: Started tracking rating of product - 4.8
+2026-07-04 16:17:20,728 INFO: B0CJT85Q6N: Saved 1 product metadata in db
+2026-07-04 16:17:20,728 INFO: ##139/240: Saving or updating product - B0CJ984LX7
+2026-07-04 16:17:20,753 INFO: B0CJ984LX7: Product metadata is not available in table
+2026-07-04 16:17:20,809 INFO: B0CJ984LX7: Price of product is not tracked
+2026-07-04 16:17:20,809 INFO: B0CJ984LX7: Started tracking price of product - 59.99
+2026-07-04 16:17:20,889 INFO: B0CJ984LX7: Rating of product is not tracked
+2026-07-04 16:17:20,889 INFO: B0CJ984LX7: Started tracking rating of product - 4.8
+2026-07-04 16:17:20,889 INFO: B0CJ984LX7: Saved 1 product metadata in db
+2026-07-04 16:17:20,889 INFO: ##140/240: Saving or updating product - B0GJLG4RQR
+2026-07-04 16:17:20,905 INFO: B0GJLG4RQR: Product metadata is not available in table
+2026-07-04 16:17:20,985 INFO: B0GJLG4RQR: Price of product is not tracked
+2026-07-04 16:17:20,985 INFO: B0GJLG4RQR: Started tracking price of product - 25.99
+2026-07-04 16:17:21,050 INFO: B0GJLG4RQR: Rating of product is not tracked
+2026-07-04 16:17:21,066 INFO: B0GJLG4RQR: Started tracking rating of product - 4.8
+2026-07-04 16:17:21,066 INFO: B0GJLG4RQR: Saved 1 product metadata in db
+2026-07-04 16:17:21,066 INFO: ##141/240: Saving or updating product - B07CS2TXK6
+2026-07-04 16:17:21,066 INFO: B07CS2TXK6: Product metadata is not available in table
+2026-07-04 16:17:21,131 INFO: B07CS2TXK6: Price of product is not tracked
+2026-07-04 16:17:21,147 INFO: B07CS2TXK6: Started tracking price of product - 17.99
+2026-07-04 16:17:21,195 INFO: B07CS2TXK6: Rating of product is not tracked
+2026-07-04 16:17:21,208 INFO: B07CS2TXK6: Started tracking rating of product - 4.1
+2026-07-04 16:17:21,208 INFO: B07CS2TXK6: Saved 1 product metadata in db
+2026-07-04 16:17:21,208 INFO: ##142/240: Saving or updating product - B0G8WX32JX
+2026-07-04 16:17:21,211 INFO: B0G8WX32JX: Product metadata is not available in table
+2026-07-04 16:17:21,275 INFO: B0G8WX32JX: Price of product is not tracked
+2026-07-04 16:17:21,291 INFO: B0G8WX32JX: Started tracking price of product - 36.79
+2026-07-04 16:17:21,340 INFO: B0G8WX32JX: Rating of product is not tracked
+2026-07-04 16:17:21,340 INFO: B0G8WX32JX: Started tracking rating of product - 4.8
+2026-07-04 16:17:21,340 INFO: B0G8WX32JX: Saved 1 product metadata in db
+2026-07-04 16:17:21,340 INFO: ##143/240: Saving or updating product - B0CDZ7XVP8
+2026-07-04 16:17:21,362 INFO: B0CDZ7XVP8: Product metadata is not available in table
+2026-07-04 16:17:21,419 INFO: B0CDZ7XVP8: Price of product is not tracked
+2026-07-04 16:17:21,435 INFO: B0CDZ7XVP8: Started tracking price of product - 119.0
+2026-07-04 16:17:21,484 INFO: B0CDZ7XVP8: Rating of product is not tracked
+2026-07-04 16:17:21,484 INFO: B0CDZ7XVP8: Started tracking rating of product - 4.5
+2026-07-04 16:17:21,500 INFO: B0CDZ7XVP8: Saved 1 product metadata in db
+2026-07-04 16:17:21,500 INFO: ##144/240: Saving or updating product - B09CMDJF48
+2026-07-04 16:17:21,509 INFO: B09CMDJF48: Product metadata is not available in table
+2026-07-04 16:17:21,580 INFO: B09CMDJF48: Price of product is not tracked
+2026-07-04 16:17:21,596 INFO: B09CMDJF48: Started tracking price of product - 61.23
+2026-07-04 16:17:21,676 INFO: B09CMDJF48: Rating of product is not tracked
+2026-07-04 16:17:21,692 INFO: B09CMDJF48: Started tracking rating of product - 4.5
+2026-07-04 16:17:21,692 INFO: B09CMDJF48: Saved 1 product metadata in db
+2026-07-04 16:17:21,692 INFO: ##145/240: Saving or updating product - B0CJT85Q6N
+2026-07-04 16:17:21,704 INFO: B0CJT85Q6N: Product metadata is available in table
+2026-07-04 16:17:21,713 INFO: B0CJT85Q6N: These fields are null in existing record in database - ['brand']
+2026-07-04 16:17:21,724 INFO: B0CJT85Q6N: Updated the values of following fields - ['currency']
+2026-07-04 16:17:21,764 INFO: B0CJT85Q6N: Price of product is tracked
+2026-07-04 16:17:21,772 INFO: B0CJT85Q6N: Last price - 64.0, Current price - 63.99
+2026-07-04 16:17:21,788 INFO: B0CJT85Q6N: Price change detected 64.0 \u2192 63.99
+2026-07-04 16:17:21,788 INFO: B0CJT85Q6N: Successfully recorded the price change in the database
+2026-07-04 16:17:21,836 INFO: B0CJT85Q6N: Rating of product is tracked
+2026-07-04 16:17:21,836 INFO: B0CJT85Q6N: Last rating - 4.8, Current rating - 4.8
+2026-07-04 16:17:21,836 INFO: B0CJT85Q6N: Rating unchanged (Current: 4.8, Last: 4.8), skipping insert.
+2026-07-04 16:17:21,836 INFO: B0CJT85Q6N: Updated the price and rating of product
+2026-07-04 16:17:21,836 INFO: ##146/240: Saving or updating product - B000UN267C
+2026-07-04 16:17:21,859 INFO: B000UN267C: Product metadata is available in table
+2026-07-04 16:17:21,865 INFO: B000UN267C: These fields are null in existing record in database - ['brand']
+2026-07-04 16:17:21,868 INFO: B000UN267C: Updated the values of following fields - ['currency']
+2026-07-04 16:17:21,916 INFO: B000UN267C: Price of product is tracked
+2026-07-04 16:17:21,932 INFO: B000UN267C: Last price - 160.0, Current price - 159.99
+2026-07-04 16:17:21,946 INFO: B000UN267C: Price change detected 160.0 \u2192 159.99
+2026-07-04 16:17:21,946 INFO: B000UN267C: Successfully recorded the price change in the database
+2026-07-04 16:17:21,996 INFO: B000UN267C: Rating of product is tracked
+2026-07-04 16:17:21,996 INFO: B000UN267C: Last rating - 4.5, Current rating - 4.5
+2026-07-04 16:17:22,014 INFO: B000UN267C: Rating unchanged (Current: 4.5, Last: 4.5), skipping insert.
+2026-07-04 16:17:22,014 INFO: B000UN267C: Updated the price and rating of product
+2026-07-04 16:17:22,014 INFO: ##147/240: Saving or updating product - B0GGZGDV92
+2026-07-04 16:17:22,018 INFO: B0GGZGDV92: Product metadata is not available in table
+2026-07-04 16:17:22,075 INFO: B0GGZGDV92: Price of product is not tracked
+2026-07-04 16:17:22,092 INFO: B0GGZGDV92: Started tracking price of product - 29.99
+2026-07-04 16:17:22,139 INFO: B0GGZGDV92: Rating of product is not tracked
+2026-07-04 16:17:22,139 INFO: B0GGZGDV92: Started tracking rating of product - 4.5
+2026-07-04 16:17:22,139 INFO: B0GGZGDV92: Saved 1 product metadata in db
+2026-07-04 16:17:22,139 INFO: ##148/240: Saving or updating product - B0BRXXNJ5L
+2026-07-04 16:17:22,156 INFO: B0BRXXNJ5L: Product metadata is not available in table
+2026-07-04 16:17:22,219 INFO: B0BRXXNJ5L: Price of product is not tracked
+2026-07-04 16:17:22,235 INFO: B0BRXXNJ5L: Started tracking price of product - 27.99
+2026-07-04 16:17:22,283 INFO: B0BRXXNJ5L: Rating of product is not tracked
+2026-07-04 16:17:22,283 INFO: B0BRXXNJ5L: Started tracking rating of product - 4.6
+2026-07-04 16:17:22,283 INFO: B0BRXXNJ5L: Saved 1 product metadata in db
+2026-07-04 16:17:22,283 INFO: ##149/240: Saving or updating product - B0CJ984LX7
+2026-07-04 16:17:22,308 INFO: B0CJ984LX7: Product metadata is available in table
+2026-07-04 16:17:22,310 INFO: B0CJ984LX7: These fields are null in existing record in database - ['brand']
+2026-07-04 16:17:22,319 INFO: B0CJ984LX7: Updated the values of following fields - ['currency']
+2026-07-04 16:17:22,369 INFO: B0CJ984LX7: Price of product is tracked
+2026-07-04 16:17:22,369 INFO: B0CJ984LX7: Last price - 60.0, Current price - 59.99
+2026-07-04 16:17:22,379 INFO: B0CJ984LX7: Price change detected 60.0 \u2192 59.99
+2026-07-04 16:17:22,379 INFO: B0CJ984LX7: Successfully recorded the price change in the database
+2026-07-04 16:17:22,427 INFO: B0CJ984LX7: Rating of product is tracked
+2026-07-04 16:17:22,427 INFO: B0CJ984LX7: Last rating - 4.8, Current rating - 4.8
+2026-07-04 16:17:22,427 INFO: B0CJ984LX7: Rating unchanged (Current: 4.8, Last: 4.8), skipping insert.
+2026-07-04 16:17:22,427 INFO: B0CJ984LX7: Updated the price and rating of product
+2026-07-04 16:17:22,427 INFO: ##150/240: Saving or updating product - B0G8WX32JX
+2026-07-04 16:17:22,450 INFO: B0G8WX32JX: Product metadata is available in table
+2026-07-04 16:17:22,452 INFO: B0G8WX32JX: These fields are null in existing record in database - ['brand']
+2026-07-04 16:17:22,459 INFO: B0G8WX32JX: Updated the values of following fields - ['currency']
+2026-07-04 16:17:22,523 INFO: B0G8WX32JX: Price of product is tracked
+2026-07-04 16:17:22,523 INFO: B0G8WX32JX: Last price - 37.0, Current price - 36.79
+2026-07-04 16:17:22,539 INFO: B0G8WX32JX: Price change detected 37.0 \u2192 36.79
+2026-07-04 16:17:22,539 INFO: B0G8WX32JX: Successfully recorded the price change in the database
+2026-07-04 16:17:22,603 INFO: B0G8WX32JX: Rating of product is tracked
+2026-07-04 16:17:22,603 INFO: B0G8WX32JX: Last rating - 4.8, Current rating - 4.8
+2026-07-04 16:17:22,622 INFO: B0G8WX32JX: Rating unchanged (Current: 4.8, Last: 4.8), skipping insert.
+2026-07-04 16:17:22,622 INFO: B0G8WX32JX: Updated the price and rating of product
+2026-07-04 16:17:22,622 INFO: ##151/240: Saving or updating product - B0FWGNGPZJ
+2026-07-04 16:17:22,622 INFO: B0FWGNGPZJ: Product metadata is not available in table
+2026-07-04 16:17:22,683 INFO: B0FWGNGPZJ: Price of product is not tracked
+2026-07-04 16:17:22,699 INFO: B0FWGNGPZJ: Started tracking price of product - 128.0
+2026-07-04 16:17:22,748 INFO: B0FWGNGPZJ: Rating of product is not tracked
+2026-07-04 16:17:22,764 INFO: B0FWGNGPZJ: Started tracking rating of product - 3.9
+2026-07-04 16:17:22,764 INFO: B0FWGNGPZJ: Saved 1 product metadata in db
+2026-07-04 16:17:22,764 INFO: ##152/240: Saving or updating product - B0FF1VFZ5Q
+2026-07-04 16:17:22,773 INFO: B0FF1VFZ5Q: Product metadata is available in table
+2026-07-04 16:17:22,780 INFO: B0FF1VFZ5Q: These fields are null in existing record in database - ['brand']
+2026-07-04 16:17:22,780 INFO: B0FF1VFZ5Q: Updated the values of following fields - ['currency']
+2026-07-04 16:17:22,845 INFO: B0FF1VFZ5Q: Price of product is tracked
+2026-07-04 16:17:22,845 INFO: B0FF1VFZ5Q: Last price - 10.0, Current price - 9.99
+2026-07-04 16:17:22,874 INFO: B0FF1VFZ5Q: Price change detected 10.0 \u2192 9.99
+2026-07-04 16:17:22,874 INFO: B0FF1VFZ5Q: Successfully recorded the price change in the database
+2026-07-04 16:17:22,941 INFO: B0FF1VFZ5Q: Rating of product is tracked
+2026-07-04 16:17:22,941 INFO: B0FF1VFZ5Q: Last rating - 4.2, Current rating - 4.2
+2026-07-04 16:17:22,941 INFO: B0FF1VFZ5Q: Rating unchanged (Current: 4.2, Last: 4.2), skipping insert.
+2026-07-04 16:17:22,941 INFO: B0FF1VFZ5Q: Updated the price and rating of product
+2026-07-04 16:17:22,941 INFO: ##153/240: Saving or updating product - B0FVY2PQZD
+2026-07-04 16:17:22,957 INFO: B0FVY2PQZD: Product metadata is not available in table
+2026-07-04 16:17:23,038 INFO: B0FVY2PQZD: Price of product is not tracked
+2026-07-04 16:17:23,038 INFO: B0FVY2PQZD: Started tracking price of product - 35.99
+2026-07-04 16:17:23,106 INFO: B0FVY2PQZD: Rating of product is not tracked
+2026-07-04 16:17:23,123 INFO: B0FVY2PQZD: Started tracking rating of product - 4.7
+2026-07-04 16:17:23,123 INFO: B0FVY2PQZD: Saved 1 product metadata in db
+2026-07-04 16:17:23,123 INFO: ##154/240: Saving or updating product - B0FVSTTGCW
+2026-07-04 16:17:23,127 INFO: B0FVSTTGCW: Product metadata is not available in table
+2026-07-04 16:17:23,185 INFO: B0FVSTTGCW: Price of product is not tracked
+2026-07-04 16:17:23,194 INFO: B0FVSTTGCW: Started tracking price of product - 15.99
+2026-07-04 16:17:23,256 INFO: B0FVSTTGCW: Rating of product is not tracked
+2026-07-04 16:17:23,272 INFO: B0FVSTTGCW: Started tracking rating of product - 4.4
+2026-07-04 16:17:23,272 INFO: B0FVSTTGCW: Saved 1 product metadata in db
+2026-07-04 16:17:23,272 INFO: ##155/240: Saving or updating product - B09CMDJF48
+2026-07-04 16:17:23,278 INFO: B09CMDJF48: Product metadata is available in table
+2026-07-04 16:17:23,278 INFO: B09CMDJF48: These fields are null in existing record in database - ['brand']
+2026-07-04 16:17:23,288 INFO: B09CMDJF48: Updated the values of following fields - ['currency']
+2026-07-04 16:17:23,336 INFO: B09CMDJF48: Price of product is tracked
+2026-07-04 16:17:23,336 INFO: B09CMDJF48: Last price - 61.0, Current price - 61.23
+2026-07-04 16:17:23,352 INFO: B09CMDJF48: Price change detected 61.0 \u2192 61.23
+2026-07-04 16:17:23,352 INFO: B09CMDJF48: Successfully recorded the price change in the database
+2026-07-04 16:17:23,400 INFO: B09CMDJF48: Rating of product is tracked
+2026-07-04 16:17:23,400 INFO: B09CMDJF48: Last rating - 4.5, Current rating - 4.5
+2026-07-04 16:17:23,416 INFO: B09CMDJF48: Rating unchanged (Current: 4.5, Last: 4.5), skipping insert.
+2026-07-04 16:17:23,416 INFO: B09CMDJF48: Updated the price and rating of product
+2026-07-04 16:17:23,416 INFO: ##156/240: Saving or updating product - B0C6MVDDSQ
+2026-07-04 16:17:23,416 INFO: B0C6MVDDSQ: Product metadata is not available in table
+2026-07-04 16:17:23,480 INFO: B0C6MVDDSQ: Price of product is not tracked
+2026-07-04 16:17:23,480 INFO: B0C6MVDDSQ: Started tracking price of product - 78.29
+2026-07-04 16:17:23,544 INFO: B0C6MVDDSQ: Rating of product is not tracked
+2026-07-04 16:17:23,560 INFO: B0C6MVDDSQ: Started tracking rating of product - 4.5
+2026-07-04 16:17:23,560 INFO: B0C6MVDDSQ: Saved 1 product metadata in db
+2026-07-04 16:17:23,560 INFO: ##157/240: Saving or updating product - B07PJK56FP
+2026-07-04 16:17:23,560 INFO: B07PJK56FP: Product metadata is not available in table
+2026-07-04 16:17:23,624 INFO: B07PJK56FP: Price of product is not tracked
+2026-07-04 16:17:23,640 INFO: B07PJK56FP: Started tracking price of product - 20.99
+2026-07-04 16:17:23,682 INFO: B07PJK56FP: Rating of product is not tracked
+2026-07-04 16:17:23,693 INFO: B07PJK56FP: Started tracking rating of product - 4.4
+2026-07-04 16:17:23,695 INFO: B07PJK56FP: Saved 1 product metadata in db
+2026-07-04 16:17:23,695 INFO: ##158/240: Saving or updating product - B0G4L2BL55
+2026-07-04 16:17:23,701 INFO: B0G4L2BL55: Product metadata is not available in table
+2026-07-04 16:17:23,775 INFO: B0G4L2BL55: Price of product is not tracked
+2026-07-04 16:17:23,784 INFO: B0G4L2BL55: Started tracking price of product - 49.99
+2026-07-04 16:17:23,834 INFO: B0G4L2BL55: Rating of product is not tracked
+2026-07-04 16:17:23,846 INFO: B0G4L2BL55: Started tracking rating of product - 4.7
+2026-07-04 16:17:23,846 INFO: B0G4L2BL55: Saved 1 product metadata in db
+2026-07-04 16:17:23,846 INFO: ##159/240: Saving or updating product - B0GJLGVKHB
+2026-07-04 16:17:23,856 INFO: B0GJLGVKHB: Product metadata is not available in table
+2026-07-04 16:17:23,922 INFO: B0GJLGVKHB: Price of product is not tracked
+2026-07-04 16:17:23,935 INFO: B0GJLGVKHB: Started tracking price of product - 25.99
+2026-07-04 16:17:23,989 INFO: B0GJLGVKHB: Rating of product is not tracked
+2026-07-04 16:17:23,999 INFO: B0GJLGVKHB: Started tracking rating of product - 4.8
+2026-07-04 16:17:23,999 INFO: B0GJLGVKHB: Saved 1 product metadata in db
+2026-07-04 16:17:23,999 INFO: ##160/240: Saving or updating product - B0GX5MQ71R
+2026-07-04 16:17:24,008 INFO: B0GX5MQ71R: Product metadata is not available in table
+2026-07-04 16:17:24,064 INFO: B0GX5MQ71R: Price of product is not tracked
+2026-07-04 16:17:24,074 INFO: B0GX5MQ71R: Started tracking price of product - 25.64
+2026-07-04 16:17:24,143 INFO: B0GX5MQ71R: Rating of product is not tracked
+2026-07-04 16:17:24,154 INFO: B0GX5MQ71R: Started tracking rating of product - 4.4
+2026-07-04 16:17:24,154 INFO: B0GX5MQ71R: Saved 1 product metadata in db
+2026-07-04 16:17:24,154 INFO: ##161/240: Saving or updating product - B0FWGGTT6Y
+2026-07-04 16:17:24,163 INFO: B0FWGGTT6Y: Product metadata is not available in table
+2026-07-04 16:17:24,235 INFO: B0FWGGTT6Y: Price of product is not tracked
+2026-07-04 16:17:24,245 INFO: B0FWGGTT6Y: Started tracking price of product - 268.0
+2026-07-04 16:17:24,310 INFO: B0FWGGTT6Y: Rating of product is not tracked
+2026-07-04 16:17:24,319 INFO: B0FWGGTT6Y: Started tracking rating of product - 4.7
+2026-07-04 16:17:24,320 INFO: B0FWGGTT6Y: Saved 1 product metadata in db
+2026-07-04 16:17:24,320 INFO: ##162/240: Saving or updating product - B07LC7C3NG
+2026-07-04 16:17:24,330 INFO: B07LC7C3NG: Product metadata is not available in table
+2026-07-04 16:17:24,401 INFO: B07LC7C3NG: Price of product is not tracked
+2026-07-04 16:17:24,404 INFO: B07LC7C3NG: Started tracking price of product - 112.74
+2026-07-04 16:17:24,467 INFO: B07LC7C3NG: Rating of product is not tracked
+2026-07-04 16:17:24,484 INFO: B07LC7C3NG: Started tracking rating of product - 4.7
+2026-07-04 16:17:24,484 INFO: B07LC7C3NG: Saved 1 product metadata in db
+2026-07-04 16:17:24,484 INFO: ##163/240: Saving or updating product - B0DXFHSFHJ
+2026-07-04 16:17:24,490 INFO: B0DXFHSFHJ: Product metadata is not available in table
+2026-07-04 16:17:24,555 INFO: B0DXFHSFHJ: Price of product is not tracked
+2026-07-04 16:17:24,564 INFO: B0DXFHSFHJ: Started tracking price of product - 48.99
+2026-07-04 16:17:24,628 INFO: B0DXFHSFHJ: Rating of product is not tracked
+2026-07-04 16:17:24,637 INFO: B0DXFHSFHJ: Started tracking rating of product - 4.4
+2026-07-04 16:17:24,639 INFO: B0DXFHSFHJ: Saved 1 product metadata in db
+2026-07-04 16:17:24,639 INFO: ##164/240: Saving or updating product - B0BLBM99XG
+2026-07-04 16:17:24,649 INFO: B0BLBM99XG: Product metadata is not available in table
+2026-07-04 16:17:24,704 INFO: B0BLBM99XG: Price of product is not tracked
+2026-07-04 16:17:24,714 INFO: B0BLBM99XG: Started tracking price of product - 69.99
+2026-07-04 16:17:24,757 INFO: B0BLBM99XG: Rating of product is not tracked
+2026-07-04 16:17:24,757 INFO: B0BLBM99XG: Started tracking rating of product - 4.6
+2026-07-04 16:17:24,757 INFO: B0BLBM99XG: Saved 1 product metadata in db
+2026-07-04 16:17:24,757 INFO: ##165/240: Saving or updating product - B0FXWYSMCR
+2026-07-04 16:17:24,775 INFO: B0FXWYSMCR: Product metadata is not available in table
+2026-07-04 16:17:24,834 INFO: B0FXWYSMCR: Price of product is not tracked
+2026-07-04 16:17:24,837 INFO: B0FXWYSMCR: Started tracking price of product - 39.99
+2026-07-04 16:17:24,950 INFO: B0FXWYSMCR: Rating of product is not tracked
+2026-07-04 16:17:24,966 INFO: B0FXWYSMCR: Started tracking rating of product - 4.6
+2026-07-04 16:17:24,966 INFO: B0FXWYSMCR: Saved 1 product metadata in db
+2026-07-04 16:17:24,966 INFO: ##166/240: Saving or updating product - B0FK871KH8
+2026-07-04 16:17:24,987 INFO: B0FK871KH8: Product metadata is not available in table
+2026-07-04 16:17:25,064 INFO: B0FK871KH8: Price of product is not tracked
+2026-07-04 16:17:25,071 INFO: B0FK871KH8: Started tracking price of product - 29.99
+2026-07-04 16:17:25,118 INFO: B0FK871KH8: Rating of product is not tracked
+2026-07-04 16:17:25,134 INFO: B0FK871KH8: Started tracking rating of product - 5.0
+2026-07-04 16:17:25,134 INFO: B0FK871KH8: Saved 1 product metadata in db
+2026-07-04 16:17:25,134 INFO: ##167/240: Saving or updating product - B0FT8HLHJG
+2026-07-04 16:17:25,150 INFO: B0FT8HLHJG: Product metadata is not available in table
+2026-07-04 16:17:25,213 INFO: B0FT8HLHJG: Price of product is not tracked
+2026-07-04 16:17:25,229 INFO: B0FT8HLHJG: Started tracking price of product - 116.99
+2026-07-04 16:17:25,277 INFO: B0FT8HLHJG: Rating of product is not tracked
+2026-07-04 16:17:25,303 INFO: B0FT8HLHJG: Started tracking rating of product - 5.0
+2026-07-04 16:17:25,304 INFO: B0FT8HLHJG: Saved 1 product metadata in db
+2026-07-04 16:17:25,304 INFO: ##168/240: Saving or updating product - B0GJ51K3JV
+2026-07-04 16:17:25,313 INFO: B0GJ51K3JV: Product metadata is not available in table
+2026-07-04 16:17:25,406 INFO: B0GJ51K3JV: Price of product is not tracked
+2026-07-04 16:17:25,423 INFO: B0GJ51K3JV: Started tracking price of product - 46.98
+2026-07-04 16:17:25,473 INFO: B0GJ51K3JV: Rating of product is not tracked
+2026-07-04 16:17:25,488 INFO: B0GJ51K3JV: Started tracking rating of product - 4.6
+2026-07-04 16:17:25,489 INFO: B0GJ51K3JV: Saved 1 product metadata in db
+2026-07-04 16:17:25,489 INFO: ##169/240: Saving or updating product - B0FV324FW5
+2026-07-04 16:17:25,491 INFO: B0FV324FW5: Product metadata is not available in table
+2026-07-04 16:17:25,570 INFO: B0FV324FW5: Price of product is not tracked
+2026-07-04 16:17:25,572 INFO: B0FV324FW5: Started tracking price of product - 45.99
+2026-07-04 16:17:25,640 INFO: B0FV324FW5: Rating of product is not tracked
+2026-07-04 16:17:25,656 INFO: B0FV324FW5: Started tracking rating of product - 4.6
+2026-07-04 16:17:25,656 INFO: B0FV324FW5: Saved 1 product metadata in db
+2026-07-04 16:17:25,656 INFO: ##170/240: Saving or updating product - B0FDFY94BB
+2026-07-04 16:17:25,656 INFO: B0FDFY94BB: Product metadata is not available in table
+2026-07-04 16:17:25,724 INFO: B0FDFY94BB: Price of product is not tracked
+2026-07-04 16:17:25,738 INFO: B0FDFY94BB: Started tracking price of product - 74.88
+2026-07-04 16:17:25,772 INFO: B0FDFY94BB: Rating of product is not tracked
+2026-07-04 16:17:25,791 INFO: B0FDFY94BB: Started tracking rating of product - 5.0
+2026-07-04 16:17:25,791 INFO: B0FDFY94BB: Saved 1 product metadata in db
+2026-07-04 16:17:25,791 INFO: ##171/240: Saving or updating product - B0FSSDZ2LG
+2026-07-04 16:17:25,805 INFO: B0FSSDZ2LG: Product metadata is not available in table
+2026-07-04 16:17:25,873 INFO: B0FSSDZ2LG: Price of product is not tracked
+2026-07-04 16:17:25,892 INFO: B0FSSDZ2LG: Started tracking price of product - 36.89
+2026-07-04 16:17:25,959 INFO: B0FSSDZ2LG: Rating of product is not tracked
+2026-07-04 16:17:25,973 INFO: B0FSSDZ2LG: Started tracking rating of product - 4.6
+2026-07-04 16:17:25,973 INFO: B0FSSDZ2LG: Saved 1 product metadata in db
+2026-07-04 16:17:25,973 INFO: ##172/240: Saving or updating product - B0CW5Z8R3H
+2026-07-04 16:17:25,990 INFO: B0CW5Z8R3H: Product metadata is not available in table
+2026-07-04 16:17:26,061 INFO: B0CW5Z8R3H: Price of product is not tracked
+2026-07-04 16:17:26,073 INFO: B0CW5Z8R3H: Started tracking price of product - 89.99
+2026-07-04 16:17:26,140 INFO: B0CW5Z8R3H: Rating of product is not tracked
+2026-07-04 16:17:26,156 INFO: B0CW5Z8R3H: Started tracking rating of product - 4.5
+2026-07-04 16:17:26,156 INFO: B0CW5Z8R3H: Saved 1 product metadata in db
+2026-07-04 16:17:26,156 INFO: ##173/240: Saving or updating product - B0GWCQ8Q8L
+2026-07-04 16:17:26,161 INFO: B0GWCQ8Q8L: Product metadata is not available in table
+2026-07-04 16:17:26,222 INFO: B0GWCQ8Q8L: Price of product is not tracked
+2026-07-04 16:17:26,240 INFO: B0GWCQ8Q8L: Started tracking price of product - 42.0
+2026-07-04 16:17:26,290 INFO: B0GWCQ8Q8L: Rating of product is not tracked
+2026-07-04 16:17:26,306 INFO: B0GWCQ8Q8L: Started tracking rating of product - 4.8
+2026-07-04 16:17:26,306 INFO: B0GWCQ8Q8L: Saved 1 product metadata in db
+2026-07-04 16:17:26,307 INFO: ##174/240: Saving or updating product - B0G58G9X63
+2026-07-04 16:17:26,313 INFO: B0G58G9X63: Product metadata is not available in table
+2026-07-04 16:17:26,373 INFO: B0G58G9X63: Price of product is not tracked
+2026-07-04 16:17:26,389 INFO: B0G58G9X63: Started tracking price of product - 31.98
+2026-07-04 16:17:26,439 INFO: B0G58G9X63: Rating of product is not tracked
+2026-07-04 16:17:26,456 INFO: B0G58G9X63: Started tracking rating of product - 4.6
+2026-07-04 16:17:26,457 INFO: B0G58G9X63: Saved 1 product metadata in db
+2026-07-04 16:17:26,457 INFO: ##175/240: Saving or updating product - B0G39ZPS4S
+2026-07-04 16:17:26,465 INFO: B0G39ZPS4S: Product metadata is not available in table
+2026-07-04 16:17:26,525 INFO: B0G39ZPS4S: Price of product is not tracked
+2026-07-04 16:17:26,534 INFO: B0G39ZPS4S: Started tracking price of product - 17.99
+2026-07-04 16:17:26,599 INFO: B0G39ZPS4S: Rating of product is not tracked
+2026-07-04 16:17:26,608 INFO: B0G39ZPS4S: Started tracking rating of product - 5.0
+2026-07-04 16:17:26,609 INFO: B0G39ZPS4S: Saved 1 product metadata in db
+2026-07-04 16:17:26,609 INFO: ##176/240: Saving or updating product - B0GM71CTPP
+2026-07-04 16:17:26,618 INFO: B0GM71CTPP: Product metadata is not available in table
+2026-07-04 16:17:26,672 INFO: B0GM71CTPP: Price of product is not tracked
+2026-07-04 16:17:26,688 INFO: B0GM71CTPP: Started tracking price of product - 17.58
+2026-07-04 16:17:26,753 INFO: B0GM71CTPP: Rating of product is not tracked
+2026-07-04 16:17:26,768 INFO: B0GM71CTPP: Started tracking rating of product - 4.6
+2026-07-04 16:17:26,768 INFO: B0GM71CTPP: Saved 1 product metadata in db
+2026-07-04 16:17:26,768 INFO: ##177/240: Saving or updating product - B0GZN1RXF6
+2026-07-04 16:17:26,784 INFO: B0GZN1RXF6: Product metadata is not available in table
+2026-07-04 16:17:26,856 INFO: B0GZN1RXF6: Price of product is not tracked
+2026-07-04 16:17:26,873 INFO: B0GZN1RXF6: Started tracking price of product - 24.99
+2026-07-04 16:17:26,923 INFO: B0GZN1RXF6: Rating of product is not tracked
+2026-07-04 16:17:26,940 INFO: B0GZN1RXF6: Started tracking rating of product - 4.6
+2026-07-04 16:17:26,940 INFO: B0GZN1RXF6: Saved 1 product metadata in db
+2026-07-04 16:17:26,940 INFO: ##178/240: Saving or updating product - B0DX77T3QR
+2026-07-04 16:17:26,955 INFO: B0DX77T3QR: Product metadata is not available in table
+2026-07-04 16:17:27,033 INFO: B0DX77T3QR: Price of product is not tracked
+2026-07-04 16:17:27,043 INFO: B0DX77T3QR: Started tracking price of product - 13.99
+2026-07-04 16:17:27,108 INFO: B0DX77T3QR: Rating of product is not tracked
+2026-07-04 16:17:27,116 INFO: B0DX77T3QR: Started tracking rating of product - 4.7
+2026-07-04 16:17:27,116 INFO: B0DX77T3QR: Saved 1 product metadata in db
+2026-07-04 16:17:27,117 INFO: ##179/240: Saving or updating product - B0G46Z2SVC
+2026-07-04 16:17:27,122 INFO: B0G46Z2SVC: Product metadata is not available in table
+2026-07-04 16:17:27,189 INFO: B0G46Z2SVC: Price of product is not tracked
+2026-07-04 16:17:27,198 INFO: B0G46Z2SVC: Started tracking price of product - 21.99
+2026-07-04 16:17:27,250 INFO: B0G46Z2SVC: Rating of product is not tracked
+2026-07-04 16:17:27,259 INFO: B0G46Z2SVC: Started tracking rating of product - 4.4
+2026-07-04 16:17:27,260 INFO: B0G46Z2SVC: Saved 1 product metadata in db
+2026-07-04 16:17:27,260 INFO: ##180/240: Saving or updating product - B0GYWN6Y85
+2026-07-04 16:17:27,269 INFO: B0GYWN6Y85: Product metadata is not available in table
+2026-07-04 16:17:27,358 INFO: B0GYWN6Y85: Price of product is not tracked
+2026-07-04 16:17:27,370 INFO: B0GYWN6Y85: Started tracking price of product - 59.99
+2026-07-04 16:17:27,432 ERROR: B0GYWN6Y85: Rating of product not tracked since it is None
+2026-07-04 16:17:27,438 INFO: B0GYWN6Y85: Saved 1 product metadata in db
+2026-07-04 16:17:27,438 INFO: ##181/240: Saving or updating product - B0GZVDW3R4
+2026-07-04 16:17:27,447 INFO: B0GZVDW3R4: Product metadata is not available in table
+2026-07-04 16:17:27,532 INFO: B0GZVDW3R4: Price of product is not tracked
+2026-07-04 16:17:27,542 INFO: B0GZVDW3R4: Started tracking price of product - 169.0
+2026-07-04 16:17:27,610 ERROR: B0GZVDW3R4: Rating of product not tracked since it is None
+2026-07-04 16:17:27,616 INFO: B0GZVDW3R4: Saved 1 product metadata in db
+2026-07-04 16:17:27,616 INFO: ##182/240: Saving or updating product - B0GVVX54GT
+2026-07-04 16:17:27,626 INFO: B0GVVX54GT: Product metadata is not available in table
+2026-07-04 16:17:27,688 INFO: B0GVVX54GT: Price of product is not tracked
+2026-07-04 16:17:27,712 INFO: B0GVVX54GT: Started tracking price of product - 36.99
+2026-07-04 16:17:27,772 INFO: B0GVVX54GT: Rating of product is not tracked
+2026-07-04 16:17:27,784 INFO: B0GVVX54GT: Started tracking rating of product - 4.9
+2026-07-04 16:17:27,784 INFO: B0GVVX54GT: Saved 1 product metadata in db
+2026-07-04 16:17:27,785 INFO: ##183/240: Saving or updating product - B0G4RJ1SRP
+2026-07-04 16:17:27,794 INFO: B0G4RJ1SRP: Product metadata is not available in table
+2026-07-04 16:17:27,857 INFO: B0G4RJ1SRP: Price of product is not tracked
+2026-07-04 16:17:27,874 INFO: B0G4RJ1SRP: Started tracking price of product - 28.59
+2026-07-04 16:17:27,928 INFO: B0G4RJ1SRP: Rating of product is not tracked
+2026-07-04 16:17:27,940 INFO: B0G4RJ1SRP: Started tracking rating of product - 5.0
+2026-07-04 16:17:27,940 INFO: B0G4RJ1SRP: Saved 1 product metadata in db
+2026-07-04 16:17:27,940 INFO: ##184/240: Saving or updating product - B0GWGWMSVJ
+2026-07-04 16:17:27,950 INFO: B0GWGWMSVJ: Product metadata is not available in table
+2026-07-04 16:17:28,007 INFO: B0GWGWMSVJ: Price of product is not tracked
+2026-07-04 16:17:28,029 INFO: B0GWGWMSVJ: Started tracking price of product - 32.99
+2026-07-04 16:17:28,087 INFO: B0GWGWMSVJ: Rating of product is not tracked
+2026-07-04 16:17:28,106 INFO: B0GWGWMSVJ: Started tracking rating of product - 4.9
+2026-07-04 16:17:28,106 INFO: B0GWGWMSVJ: Saved 1 product metadata in db
+2026-07-04 16:17:28,106 INFO: ##185/240: Saving or updating product - B0H1GXVPCB
+2026-07-04 16:17:28,106 INFO: B0H1GXVPCB: Product metadata is not available in table
+2026-07-04 16:17:28,181 INFO: B0H1GXVPCB: Price of product is not tracked
+2026-07-04 16:17:28,188 INFO: B0H1GXVPCB: Started tracking price of product - 34.99
+2026-07-04 16:17:28,238 ERROR: B0H1GXVPCB: Rating of product not tracked since it is None
+2026-07-04 16:17:28,238 INFO: B0H1GXVPCB: Saved 1 product metadata in db
+2026-07-04 16:17:28,238 INFO: ##186/240: Saving or updating product - B0GSBL6KZV
+2026-07-04 16:17:28,255 INFO: B0GSBL6KZV: Product metadata is not available in table
+2026-07-04 16:17:28,333 INFO: B0GSBL6KZV: Price of product is not tracked
+2026-07-04 16:17:28,344 INFO: B0GSBL6KZV: Started tracking price of product - 34.98
+2026-07-04 16:17:28,404 INFO: B0GSBL6KZV: Rating of product is not tracked
+2026-07-04 16:17:28,421 INFO: B0GSBL6KZV: Started tracking rating of product - 4.7
+2026-07-04 16:17:28,421 INFO: B0GSBL6KZV: Saved 1 product metadata in db
+2026-07-04 16:17:28,421 INFO: ##187/240: Saving or updating product - B0GZMVTH2V
+2026-07-04 16:17:28,438 INFO: B0GZMVTH2V: Product metadata is not available in table
+2026-07-04 16:17:28,514 INFO: B0GZMVTH2V: Price of product is not tracked
+2026-07-04 16:17:28,523 INFO: B0GZMVTH2V: Started tracking price of product - 24.99
+2026-07-04 16:17:28,600 INFO: B0GZMVTH2V: Rating of product is not tracked
+2026-07-04 16:17:28,610 INFO: B0GZMVTH2V: Started tracking rating of product - 4.6
+2026-07-04 16:17:28,610 INFO: B0GZMVTH2V: Saved 1 product metadata in db
+2026-07-04 16:17:28,611 INFO: ##188/240: Saving or updating product - B0G24B2ZZ9
+2026-07-04 16:17:28,620 INFO: B0G24B2ZZ9: Product metadata is not available in table
+2026-07-04 16:17:28,691 INFO: B0G24B2ZZ9: Price of product is not tracked
+2026-07-04 16:17:28,708 INFO: B0G24B2ZZ9: Started tracking price of product - 26.59
+2026-07-04 16:17:28,777 INFO: B0G24B2ZZ9: Rating of product is not tracked
+2026-07-04 16:17:28,788 INFO: B0G24B2ZZ9: Started tracking rating of product - 4.7
+2026-07-04 16:17:28,789 INFO: B0G24B2ZZ9: Saved 1 product metadata in db
+2026-07-04 16:17:28,789 INFO: ##189/240: Saving or updating product - B0FV7P3R2H
+2026-07-04 16:17:28,798 INFO: B0FV7P3R2H: Product metadata is not available in table
+2026-07-04 16:17:28,885 INFO: B0FV7P3R2H: Price of product is not tracked
+2026-07-04 16:17:28,894 INFO: B0FV7P3R2H: Started tracking price of product - 54.4
+2026-07-04 16:17:28,969 INFO: B0FV7P3R2H: Rating of product is not tracked
+2026-07-04 16:17:28,978 INFO: B0FV7P3R2H: Started tracking rating of product - 4.4
+2026-07-04 16:17:28,979 INFO: B0FV7P3R2H: Saved 1 product metadata in db
+2026-07-04 16:17:28,979 INFO: ##190/240: Saving or updating product - B0H4RV932Q
+2026-07-04 16:17:28,989 INFO: B0H4RV932Q: Product metadata is not available in table
+2026-07-04 16:17:29,061 INFO: B0H4RV932Q: Price of product is not tracked
+2026-07-04 16:17:29,071 INFO: B0H4RV932Q: Started tracking price of product - 98.0
+2026-07-04 16:17:29,149 INFO: B0H4RV932Q: Rating of product is not tracked
+2026-07-04 16:17:29,159 INFO: B0H4RV932Q: Started tracking rating of product - 4.6
+2026-07-04 16:17:29,159 INFO: B0H4RV932Q: Saved 1 product metadata in db
+2026-07-04 16:17:29,160 INFO: ##191/240: Saving or updating product - B0GTG63BBZ
+2026-07-04 16:17:29,168 INFO: B0GTG63BBZ: Product metadata is not available in table
+2026-07-04 16:17:29,222 INFO: B0GTG63BBZ: Price of product is not tracked
+2026-07-04 16:17:29,231 INFO: B0GTG63BBZ: Started tracking price of product - 72.25
+2026-07-04 16:17:29,272 ERROR: B0GTG63BBZ: Rating of product not tracked since it is None
+2026-07-04 16:17:29,276 INFO: B0GTG63BBZ: Saved 1 product metadata in db
+2026-07-04 16:17:29,276 INFO: ##192/240: Saving or updating product - B0G56RVM15
+2026-07-04 16:17:29,285 INFO: B0G56RVM15: Product metadata is not available in table
+2026-07-04 16:17:29,325 INFO: B0G56RVM15: Price of product is not tracked
+2026-07-04 16:17:29,341 INFO: B0G56RVM15: Started tracking price of product - 9.89
+2026-07-04 16:17:29,395 INFO: B0G56RVM15: Rating of product is not tracked
+2026-07-04 16:17:29,408 INFO: B0G56RVM15: Started tracking rating of product - 4.4
+2026-07-04 16:17:29,408 INFO: B0G56RVM15: Saved 1 product metadata in db
+2026-07-04 16:17:29,408 INFO: ##193/240: Saving or updating product - B0F7M3QMYP
+2026-07-04 16:17:29,417 INFO: B0F7M3QMYP: Product metadata is not available in table
+2026-07-04 16:17:29,472 INFO: B0F7M3QMYP: Price of product is not tracked
+2026-07-04 16:17:29,474 INFO: B0F7M3QMYP: Started tracking price of product - 32.4
+2026-07-04 16:17:29,520 INFO: B0F7M3QMYP: Rating of product is not tracked
+2026-07-04 16:17:29,522 INFO: B0F7M3QMYP: Started tracking rating of product - 4.8
+2026-07-04 16:17:29,522 INFO: B0F7M3QMYP: Saved 1 product metadata in db
+2026-07-04 16:17:29,522 INFO: ##194/240: Saving or updating product - B0GS9S7YQQ
+2026-07-04 16:17:29,539 INFO: B0GS9S7YQQ: Product metadata is not available in table
+2026-07-04 16:17:29,587 INFO: B0GS9S7YQQ: Price of product is not tracked
+2026-07-04 16:17:29,594 INFO: B0GS9S7YQQ: Started tracking price of product - 26.89
+2026-07-04 16:17:29,622 INFO: B0GS9S7YQQ: Rating of product is not tracked
+2026-07-04 16:17:29,644 INFO: B0GS9S7YQQ: Started tracking rating of product - 4.5
+2026-07-04 16:17:29,644 INFO: B0GS9S7YQQ: Saved 1 product metadata in db
+2026-07-04 16:17:29,644 INFO: ##195/240: Saving or updating product - B0GVS6947Z
+2026-07-04 16:17:29,655 INFO: B0GVS6947Z: Product metadata is not available in table
+2026-07-04 16:17:29,722 INFO: B0GVS6947Z: Price of product is not tracked
+2026-07-04 16:17:29,722 INFO: B0GVS6947Z: Started tracking price of product - 39.99
+2026-07-04 16:17:29,797 INFO: B0GVS6947Z: Rating of product is not tracked
+2026-07-04 16:17:29,805 INFO: B0GVS6947Z: Started tracking rating of product - 4.7
+2026-07-04 16:17:29,806 INFO: B0GVS6947Z: Saved 1 product metadata in db
+2026-07-04 16:17:29,806 INFO: ##196/240: Saving or updating product - B0GSZ8Y435
+2026-07-04 16:17:29,815 INFO: B0GSZ8Y435: Product metadata is not available in table
+2026-07-04 16:17:29,864 INFO: B0GSZ8Y435: Price of product is not tracked
+2026-07-04 16:17:29,875 INFO: B0GSZ8Y435: Started tracking price of product - 47.99
+2026-07-04 16:17:29,943 INFO: B0GSZ8Y435: Rating of product is not tracked
+2026-07-04 16:17:29,952 INFO: B0GSZ8Y435: Started tracking rating of product - 4.3
+2026-07-04 16:17:29,952 INFO: B0GSZ8Y435: Saved 1 product metadata in db
+2026-07-04 16:17:29,952 INFO: ##197/240: Saving or updating product - B0H2J58P6J
+2026-07-04 16:17:29,962 INFO: B0H2J58P6J: Product metadata is not available in table
+2026-07-04 16:17:30,037 INFO: B0H2J58P6J: Price of product is not tracked
+2026-07-04 16:17:30,047 INFO: B0H2J58P6J: Started tracking price of product - 11.99
+2026-07-04 16:17:30,105 INFO: B0H2J58P6J: Rating of product is not tracked
+2026-07-04 16:17:30,115 INFO: B0H2J58P6J: Started tracking rating of product - 4.1
+2026-07-04 16:17:30,115 INFO: B0H2J58P6J: Saved 1 product metadata in db
+2026-07-04 16:17:30,115 INFO: ##198/240: Saving or updating product - B0GHNSXGDT
+2026-07-04 16:17:30,124 INFO: B0GHNSXGDT: Product metadata is not available in table
+2026-07-04 16:17:30,205 INFO: B0GHNSXGDT: Price of product is not tracked
+2026-07-04 16:17:30,216 INFO: B0GHNSXGDT: Started tracking price of product - 35.99
+2026-07-04 16:17:30,271 INFO: B0GHNSXGDT: Rating of product is not tracked
+2026-07-04 16:17:30,272 INFO: B0GHNSXGDT: Started tracking rating of product - 4.8
+2026-07-04 16:17:30,272 INFO: B0GHNSXGDT: Saved 1 product metadata in db
+2026-07-04 16:17:30,272 INFO: ##199/240: Saving or updating product - B0FRXX6Q7S
+2026-07-04 16:17:30,289 INFO: B0FRXX6Q7S: Product metadata is not available in table
+2026-07-04 16:17:30,345 INFO: B0FRXX6Q7S: Price of product is not tracked
+2026-07-04 16:17:30,354 INFO: B0FRXX6Q7S: Started tracking price of product - 45.95
+2026-07-04 16:17:30,402 INFO: B0FRXX6Q7S: Rating of product is not tracked
+2026-07-04 16:17:30,410 INFO: B0FRXX6Q7S: Started tracking rating of product - 4.4
+2026-07-04 16:17:30,411 INFO: B0FRXX6Q7S: Saved 1 product metadata in db
+2026-07-04 16:17:30,411 INFO: ##200/240: Saving or updating product - B07XW171F9
+2026-07-04 16:17:30,421 INFO: B07XW171F9: Product metadata is available in table
+2026-07-04 16:17:30,426 INFO: B07XW171F9: These fields are null in existing record in database - ['brand']
+2026-07-04 16:17:30,436 INFO: B07XW171F9: Updated the values of following fields - ['currency']
+2026-07-04 16:17:30,484 INFO: B07XW171F9: Price of product is tracked
+2026-07-04 16:17:30,489 INFO: B07XW171F9: Last price - 150.0, Current price - 150.49
+2026-07-04 16:17:30,504 INFO: B07XW171F9: Price change detected 150.0 \u2192 150.49
+2026-07-04 16:17:30,504 INFO: B07XW171F9: Successfully recorded the price change in the database
+2026-07-04 16:17:30,561 INFO: B07XW171F9: Rating of product is tracked
+2026-07-04 16:17:30,565 INFO: B07XW171F9: Last rating - 4.5, Current rating - 4.5
+2026-07-04 16:17:30,570 INFO: B07XW171F9: Rating unchanged (Current: 4.5, Last: 4.5), skipping insert.
+2026-07-04 16:17:30,571 INFO: B07XW171F9: Updated the price and rating of product
+2026-07-04 16:17:30,571 INFO: ##201/240: Saving or updating product - B0H2CSJDX3
+2026-07-04 16:17:30,585 INFO: B0H2CSJDX3: Product metadata is not available in table
+2026-07-04 16:17:30,638 INFO: B0H2CSJDX3: Price of product is not tracked
+2026-07-04 16:17:30,650 INFO: B0H2CSJDX3: Started tracking price of product - 59.99
+2026-07-04 16:17:30,705 INFO: B0H2CSJDX3: Rating of product is not tracked
+2026-07-04 16:17:30,714 INFO: B0H2CSJDX3: Started tracking rating of product - 4.7
+2026-07-04 16:17:30,714 INFO: B0H2CSJDX3: Saved 1 product metadata in db
+2026-07-04 16:17:30,714 INFO: ##202/240: Saving or updating product - B0GLFMK4YJ
+2026-07-04 16:17:30,724 INFO: B0GLFMK4YJ: Product metadata is not available in table
+2026-07-04 16:17:30,773 INFO: B0GLFMK4YJ: Price of product is not tracked
+2026-07-04 16:17:30,783 INFO: B0GLFMK4YJ: Started tracking price of product - 26.39
+2026-07-04 16:17:30,829 INFO: B0GLFMK4YJ: Rating of product is not tracked
+2026-07-04 16:17:30,838 INFO: B0GLFMK4YJ: Started tracking rating of product - 4.7
+2026-07-04 16:17:30,840 INFO: B0GLFMK4YJ: Saved 1 product metadata in db
+2026-07-04 16:17:30,840 INFO: ##203/240: Saving or updating product - B0CW5Z8R3H
+2026-07-04 16:17:30,848 INFO: B0CW5Z8R3H: Product metadata is available in table
+2026-07-04 16:17:30,854 INFO: B0CW5Z8R3H: These fields are null in existing record in database - ['brand']
+2026-07-04 16:17:30,863 INFO: B0CW5Z8R3H: Updated the values of following fields - ['currency']
+2026-07-04 16:17:30,921 INFO: B0CW5Z8R3H: Price of product is tracked
+2026-07-04 16:17:30,921 INFO: B0CW5Z8R3H: Last price - 90.0, Current price - 89.99
+2026-07-04 16:17:30,938 INFO: B0CW5Z8R3H: Price change detected 90.0 \u2192 89.99
+2026-07-04 16:17:30,938 INFO: B0CW5Z8R3H: Successfully recorded the price change in the database
+2026-07-04 16:17:30,988 INFO: B0CW5Z8R3H: Rating of product is tracked
+2026-07-04 16:17:30,988 INFO: B0CW5Z8R3H: Last rating - 4.5, Current rating - 4.5
+2026-07-04 16:17:30,988 INFO: B0CW5Z8R3H: Rating unchanged (Current: 4.5, Last: 4.5), skipping insert.
+2026-07-04 16:17:30,988 INFO: B0CW5Z8R3H: Updated the price and rating of product
+2026-07-04 16:17:30,988 INFO: ##204/240: Saving or updating product - B0FM86F584
+2026-07-04 16:17:31,012 INFO: B0FM86F584: Product metadata is not available in table
+2026-07-04 16:17:31,069 INFO: B0FM86F584: Price of product is not tracked
+2026-07-04 16:17:31,078 INFO: B0FM86F584: Started tracking price of product - 25.89
+2026-07-04 16:17:31,150 INFO: B0FM86F584: Rating of product is not tracked
+2026-07-04 16:17:31,160 INFO: B0FM86F584: Started tracking rating of product - 4.2
+2026-07-04 16:17:31,161 INFO: B0FM86F584: Saved 1 product metadata in db
+2026-07-04 16:17:31,161 INFO: ##205/240: Saving or updating product - B08HLMQ6Z8
+2026-07-04 16:17:31,170 INFO: B08HLMQ6Z8: Product metadata is available in table
+2026-07-04 16:17:31,176 INFO: B08HLMQ6Z8: These fields are null in existing record in database - ['brand']
+2026-07-04 16:17:31,187 INFO: B08HLMQ6Z8: Updated the values of following fields - ['currency']
+2026-07-04 16:17:31,257 INFO: B08HLMQ6Z8: Price of product is tracked
+2026-07-04 16:17:31,262 INFO: B08HLMQ6Z8: Last price - 40.0, Current price - 39.99
+2026-07-04 16:17:31,278 INFO: B08HLMQ6Z8: Price change detected 40.0 \u2192 39.99
+2026-07-04 16:17:31,278 INFO: B08HLMQ6Z8: Successfully recorded the price change in the database
+2026-07-04 16:17:31,351 INFO: B08HLMQ6Z8: Rating of product is tracked
+2026-07-04 16:17:31,356 INFO: B08HLMQ6Z8: Last rating - 4.6, Current rating - 4.6
+2026-07-04 16:17:31,362 INFO: B08HLMQ6Z8: Rating unchanged (Current: 4.6, Last: 4.6), skipping insert.
+2026-07-04 16:17:31,362 INFO: B08HLMQ6Z8: Updated the price and rating of product
+2026-07-04 16:17:31,362 INFO: ##206/240: Saving or updating product - B0H25FFSFP
+2026-07-04 16:17:31,371 INFO: B0H25FFSFP: Product metadata is not available in table
+2026-07-04 16:17:31,446 INFO: B0H25FFSFP: Price of product is not tracked
+2026-07-04 16:17:31,457 INFO: B0H25FFSFP: Started tracking price of product - 24.99
+2026-07-04 16:17:31,522 INFO: B0H25FFSFP: Rating of product is not tracked
+2026-07-04 16:17:31,533 INFO: B0H25FFSFP: Started tracking rating of product - 4.0
+2026-07-04 16:17:31,533 INFO: B0H25FFSFP: Saved 1 product metadata in db
+2026-07-04 16:17:31,533 INFO: ##207/240: Saving or updating product - B07KFYN3QZ
+2026-07-04 16:17:31,543 INFO: B07KFYN3QZ: Product metadata is not available in table
+2026-07-04 16:17:31,656 INFO: B07KFYN3QZ: Price of product is not tracked
+2026-07-04 16:17:31,666 INFO: B07KFYN3QZ: Started tracking price of product - 129.0
+2026-07-04 16:17:31,744 INFO: B07KFYN3QZ: Rating of product is not tracked
+2026-07-04 16:17:31,753 INFO: B07KFYN3QZ: Started tracking rating of product - 4.7
+2026-07-04 16:17:31,754 INFO: B07KFYN3QZ: Saved 1 product metadata in db
+2026-07-04 16:17:31,755 INFO: ##208/240: Saving or updating product - B0CKDSRQ51
+2026-07-04 16:17:31,764 INFO: B0CKDSRQ51: Product metadata is not available in table
+2026-07-04 16:17:31,846 INFO: B0CKDSRQ51: Price of product is not tracked
+2026-07-04 16:17:31,856 INFO: B0CKDSRQ51: Started tracking price of product - 34.99
+2026-07-04 16:17:31,904 INFO: B0CKDSRQ51: Rating of product is not tracked
+2026-07-04 16:17:31,914 INFO: B0CKDSRQ51: Started tracking rating of product - 4.5
+2026-07-04 16:17:31,915 INFO: B0CKDSRQ51: Saved 1 product metadata in db
+2026-07-04 16:17:31,915 INFO: ##209/240: Saving or updating product - B0GWCRTKZX
+2026-07-04 16:17:31,924 INFO: B0GWCRTKZX: Product metadata is available in table
+2026-07-04 16:17:31,929 INFO: B0GWCRTKZX: These fields are null in existing record in database - ['brand']
+2026-07-04 16:17:31,939 INFO: B0GWCRTKZX: Updated the values of following fields - ['currency']
+2026-07-04 16:17:32,002 INFO: B0GWCRTKZX: Price of product is tracked
+2026-07-04 16:17:32,007 INFO: B0GWCRTKZX: Last price - 67.0, Current price - 66.99
+2026-07-04 16:17:32,024 INFO: B0GWCRTKZX: Price change detected 67.0 \u2192 66.99
+2026-07-04 16:17:32,024 INFO: B0GWCRTKZX: Successfully recorded the price change in the database
+2026-07-04 16:17:32,085 INFO: B0GWCRTKZX: Rating of product is tracked
+2026-07-04 16:17:32,089 INFO: B0GWCRTKZX: Last rating - 4.9, Current rating - 4.9
+2026-07-04 16:17:32,095 INFO: B0GWCRTKZX: Rating unchanged (Current: 4.9, Last: 4.9), skipping insert.
+2026-07-04 16:17:32,095 INFO: B0GWCRTKZX: Updated the price and rating of product
+2026-07-04 16:17:32,095 INFO: ##210/240: Saving or updating product - B0DJLTZLMJ
+2026-07-04 16:17:32,104 INFO: B0DJLTZLMJ: Product metadata is available in table
+2026-07-04 16:17:32,109 INFO: B0DJLTZLMJ: These fields are null in existing record in database - ['brand']
+2026-07-04 16:17:32,122 INFO: B0DJLTZLMJ: Updated the values of following fields - ['currency']
+2026-07-04 16:17:32,187 INFO: B0DJLTZLMJ: Price of product is tracked
+2026-07-04 16:17:32,192 INFO: B0DJLTZLMJ: Last price - 28.0, Current price - 27.98
+2026-07-04 16:17:32,207 INFO: B0DJLTZLMJ: Price change detected 28.0 \u2192 27.98
+2026-07-04 16:17:32,207 INFO: B0DJLTZLMJ: Successfully recorded the price change in the database
+2026-07-04 16:17:32,280 INFO: B0DJLTZLMJ: Rating of product is tracked
+2026-07-04 16:17:32,285 INFO: B0DJLTZLMJ: Last rating - 4.7, Current rating - 4.7
+2026-07-04 16:17:32,290 INFO: B0DJLTZLMJ: Rating unchanged (Current: 4.7, Last: 4.7), skipping insert.
+2026-07-04 16:17:32,290 INFO: B0DJLTZLMJ: Updated the price and rating of product
+2026-07-04 16:17:32,290 INFO: ##211/240: Saving or updating product - B0GXYT933F
+2026-07-04 16:17:32,301 INFO: B0GXYT933F: Product metadata is not available in table
+2026-07-04 16:17:32,378 INFO: B0GXYT933F: Price of product is not tracked
+2026-07-04 16:17:32,388 INFO: B0GXYT933F: Started tracking price of product - 36.98
+2026-07-04 16:17:32,440 INFO: B0GXYT933F: Rating of product is not tracked
+2026-07-04 16:17:32,449 INFO: B0GXYT933F: Started tracking rating of product - 5.0
+2026-07-04 16:17:32,450 INFO: B0GXYT933F: Saved 1 product metadata in db
+2026-07-04 16:17:32,450 INFO: ##212/240: Saving or updating product - B0CT7SDV2L
+2026-07-04 16:17:32,459 INFO: B0CT7SDV2L: Product metadata is not available in table
+2026-07-04 16:17:32,535 INFO: B0CT7SDV2L: Price of product is not tracked
+2026-07-04 16:17:32,535 INFO: B0CT7SDV2L: Started tracking price of product - 56.99
+2026-07-04 16:17:32,614 INFO: B0CT7SDV2L: Rating of product is not tracked
+2026-07-04 16:17:32,617 INFO: B0CT7SDV2L: Started tracking rating of product - 4.6
+2026-07-04 16:17:32,617 INFO: B0CT7SDV2L: Saved 1 product metadata in db
+2026-07-04 16:17:32,617 INFO: ##213/240: Saving or updating product - B0GYJLVK9G
+2026-07-04 16:17:32,637 INFO: B0GYJLVK9G: Product metadata is not available in table
+2026-07-04 16:17:32,696 INFO: B0GYJLVK9G: Price of product is not tracked
+2026-07-04 16:17:32,706 INFO: B0GYJLVK9G: Started tracking price of product - 59.98
+2026-07-04 16:17:32,772 INFO: B0GYJLVK9G: Rating of product is not tracked
+2026-07-04 16:17:32,781 INFO: B0GYJLVK9G: Started tracking rating of product - 4.8
+2026-07-04 16:17:32,781 INFO: B0GYJLVK9G: Saved 1 product metadata in db
+2026-07-04 16:17:32,781 INFO: ##214/240: Saving or updating product - B0FVL6GWGZ
+2026-07-04 16:17:32,792 INFO: B0FVL6GWGZ: Product metadata is not available in table
+2026-07-04 16:17:32,861 INFO: B0FVL6GWGZ: Price of product is not tracked
+2026-07-04 16:17:32,870 INFO: B0FVL6GWGZ: Started tracking price of product - 35.99
+2026-07-04 16:17:32,941 INFO: B0FVL6GWGZ: Rating of product is not tracked
+2026-07-04 16:17:32,951 INFO: B0FVL6GWGZ: Started tracking rating of product - 4.8
+2026-07-04 16:17:32,952 INFO: B0FVL6GWGZ: Saved 1 product metadata in db
+2026-07-04 16:17:32,952 INFO: ##215/240: Saving or updating product - B0F69P41LQ
+2026-07-04 16:17:32,962 INFO: B0F69P41LQ: Product metadata is not available in table
+2026-07-04 16:17:33,039 INFO: B0F69P41LQ: Price of product is not tracked
+2026-07-04 16:17:33,057 INFO: B0F69P41LQ: Started tracking price of product - 118.0
+2026-07-04 16:17:33,107 INFO: B0F69P41LQ: Rating of product is not tracked
+2026-07-04 16:17:33,124 INFO: B0F69P41LQ: Started tracking rating of product - 4.1
+2026-07-04 16:17:33,124 INFO: B0F69P41LQ: Saved 1 product metadata in db
+2026-07-04 16:17:33,124 INFO: ##216/240: Saving or updating product - B0FP1Z61TJ
+2026-07-04 16:17:33,124 INFO: B0FP1Z61TJ: Product metadata is not available in table
+2026-07-04 16:17:33,214 INFO: B0FP1Z61TJ: Price of product is not tracked
+2026-07-04 16:17:33,223 INFO: B0FP1Z61TJ: Started tracking price of product - 6.99
+2026-07-04 16:17:33,273 INFO: B0FP1Z61TJ: Rating of product is not tracked
+2026-07-04 16:17:33,285 INFO: B0FP1Z61TJ: Started tracking rating of product - 4.9
+2026-07-04 16:17:33,285 INFO: B0FP1Z61TJ: Saved 1 product metadata in db
+2026-07-04 16:17:33,285 INFO: ##217/240: Saving or updating product - B07Z4RSZ53
+2026-07-04 16:17:33,301 INFO: B07Z4RSZ53: Product metadata is not available in table
+2026-07-04 16:17:33,374 INFO: B07Z4RSZ53: Price of product is not tracked
+2026-07-04 16:17:33,379 INFO: B07Z4RSZ53: Started tracking price of product - 159.99
+2026-07-04 16:17:33,457 INFO: B07Z4RSZ53: Rating of product is not tracked
+2026-07-04 16:17:33,457 INFO: B07Z4RSZ53: Started tracking rating of product - 4.6
+2026-07-04 16:17:33,471 INFO: B07Z4RSZ53: Saved 1 product metadata in db
+2026-07-04 16:17:33,472 INFO: ##218/240: Saving or updating product - B0FCJP7JDV
+2026-07-04 16:17:33,474 INFO: B0FCJP7JDV: Product metadata is not available in table
+2026-07-04 16:17:33,556 INFO: B0FCJP7JDV: Price of product is not tracked
+2026-07-04 16:17:33,571 INFO: B0FCJP7JDV: Started tracking price of product - 194.97
+2026-07-04 16:17:33,626 INFO: B0FCJP7JDV: Rating of product is not tracked
+2026-07-04 16:17:33,641 INFO: B0FCJP7JDV: Started tracking rating of product - 4.5
+2026-07-04 16:17:33,641 INFO: B0FCJP7JDV: Saved 1 product metadata in db
+2026-07-04 16:17:33,642 INFO: ##219/240: Saving or updating product - B0D9GVV8BB
+2026-07-04 16:17:33,657 INFO: B0D9GVV8BB: Product metadata is not available in table
+2026-07-04 16:17:33,724 INFO: B0D9GVV8BB: Price of product is not tracked
+2026-07-04 16:17:33,726 INFO: B0D9GVV8BB: Started tracking price of product - 32.99
+2026-07-04 16:17:33,804 INFO: B0D9GVV8BB: Rating of product is not tracked
+2026-07-04 16:17:33,805 INFO: B0D9GVV8BB: Started tracking rating of product - 4.6
+2026-07-04 16:17:33,805 INFO: B0D9GVV8BB: Saved 1 product metadata in db
+2026-07-04 16:17:33,805 INFO: ##220/240: Saving or updating product - B0GHM5JXX6
+2026-07-04 16:17:33,824 INFO: B0GHM5JXX6: Product metadata is not available in table
+2026-07-04 16:17:33,902 INFO: B0GHM5JXX6: Price of product is not tracked
+2026-07-04 16:17:33,902 INFO: B0GHM5JXX6: Started tracking price of product - 36.99
+2026-07-04 16:17:33,977 INFO: B0GHM5JXX6: Rating of product is not tracked
+2026-07-04 16:17:33,987 INFO: B0GHM5JXX6: Started tracking rating of product - 4.6
+2026-07-04 16:17:33,987 INFO: B0GHM5JXX6: Saved 1 product metadata in db
+2026-07-04 16:17:33,987 INFO: ##221/240: Saving or updating product - B092HWD264
+2026-07-04 16:17:33,997 INFO: B092HWD264: Product metadata is not available in table
+2026-07-04 16:17:34,061 INFO: B092HWD264: Price of product is not tracked
+2026-07-04 16:17:34,076 INFO: B092HWD264: Started tracking price of product - 95.99
+2026-07-04 16:17:34,139 INFO: B092HWD264: Rating of product is not tracked
+2026-07-04 16:17:34,141 INFO: B092HWD264: Started tracking rating of product - 4.6
+2026-07-04 16:17:34,141 INFO: B092HWD264: Saved 1 product metadata in db
+2026-07-04 16:17:34,141 INFO: ##222/240: Saving or updating product - B0CWV4FV5B
+2026-07-04 16:17:34,158 INFO: B0CWV4FV5B: Product metadata is available in table
+2026-07-04 16:17:34,158 INFO: B0CWV4FV5B: These fields are null in existing record in database - ['brand']
+2026-07-04 16:17:34,173 INFO: B0CWV4FV5B: Updated the values of following fields - ['currency']
+2026-07-04 16:17:34,231 INFO: B0CWV4FV5B: Price of product is tracked
+2026-07-04 16:17:34,238 INFO: B0CWV4FV5B: Last price - 65.0, Current price - 64.59
+2026-07-04 16:17:34,241 INFO: B0CWV4FV5B: Price change detected 65.0 \u2192 64.59
+2026-07-04 16:17:34,241 INFO: B0CWV4FV5B: Successfully recorded the price change in the database
+2026-07-04 16:17:34,318 INFO: B0CWV4FV5B: Rating of product is tracked
+2026-07-04 16:17:34,321 INFO: B0CWV4FV5B: Last rating - 4.5, Current rating - 4.5
+2026-07-04 16:17:34,321 INFO: B0CWV4FV5B: Rating unchanged (Current: 4.5, Last: 4.5), skipping insert.
+2026-07-04 16:17:34,321 INFO: B0CWV4FV5B: Updated the price and rating of product
+2026-07-04 16:17:34,321 INFO: ##223/240: Saving or updating product - B0G2GTMVM6
+2026-07-04 16:17:34,336 INFO: B0G2GTMVM6: Product metadata is not available in table
+2026-07-04 16:17:34,405 INFO: B0G2GTMVM6: Price of product is not tracked
+2026-07-04 16:17:34,421 INFO: B0G2GTMVM6: Started tracking price of product - 59.99
+2026-07-04 16:17:34,489 INFO: B0G2GTMVM6: Rating of product is not tracked
+2026-07-04 16:17:34,491 INFO: B0G2GTMVM6: Started tracking rating of product - 3.6
+2026-07-04 16:17:34,491 INFO: B0G2GTMVM6: Saved 1 product metadata in db
+2026-07-04 16:17:34,491 INFO: ##224/240: Saving or updating product - B07ZXS9X3J
+2026-07-04 16:17:34,507 INFO: B07ZXS9X3J: Product metadata is not available in table
+2026-07-04 16:17:34,585 INFO: B07ZXS9X3J: Price of product is not tracked
+2026-07-04 16:17:34,590 INFO: B07ZXS9X3J: Started tracking price of product - 46.99
+2026-07-04 16:17:34,640 INFO: B07ZXS9X3J: Rating of product is not tracked
+2026-07-04 16:17:34,655 INFO: B07ZXS9X3J: Started tracking rating of product - 4.5
+2026-07-04 16:17:34,655 INFO: B07ZXS9X3J: Saved 1 product metadata in db
+2026-07-04 16:17:34,655 INFO: ##225/240: Saving or updating product - B0922GDRWB
+2026-07-04 16:17:34,656 INFO: B0922GDRWB: Product metadata is not available in table
+2026-07-04 16:17:34,723 INFO: B0922GDRWB: Price of product is not tracked
+2026-07-04 16:17:34,743 INFO: B0922GDRWB: Started tracking price of product - 79.99
+2026-07-04 16:17:35,014 INFO: B0922GDRWB: Rating of product is not tracked
+2026-07-04 16:17:35,037 INFO: B0922GDRWB: Started tracking rating of product - 4.3
+2026-07-04 16:17:35,037 INFO: B0922GDRWB: Saved 1 product metadata in db
+2026-07-04 16:17:35,037 INFO: ##226/240: Saving or updating product - B0GVVX5FRQ
+2026-07-04 16:17:35,047 INFO: B0GVVX5FRQ: Product metadata is not available in table
+2026-07-04 16:17:35,113 INFO: B0GVVX5FRQ: Price of product is not tracked
+2026-07-04 16:17:35,123 INFO: B0GVVX5FRQ: Started tracking price of product - 36.99
+2026-07-04 16:17:35,194 INFO: B0GVVX5FRQ: Rating of product is not tracked
+2026-07-04 16:17:35,206 INFO: B0GVVX5FRQ: Started tracking rating of product - 4.9
+2026-07-04 16:17:35,206 INFO: B0GVVX5FRQ: Saved 1 product metadata in db
+2026-07-04 16:17:35,206 INFO: ##227/240: Saving or updating product - B091Y7QPHK
+2026-07-04 16:17:35,206 INFO: B091Y7QPHK: Product metadata is not available in table
+2026-07-04 16:17:35,277 INFO: B091Y7QPHK: Price of product is not tracked
+2026-07-04 16:17:35,287 INFO: B091Y7QPHK: Started tracking price of product - 20.99
+2026-07-04 16:17:35,341 INFO: B091Y7QPHK: Rating of product is not tracked
+2026-07-04 16:17:35,353 INFO: B091Y7QPHK: Started tracking rating of product - 4.5
+2026-07-04 16:17:35,353 INFO: B091Y7QPHK: Saved 1 product metadata in db
+2026-07-04 16:17:35,353 INFO: ##228/240: Saving or updating product - B0GS1NK17Y
+2026-07-04 16:17:35,368 INFO: B0GS1NK17Y: Product metadata is not available in table
+2026-07-04 16:17:35,442 INFO: B0GS1NK17Y: Price of product is not tracked
+2026-07-04 16:17:35,457 INFO: B0GS1NK17Y: Started tracking price of product - 35.99
+2026-07-04 16:17:35,507 INFO: B0GS1NK17Y: Rating of product is not tracked
+2026-07-04 16:17:35,522 INFO: B0GS1NK17Y: Started tracking rating of product - 4.5
+2026-07-04 16:17:35,523 INFO: B0GS1NK17Y: Saved 1 product metadata in db
+2026-07-04 16:17:35,523 INFO: ##229/240: Saving or updating product - B0C68Q7ZNF
+2026-07-04 16:17:35,524 INFO: B0C68Q7ZNF: Product metadata is not available in table
+2026-07-04 16:17:35,605 INFO: B0C68Q7ZNF: Price of product is not tracked
+2026-07-04 16:17:35,615 INFO: B0C68Q7ZNF: Started tracking price of product - 25.99
+2026-07-04 16:17:35,675 INFO: B0C68Q7ZNF: Rating of product is not tracked
+2026-07-04 16:17:35,675 INFO: B0C68Q7ZNF: Started tracking rating of product - 4.7
+2026-07-04 16:17:35,675 INFO: B0C68Q7ZNF: Saved 1 product metadata in db
+2026-07-04 16:17:35,687 INFO: ##230/240: Saving or updating product - B015SH3RI6
+2026-07-04 16:17:35,695 INFO: B015SH3RI6: Product metadata is available in table
+2026-07-04 16:17:35,704 INFO: B015SH3RI6: These fields are null in existing record in database - ['brand']
+2026-07-04 16:17:35,706 INFO: B015SH3RI6: Updated the values of following fields - ['currency']
+2026-07-04 16:17:35,784 INFO: B015SH3RI6: Price of product is tracked
+2026-07-04 16:17:35,790 INFO: B015SH3RI6: Last price - 149.0, Current price - 149.45
+2026-07-04 16:17:35,808 INFO: B015SH3RI6: Price change detected 149.0 \u2192 149.45
+2026-07-04 16:17:35,808 INFO: B015SH3RI6: Successfully recorded the price change in the database
+2026-07-04 16:17:35,870 INFO: B015SH3RI6: Rating of product is tracked
+2026-07-04 16:17:35,870 INFO: B015SH3RI6: Last rating - 4.7, Current rating - 4.7
+2026-07-04 16:17:35,887 INFO: B015SH3RI6: Rating unchanged (Current: 4.7, Last: 4.7), skipping insert.
+2026-07-04 16:17:35,887 INFO: B015SH3RI6: Updated the price and rating of product
+2026-07-04 16:17:35,887 INFO: ##231/240: Saving or updating product - B0GV7R8N7B
+2026-07-04 16:17:35,887 INFO: B0GV7R8N7B: Product metadata is not available in table
+2026-07-04 16:17:35,967 INFO: B0GV7R8N7B: Price of product is not tracked
+2026-07-04 16:17:35,983 INFO: B0GV7R8N7B: Started tracking price of product - 59.99
+2026-07-04 16:17:36,047 INFO: B0GV7R8N7B: Rating of product is not tracked
+2026-07-04 16:17:36,063 INFO: B0GV7R8N7B: Started tracking rating of product - 4.7
+2026-07-04 16:17:36,063 INFO: B0GV7R8N7B: Saved 1 product metadata in db
+2026-07-04 16:17:36,063 INFO: ##232/240: Saving or updating product - B0BNNBH1Q1
+2026-07-04 16:17:36,079 INFO: B0BNNBH1Q1: Product metadata is not available in table
+2026-07-04 16:17:36,149 INFO: B0BNNBH1Q1: Price of product is not tracked
+2026-07-04 16:17:36,160 INFO: B0BNNBH1Q1: Started tracking price of product - 19.99
+2026-07-04 16:17:36,224 INFO: B0BNNBH1Q1: Rating of product is not tracked
+2026-07-04 16:17:36,224 INFO: B0BNNBH1Q1: Started tracking rating of product - 4.6
+2026-07-04 16:17:36,224 INFO: B0BNNBH1Q1: Saved 1 product metadata in db
+2026-07-04 16:17:36,224 INFO: ##233/240: Saving or updating product - B099Z41GGH
+2026-07-04 16:17:36,240 INFO: B099Z41GGH: Product metadata is not available in table
+2026-07-04 16:17:36,305 INFO: B099Z41GGH: Price of product is not tracked
+2026-07-04 16:17:36,321 INFO: B099Z41GGH: Started tracking price of product - 45.46
+2026-07-04 16:17:36,369 INFO: B099Z41GGH: Rating of product is not tracked
+2026-07-04 16:17:36,385 INFO: B099Z41GGH: Started tracking rating of product - 4.6
+2026-07-04 16:17:36,385 INFO: B099Z41GGH: Saved 1 product metadata in db
+2026-07-04 16:17:36,385 INFO: ##234/240: Saving or updating product - B0H2W3CB69
+2026-07-04 16:17:36,385 INFO: B0H2W3CB69: Product metadata is not available in table
+2026-07-04 16:17:36,452 INFO: B0H2W3CB69: Price of product is not tracked
+2026-07-04 16:17:36,465 INFO: B0H2W3CB69: Started tracking price of product - 23.99
+2026-07-04 16:17:36,513 INFO: B0H2W3CB69: Rating of product is not tracked
+2026-07-04 16:17:36,529 INFO: B0H2W3CB69: Started tracking rating of product - 5.0
+2026-07-04 16:17:36,529 INFO: B0H2W3CB69: Saved 1 product metadata in db
+2026-07-04 16:17:36,529 INFO: ##235/240: Saving or updating product - B071RKDS5C
+2026-07-04 16:17:36,545 INFO: B071RKDS5C: Product metadata is not available in table
+2026-07-04 16:17:36,609 INFO: B071RKDS5C: Price of product is not tracked
+2026-07-04 16:17:36,625 INFO: B071RKDS5C: Started tracking price of product - 39.99
+2026-07-04 16:17:36,673 INFO: B071RKDS5C: Rating of product is not tracked
+2026-07-04 16:17:36,689 INFO: B071RKDS5C: Started tracking rating of product - 4.7
+2026-07-04 16:17:36,689 INFO: B071RKDS5C: Saved 1 product metadata in db
+2026-07-04 16:17:36,689 INFO: ##236/240: Saving or updating product - B0G2XSFB9B
+2026-07-04 16:17:36,705 INFO: B0G2XSFB9B: Product metadata is not available in table
+2026-07-04 16:17:36,769 INFO: B0G2XSFB9B: Price of product is not tracked
+2026-07-04 16:17:36,769 INFO: B0G2XSFB9B: Started tracking price of product - 22.99
+2026-07-04 16:17:36,818 INFO: B0G2XSFB9B: Rating of product is not tracked
+2026-07-04 16:17:36,834 INFO: B0G2XSFB9B: Started tracking rating of product - 4.4
+2026-07-04 16:17:36,834 INFO: B0G2XSFB9B: Saved 1 product metadata in db
+2026-07-04 16:17:36,834 INFO: ##237/240: Saving or updating product - B0C6KH6PLS
+2026-07-04 16:17:36,850 INFO: B0C6KH6PLS: Product metadata is not available in table
+2026-07-04 16:17:36,907 INFO: B0C6KH6PLS: Price of product is not tracked
+2026-07-04 16:17:36,914 INFO: B0C6KH6PLS: Started tracking price of product - 79.99
+2026-07-04 16:17:36,962 INFO: B0C6KH6PLS: Rating of product is not tracked
+2026-07-04 16:17:36,979 INFO: B0C6KH6PLS: Started tracking rating of product - 4.7
+2026-07-04 16:17:36,979 INFO: B0C6KH6PLS: Saved 1 product metadata in db
+2026-07-04 16:17:36,979 INFO: ##238/240: Saving or updating product - B0CP8JL8J1
+2026-07-04 16:17:36,979 INFO: B0CP8JL8J1: Product metadata is not available in table
+2026-07-04 16:17:37,059 INFO: B0CP8JL8J1: Price of product is not tracked
+2026-07-04 16:17:37,075 INFO: B0CP8JL8J1: Started tracking price of product - 14.99
+2026-07-04 16:17:37,123 INFO: B0CP8JL8J1: Rating of product is not tracked
+2026-07-04 16:17:37,139 INFO: B0CP8JL8J1: Started tracking rating of product - 3.8
+2026-07-04 16:17:37,139 INFO: B0CP8JL8J1: Saved 1 product metadata in db
+2026-07-04 16:17:37,139 INFO: ##239/240: Saving or updating product - B07Z4Q5YPN
+2026-07-04 16:17:37,152 INFO: B07Z4Q5YPN: Product metadata is not available in table
+2026-07-04 16:17:37,210 INFO: B07Z4Q5YPN: Price of product is not tracked
+2026-07-04 16:17:37,219 INFO: B07Z4Q5YPN: Started tracking price of product - 26.97
+2026-07-04 16:17:37,267 INFO: B07Z4Q5YPN: Rating of product is not tracked
+2026-07-04 16:17:37,283 INFO: B07Z4Q5YPN: Started tracking rating of product - 4.7
+2026-07-04 16:17:37,283 INFO: B07Z4Q5YPN: Saved 1 product metadata in db
+2026-07-04 16:17:37,283 INFO: ##240/240: Saving or updating product - B0GFH4PSC1
+2026-07-04 16:17:37,302 INFO: B0GFH4PSC1: Product metadata is not available in table
+2026-07-04 16:17:37,379 INFO: B0GFH4PSC1: Price of product is not tracked
+2026-07-04 16:17:37,379 INFO: B0GFH4PSC1: Started tracking price of product - 32.99
+2026-07-04 16:17:37,444 INFO: B0GFH4PSC1: Rating of product is not tracked
+2026-07-04 16:17:37,444 INFO: B0GFH4PSC1: Started tracking rating of product - 4.3
+2026-07-04 16:17:37,444 INFO: B0GFH4PSC1: Saved 1 product metadata in db
+2026-07-04 16:17:37,444 INFO: Saved or updated 240 products in db

@@ -55,7 +55,7 @@ def search_query(q: str):
     else:
         print("Received text")
         logger.info(f"Received text: {q}")
-        country_code = "in"
+        country_code = "com"
         url =  f"https://www.amazon.{country_code}/s?k={q.replace(' ', '+')}"
 
     html_content = asyncio.run(ping_amazon2(url))
@@ -81,7 +81,7 @@ def search_query(q: str):
             }
 
         else:
-            # save_to_database(product_info, conn) 
+            save_to_database(product_info, conn) 
             conn.close()
             return {
                 "status": "success",
@@ -155,14 +155,25 @@ def search_query(q: str):
                 "details": f"{url}: Could not find any products on search page. Could be due to captcha or other reason."
             }
         
-        # save_to_database(all_products, conn)
+        # Deduplicate by ASIN before returning
+        seen = set()
+        unique_products = []
+        for p in all_products:
+            asin = p.get("asin")
+            if asin and asin in seen:
+                continue
+            if asin:
+                seen.add(asin)
+            unique_products.append(p)
+        
+        save_to_database(all_products, conn)
         conn.close() 
         return {
             "status": "success",
-            "details": f"Found {len(all_products)} products from amazon search pages for query: {q}",
+            "details": f"Found {len(unique_products)} unique products from amazon search pages for query: {q}",
             "url-type": "search",
             "content-type": f"{type(all_products)}",
-            "content": all_products
+            "content": unique_products
         } 
         
     

@@ -48,13 +48,14 @@ from get_product_info import amzn_product_info_scraper
 from get_search_results import get_search_results
 from amzn import ping_amazon2
 import asyncio
-test_url = "https://www.amazon.in/s?k=ray+ban+meta+glasses"
+test_url = "https://www.amazon.com/PS5-Playstation-Digital-Wireless-Controller/dp/B0966NLTZS/ref=sr_1_1?sr=8-1"
 html_content = asyncio.run(ping_amazon2(test_url))
 
 # product_info = amzn_product_info_scraper(html_content, test_url)
 search_results = get_search_results(html_content)
 
-
+# print(product_info)
 print(len(search_results))
 for prod in search_results:
     print(prod["title"])
+

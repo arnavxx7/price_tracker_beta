@@ -31,7 +31,8 @@ logger.info(f"Updating the fields of {num} records")
 cur.close()  # close this cursor, save_to_database will use its own connection
 i=1
 for asin, url in rows:
-    logger.info(f"Updating record - {i}/{num}")
+    logger.info(f"\nUpdating record - {i}/{num}\n")
+    print(f"\nUpdating record - {i}/{num}\n")
     prod_html_content = asyncio.run(ping_amazon2(url))
     product_info = amzn_product_info_scraper(prod_html_content, url)
 

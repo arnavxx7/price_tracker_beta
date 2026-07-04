@@ -1,0 +1,14 @@
+2026-07-04 14:50:55,772 DEBUG: Using proactor: IocpProactor
+2026-07-04 14:50:55,772 INFO: https://www.amazon.com/s?k=ps5: Pinging amazon url
+2026-07-04 14:51:01,735 INFO: Warm-up request completed, cookies acquired, delay - {warmup_delay}
+2026-07-04 14:51:01,736 INFO: Attempt 1: GET https://www.amazon.com/s?k=ps5
+2026-07-04 14:51:04,086 WARNING: Non-200 status: 503
+2026-07-04 14:51:04,090 INFO: https://www.amazon.com/s?k=ps5: Pinging amazon url
+2026-07-04 14:51:04,090 INFO: Retry attempt 2/4, waiting 4.95s
+2026-07-04 14:51:09,043 INFO: Attempt 2: GET https://www.amazon.com/s?k=ps5
+2026-07-04 14:51:10,447 ERROR: Network error on attempt 2: Failed to perform, curl: (35) TLS connect error: error:00000000:invalid library (0):OPENSSL_internal:invalid library (0). See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-07-04 14:51:17,992 INFO: https://www.amazon.com/s?k=ps5: Pinging amazon url
+2026-07-04 14:51:17,994 INFO: Retry attempt 3/4, waiting 8.86s
+2026-07-04 14:51:26,851 INFO: Attempt 3: GET https://www.amazon.com/s?k=ps5
+2026-07-04 14:51:30,413 INFO: Success: https://www.amazon.com/s?k=ps5 (status 200)
+2026-07-04 14:51:30,413 INFO: Estimated size of response - 1311.578125 KB

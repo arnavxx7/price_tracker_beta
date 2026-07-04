@@ -1,0 +1,6 @@
+2026-07-04 14:55:56,234 DEBUG: Using proactor: IocpProactor
+2026-07-04 14:55:56,247 INFO: https://www.amazon.com/Porsche-Collectors-Cup-no-60Y/dp/B0D3863V9Z/ref=sr_1_5?sr=8-5: Pinging amazon url
+2026-07-04 14:55:58,031 INFO: Warm-up request completed, cookies acquired, delay - {warmup_delay}
+2026-07-04 14:55:58,031 INFO: Attempt 1: GET https://www.amazon.com/Porsche-Collectors-Cup-no-60Y/dp/B0D3863V9Z/ref=sr_1_5?sr=8-5
+2026-07-04 14:55:59,632 INFO: Success: https://www.amazon.com/Porsche-Collectors-Cup-no-60Y/dp/B0D3863V9Z/ref=sr_1_5?sr=8-5 (status 200)
+2026-07-04 14:55:59,634 INFO: Estimated size of response - 1302.5732421875 KB

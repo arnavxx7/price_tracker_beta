@@ -132,7 +132,18 @@ export default function search_result() {
         // get response from fastapi for search url
         const stored = sessionStorage.getItem("searchResults");
         if (stored) {
-          setProducts(JSON.parse(stored));
+            const parsed: Product[] = JSON.parse(stored);
+  
+            // Deduplicate by ASIN, keeping first occurrence
+            const seen = new Set<string>();
+            const unique = parsed.filter(product => {
+              if (!product.asin) return true; // keep products without ASIN
+              if (seen.has(product.asin)) return false;
+              seen.add(product.asin);
+              return true;
+            });
+            
+            setProducts(unique);
         } else {
           setError("No results found. Please search again.");
         }
@@ -434,7 +445,7 @@ export default function search_result() {
           <div className="product-list">
             {products.map((product, index) => (
               <ProductCard
-                key={product.asin ?? index}
+                key={product.asin ?? `no-asin-${index}`}
                 product={product}
               />
             ))}

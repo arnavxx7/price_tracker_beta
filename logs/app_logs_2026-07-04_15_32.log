@@ -1,0 +1,275 @@
+2026-07-04 15:33:10,944 INFO: Fastapi server received this query from nextjs: ps5
+2026-07-04 15:33:10,944 INFO: Received text: ps5
+2026-07-04 15:33:10,958 DEBUG: Using selector: SelectSelector
+2026-07-04 15:33:10,960 INFO: https://www.amazon.in/s?k=ps5: Pinging amazon url
+2026-07-04 15:33:16,722 INFO: Warm-up request completed, cookies acquired, delay - {warmup_delay}
+2026-07-04 15:33:16,722 INFO: Attempt 1: GET https://www.amazon.in/s?k=ps5
+2026-07-04 15:33:19,508 INFO: Success: https://www.amazon.in/s?k=ps5 (status 200)
+2026-07-04 15:33:19,511 INFO: Estimated size of response - 946.640625 KB
+2026-07-04 15:33:19,708 INFO: Search url detected
+2026-07-04 15:33:19,708 INFO: Starting product search
+2026-07-04 15:33:19,708 INFO: Scraping search page 1/5: https://www.amazon.in/s?k=ps5
+2026-07-04 15:33:20,476 INFO: Found 16 products on page 1
+2026-07-04 15:33:20,768 INFO: Scraping search page 2/5: https://www.amazon.in/s?k=ps5&page=2&xpid=BZXUbpLw9RJNv&qid=1783159397&ref=sr_pg_1
+2026-07-04 15:33:20,768 DEBUG: Using selector: SelectSelector
+2026-07-04 15:33:20,768 INFO: https://www.amazon.in/s?k=ps5&page=2&xpid=BZXUbpLw9RJNv&qid=1783159397&ref=sr_pg_1: Pinging amazon url
+2026-07-04 15:33:24,913 INFO: Warm-up request completed, cookies acquired, delay - {warmup_delay}
+2026-07-04 15:33:24,913 INFO: Attempt 1: GET https://www.amazon.in/s?k=ps5&page=2&xpid=BZXUbpLw9RJNv&qid=1783159397&ref=sr_pg_1
+2026-07-04 15:33:26,884 INFO: Success: https://www.amazon.in/s?k=ps5&page=2&xpid=BZXUbpLw9RJNv&qid=1783159397&ref=sr_pg_1 (status 200)
+2026-07-04 15:33:26,884 INFO: Estimated size of response - 1216.10546875 KB
+2026-07-04 15:33:27,648 INFO: Found 16 products on page 2
+2026-07-04 15:33:27,952 INFO: Scraping search page 3/5: https://www.amazon.in/s?k=ps5&page=3&qid=1783159405&xpid=BZXUbpLw9RJNv&ref=sr_pg_2
+2026-07-04 15:33:27,952 DEBUG: Using selector: SelectSelector
+2026-07-04 15:33:27,952 INFO: https://www.amazon.in/s?k=ps5&page=3&qid=1783159405&xpid=BZXUbpLw9RJNv&ref=sr_pg_2: Pinging amazon url
+2026-07-04 15:33:32,895 INFO: Warm-up request completed, cookies acquired, delay - {warmup_delay}
+2026-07-04 15:33:32,895 INFO: Attempt 1: GET https://www.amazon.in/s?k=ps5&page=3&qid=1783159405&xpid=BZXUbpLw9RJNv&ref=sr_pg_2
+2026-07-04 15:33:33,816 WARNING: Non-200 status: 503
+2026-07-04 15:33:33,816 INFO: https://www.amazon.in/s?k=ps5&page=3&qid=1783159405&xpid=BZXUbpLw9RJNv&ref=sr_pg_2: Pinging amazon url
+2026-07-04 15:33:33,816 INFO: Retry attempt 2/4, waiting 7.34s
+2026-07-04 15:33:41,158 INFO: Attempt 2: GET https://www.amazon.in/s?k=ps5&page=3&qid=1783159405&xpid=BZXUbpLw9RJNv&ref=sr_pg_2
+2026-07-04 15:33:44,504 INFO: Success: https://www.amazon.in/s?k=ps5&page=3&qid=1783159405&xpid=BZXUbpLw9RJNv&ref=sr_pg_2 (status 200)
+2026-07-04 15:33:44,504 INFO: Estimated size of response - 1144.6787109375 KB
+2026-07-04 15:33:45,036 INFO: Found 16 products on page 3
+2026-07-04 15:33:45,256 INFO: Scraping search page 4/5: https://www.amazon.in/s?k=ps5&page=4&qid=1783159422&xpid=BZXUbpLw9RJNv&ref=sr_pg_3
+2026-07-04 15:33:45,256 DEBUG: Using selector: SelectSelector
+2026-07-04 15:33:45,258 INFO: https://www.amazon.in/s?k=ps5&page=4&qid=1783159422&xpid=BZXUbpLw9RJNv&ref=sr_pg_3: Pinging amazon url
+2026-07-04 15:33:54,186 INFO: Warm-up request completed, cookies acquired, delay - {warmup_delay}
+2026-07-04 15:33:54,199 INFO: Attempt 1: GET https://www.amazon.in/s?k=ps5&page=4&qid=1783159422&xpid=BZXUbpLw9RJNv&ref=sr_pg_3
+2026-07-04 15:34:07,384 INFO: Success: https://www.amazon.in/s?k=ps5&page=4&qid=1783159422&xpid=BZXUbpLw9RJNv&ref=sr_pg_3 (status 200)
+2026-07-04 15:34:07,389 INFO: Estimated size of response - 1234.783203125 KB
+2026-07-04 15:34:07,971 INFO: Found 15 products on page 4
+2026-07-04 15:34:08,184 INFO: Scraping search page 5/5: https://www.amazon.in/s?k=ps5&page=5&qid=1783159434&xpid=BZXUbpLw9RJNv&ref=sr_pg_4
+2026-07-04 15:34:08,184 DEBUG: Using selector: SelectSelector
+2026-07-04 15:34:08,187 INFO: https://www.amazon.in/s?k=ps5&page=5&qid=1783159434&xpid=BZXUbpLw9RJNv&ref=sr_pg_4: Pinging amazon url
+2026-07-04 15:34:12,833 INFO: Warm-up request completed, cookies acquired, delay - {warmup_delay}
+2026-07-04 15:34:12,833 INFO: Attempt 1: GET https://www.amazon.in/s?k=ps5&page=5&qid=1783159434&xpid=BZXUbpLw9RJNv&ref=sr_pg_4
+2026-07-04 15:34:15,803 INFO: Success: https://www.amazon.in/s?k=ps5&page=5&qid=1783159434&xpid=BZXUbpLw9RJNv&ref=sr_pg_4 (status 200)
+2026-07-04 15:34:15,803 INFO: Estimated size of response - 1076.6298828125 KB
+2026-07-04 15:34:16,298 INFO: Found 16 products on page 5
+2026-07-04 15:34:16,298 INFO: Search completed. Total products found: 79
+
+2026-07-04 15:34:16,298 INFO: Search url or query received
+2026-07-04 15:34:16,298 INFO: Saving or updating 79 products
+2026-07-04 15:34:16,298 INFO: ##1/79: Saving or updating product - B08GZ6QNTC
+2026-07-04 15:34:16,354 INFO: B08GZ6QNTC: Product metadata is not available in table
+2026-07-04 15:34:16,637 INFO: B08GZ6QNTC: Price of product is not tracked
+2026-07-04 15:34:16,662 INFO: B08GZ6QNTC: Started tracking price of product - 5899.0
+2026-07-04 15:34:16,704 INFO: B08GZ6QNTC: Rating of product is not tracked
+2026-07-04 15:34:16,743 INFO: B08GZ6QNTC: Started tracking rating of product - 4.3
+2026-07-04 15:34:16,743 INFO: B08GZ6QNTC: Saved 1 product metadata in db
+2026-07-04 15:34:16,743 INFO: ##2/79: Saving or updating product - B007SJBJQU
+2026-07-04 15:34:16,753 INFO: B007SJBJQU: Product metadata is not available in table
+2026-07-04 15:34:16,849 INFO: B007SJBJQU: Price of product is not tracked
+2026-07-04 15:34:16,850 INFO: B007SJBJQU: Started tracking price of product - 14990.0
+2026-07-04 15:34:16,913 INFO: B007SJBJQU: Rating of product is not tracked
+2026-07-04 15:34:16,930 INFO: B007SJBJQU: Started tracking rating of product - 4.2
+2026-07-04 15:34:16,930 INFO: B007SJBJQU: Saved 1 product metadata in db
+2026-07-04 15:34:16,930 INFO: ##3/79: Saving or updating product - B0H2YMMDCS
+2026-07-04 15:34:16,945 INFO: B0H2YMMDCS: Product metadata is not available in table
+2026-07-04 15:34:17,036 INFO: B0H2YMMDCS: Price of product is not tracked
+2026-07-04 15:34:17,049 INFO: B0H2YMMDCS: Started tracking price of product - 5499.0
+2026-07-04 15:34:17,118 ERROR: B0H2YMMDCS: Rating of product not tracked since it is None
+2026-07-04 15:34:17,129 INFO: B0H2YMMDCS: Saved 1 product metadata in db
+2026-07-04 15:34:17,129 INFO: ##4/79: Saving or updating product - B013DYX7BS
+2026-07-04 15:34:17,142 INFO: B013DYX7BS: Product metadata is not available in table
+2026-07-04 15:34:17,214 INFO: B013DYX7BS: Price of product is not tracked
+2026-07-04 15:34:17,227 INFO: B013DYX7BS: Started tracking price of product - 31290.0
+2026-07-04 15:34:17,308 INFO: B013DYX7BS: Rating of product is not tracked
+2026-07-04 15:34:17,319 INFO: B013DYX7BS: Started tracking rating of product - 4.5
+2026-07-04 15:34:17,319 INFO: B013DYX7BS: Saved 1 product metadata in db
+2026-07-04 15:34:17,319 INFO: ##5/79: Saving or updating product - B0DB26RWBY
+2026-07-04 15:34:17,338 INFO: B0DB26RWBY: Product metadata is not available in table
+2026-07-04 15:34:17,425 INFO: B0DB26RWBY: Price of product is not tracked
+2026-07-04 15:34:17,433 INFO: B0DB26RWBY: Started tracking price of product - 18990.0
+2026-07-04 15:34:17,496 INFO: B0DB26RWBY: Rating of product is not tracked
+2026-07-04 15:34:17,511 INFO: B0DB26RWBY: Started tracking rating of product - 4.1
+2026-07-04 15:34:17,511 INFO: B0DB26RWBY: Saved 1 product metadata in db
+2026-07-04 15:34:17,511 INFO: ##6/79: Saving or updating product - B09XJ8FGVP
+2026-07-04 15:34:17,520 INFO: B09XJ8FGVP: Product metadata is not available in table
+2026-07-04 15:34:17,575 INFO: B09XJ8FGVP: Price of product is not tracked
+2026-07-04 15:34:17,592 INFO: B09XJ8FGVP: Started tracking price of product - 2099.0
+2026-07-04 15:34:17,654 INFO: B09XJ8FGVP: Rating of product is not tracked
+2026-07-04 15:34:17,660 INFO: B09XJ8FGVP: Started tracking rating of product - 4.5
+2026-07-04 15:34:17,660 INFO: B09XJ8FGVP: Saved 1 product metadata in db
+2026-07-04 15:34:17,660 INFO: ##7/79: Saving or updating product - B0BRZZCRPW
+2026-07-04 15:34:17,670 INFO: B0BRZZCRPW: Product metadata is not available in table
+2026-07-04 15:34:17,767 INFO: B0BRZZCRPW: Price of product is not tracked
+2026-07-04 15:34:17,774 INFO: B0BRZZCRPW: Started tracking price of product - 1849.0
+2026-07-04 15:34:17,846 INFO: B0BRZZCRPW: Rating of product is not tracked
+2026-07-04 15:34:17,863 INFO: B0BRZZCRPW: Started tracking rating of product - 4.3
+2026-07-04 15:34:17,863 INFO: B0BRZZCRPW: Saved 1 product metadata in db
+2026-07-04 15:34:17,863 INFO: ##8/79: Saving or updating product - B0F6VH981P
+2026-07-04 15:34:17,863 INFO: B0F6VH981P: Product metadata is not available in table
+2026-07-04 15:34:17,927 INFO: B0F6VH981P: Price of product is not tracked
+2026-07-04 15:34:17,944 INFO: B0F6VH981P: Started tracking price of product - 4199.0
+2026-07-04 15:34:18,028 INFO: B0F6VH981P: Rating of product is not tracked
+2026-07-04 15:34:18,039 INFO: B0F6VH981P: Started tracking rating of product - 4.4
+2026-07-04 15:34:18,039 INFO: B0F6VH981P: Saved 1 product metadata in db
+2026-07-04 15:34:18,039 INFO: ##9/79: Saving or updating product - B0BMPLHLZ9
+2026-07-04 15:34:18,055 INFO: B0BMPLHLZ9: Product metadata is not available in table
+2026-07-04 15:34:18,136 INFO: B0BMPLHLZ9: Price of product is not tracked
+2026-07-04 15:34:18,154 INFO: B0BMPLHLZ9: Started tracking price of product - 16499.0
+2026-07-04 15:34:18,236 INFO: B0BMPLHLZ9: Rating of product is not tracked
+2026-07-04 15:34:18,247 INFO: B0BMPLHLZ9: Started tracking rating of product - 4.4
+2026-07-04 15:34:18,247 INFO: B0BMPLHLZ9: Saved 1 product metadata in db
+2026-07-04 15:34:18,247 INFO: ##10/79: Saving or updating product - B098439Y2G
+2026-07-04 15:34:18,267 INFO: B098439Y2G: Product metadata is not available in table
+2026-07-04 15:34:18,347 INFO: B098439Y2G: Price of product is not tracked
+2026-07-04 15:34:18,364 INFO: B098439Y2G: Started tracking price of product - 5899.0
+2026-07-04 15:34:18,411 INFO: B098439Y2G: Rating of product is not tracked
+2026-07-04 15:34:18,433 INFO: B098439Y2G: Started tracking rating of product - 4.5
+2026-07-04 15:34:18,435 INFO: B098439Y2G: Saved 1 product metadata in db
+2026-07-04 15:34:18,435 INFO: ##11/79: Saving or updating product - B0B6FGSKCQ
+2026-07-04 15:34:18,443 INFO: B0B6FGSKCQ: Product metadata is not available in table
+2026-07-04 15:34:18,538 INFO: B0B6FGSKCQ: Price of product is not tracked
+2026-07-04 15:34:18,538 INFO: B0B6FGSKCQ: Started tracking price of product - 2099.0
+2026-07-04 15:34:18,602 INFO: B0B6FGSKCQ: Rating of product is not tracked
+2026-07-04 15:34:18,634 INFO: B0B6FGSKCQ: Started tracking rating of product - 4.5
+2026-07-04 15:34:18,636 INFO: B0B6FGSKCQ: Saved 1 product metadata in db
+2026-07-04 15:34:18,636 INFO: ##12/79: Saving or updating product - B0H6X8VNQC
+2026-07-04 15:34:18,650 INFO: B0H6X8VNQC: Product metadata is not available in table
+2026-07-04 15:34:18,733 INFO: B0H6X8VNQC: Price of product is not tracked
+2026-07-04 15:34:18,747 INFO: B0H6X8VNQC: Started tracking price of product - 5999.0
+2026-07-04 15:34:18,810 ERROR: B0H6X8VNQC: Rating of product not tracked since it is None
+2026-07-04 15:34:18,820 INFO: B0H6X8VNQC: Saved 1 product metadata in db
+2026-07-04 15:34:18,820 INFO: ##13/79: Saving or updating product - B0F8C158KQ
+2026-07-04 15:34:18,831 INFO: B0F8C158KQ: Product metadata is not available in table
+2026-07-04 15:34:18,911 INFO: B0F8C158KQ: Price of product is not tracked
+2026-07-04 15:34:18,914 INFO: B0F8C158KQ: Started tracking price of product - 1799.0
+2026-07-04 15:34:18,977 INFO: B0F8C158KQ: Rating of product is not tracked
+2026-07-04 15:34:18,990 INFO: B0F8C158KQ: Started tracking rating of product - 4.0
+2026-07-04 15:34:18,990 INFO: B0F8C158KQ: Saved 1 product metadata in db
+2026-07-04 15:34:18,990 INFO: ##14/79: Saving or updating product - B0C7VLXMT4
+2026-07-04 15:34:18,990 INFO: B0C7VLXMT4: Product metadata is not available in table
+2026-07-04 15:34:19,070 INFO: B0C7VLXMT4: Price of product is not tracked
+2026-07-04 15:34:19,085 INFO: B0C7VLXMT4: Started tracking price of product - 3799.0
+2026-07-04 15:34:19,150 INFO: B0C7VLXMT4: Rating of product is not tracked
+2026-07-04 15:34:19,155 INFO: B0C7VLXMT4: Started tracking rating of product - 4.3
+2026-07-04 15:34:19,155 INFO: B0C7VLXMT4: Saved 1 product metadata in db
+2026-07-04 15:34:19,155 INFO: ##15/79: Saving or updating product - B0GX6D542D
+2026-07-04 15:34:19,166 INFO: B0GX6D542D: Product metadata is not available in table
+2026-07-04 15:34:19,262 INFO: B0GX6D542D: Price of product is not tracked
+2026-07-04 15:34:19,278 INFO: B0GX6D542D: Started tracking price of product - 6999.0
+2026-07-04 15:34:19,367 INFO: B0GX6D542D: Rating of product is not tracked
+2026-07-04 15:34:19,386 INFO: B0GX6D542D: Started tracking rating of product - 4.2
+2026-07-04 15:34:19,386 INFO: B0GX6D542D: Saved 1 product metadata in db
+2026-07-04 15:34:19,386 INFO: ##16/79: Saving or updating product - B0F674X8GP
+2026-07-04 15:34:19,399 INFO: B0F674X8GP: Product metadata is not available in table
+2026-07-04 15:34:19,483 INFO: B0F674X8GP: Price of product is not tracked
+2026-07-04 15:34:19,496 INFO: B0F674X8GP: Started tracking price of product - 1609.0
+2026-07-04 15:34:19,549 INFO: B0F674X8GP: Rating of product is not tracked
+2026-07-04 15:34:19,569 INFO: B0F674X8GP: Started tracking rating of product - 4.1
+2026-07-04 15:34:19,569 INFO: B0F674X8GP: Saved 1 product metadata in db
+2026-07-04 15:34:19,569 INFO: ##17/79: Saving or updating product - B09N9MBVD1
+2026-07-04 15:34:19,576 INFO: B09N9MBVD1: Product metadata is not available in table
+2026-07-04 15:34:19,653 INFO: B09N9MBVD1: Price of product is not tracked
+2026-07-04 15:34:19,661 INFO: B09N9MBVD1: Started tracking price of product - 1899.0
+2026-07-04 15:34:19,712 INFO: B09N9MBVD1: Rating of product is not tracked
+2026-07-04 15:34:19,723 INFO: B09N9MBVD1: Started tracking rating of product - 4.6
+2026-07-04 15:34:19,724 INFO: B09N9MBVD1: Saved 1 product metadata in db
+2026-07-04 15:34:19,724 INFO: ##18/79: Saving or updating product - B099B95X36
+2026-07-04 15:34:19,733 INFO: B099B95X36: Product metadata is not available in table
+2026-07-04 15:34:19,812 INFO: B099B95X36: Price of product is not tracked
+2026-07-04 15:34:19,828 INFO: B099B95X36: Started tracking price of product - 2499.0
+2026-07-04 15:34:19,894 INFO: B099B95X36: Rating of product is not tracked
+2026-07-04 15:34:19,912 INFO: B099B95X36: Started tracking rating of product - 4.7
+2026-07-04 15:34:19,912 INFO: B099B95X36: Saved 1 product metadata in db
+2026-07-04 15:34:19,912 INFO: ##19/79: Saving or updating product - B0CHMXVCGH
+2026-07-04 15:34:19,932 INFO: B0CHMXVCGH: Product metadata is not available in table
+2026-07-04 15:34:19,994 INFO: B0CHMXVCGH: Price of product is not tracked
+2026-07-04 15:34:20,011 INFO: B0CHMXVCGH: Started tracking price of product - 225.0
+2026-07-04 15:34:20,060 INFO: B0CHMXVCGH: Rating of product is not tracked
+2026-07-04 15:34:20,068 INFO: B0CHMXVCGH: Started tracking rating of product - 4.3
+2026-07-04 15:34:20,068 INFO: B0CHMXVCGH: Saved 1 product metadata in db
+2026-07-04 15:34:20,068 INFO: ##20/79: Saving or updating product - B08RFC9DRQ
+2026-07-04 15:34:20,077 INFO: B08RFC9DRQ: Product metadata is not available in table
+2026-07-04 15:34:20,160 INFO: B08RFC9DRQ: Price of product is not tracked
+2026-07-04 15:34:20,173 INFO: B08RFC9DRQ: Started tracking price of product - 1929.0
+2026-07-04 15:34:20,211 INFO: B08RFC9DRQ: Rating of product is not tracked
+2026-07-04 15:34:20,228 INFO: B08RFC9DRQ: Started tracking rating of product - 4.5
+2026-07-04 15:34:20,228 INFO: B08RFC9DRQ: Saved 1 product metadata in db
+2026-07-04 15:34:20,228 INFO: ##21/79: Saving or updating product - B09GVLRJVS
+2026-07-04 15:34:20,246 INFO: B09GVLRJVS: Product metadata is not available in table
+2026-07-04 15:34:20,312 INFO: B09GVLRJVS: Price of product is not tracked
+2026-07-04 15:34:20,329 INFO: B09GVLRJVS: Started tracking price of product - 2289.0
+2026-07-04 15:34:20,378 INFO: B09GVLRJVS: Rating of product is not tracked
+2026-07-04 15:34:20,393 INFO: B09GVLRJVS: Started tracking rating of product - 4.4
+2026-07-04 15:34:20,395 INFO: B09GVLRJVS: Saved 1 product metadata in db
+2026-07-04 15:34:20,396 INFO: ##22/79: Saving or updating product - B0D6BZ7HHW
+2026-07-04 15:34:20,397 INFO: B0D6BZ7HHW: Product metadata is not available in table
+2026-07-04 15:34:20,462 INFO: B0D6BZ7HHW: Price of product is not tracked
+2026-07-04 15:34:20,476 INFO: B0D6BZ7HHW: Started tracking price of product - 2989.0
+2026-07-04 15:34:20,527 INFO: B0D6BZ7HHW: Rating of product is not tracked
+2026-07-04 15:34:20,543 INFO: B0D6BZ7HHW: Started tracking rating of product - 4.3
+2026-07-04 15:34:20,544 INFO: B0D6BZ7HHW: Saved 1 product metadata in db
+2026-07-04 15:34:20,544 INFO: ##23/79: Saving or updating product - B0G2MKGDFD
+2026-07-04 15:34:20,553 INFO: B0G2MKGDFD: Product metadata is not available in table
+2026-07-04 15:34:20,674 INFO: B0G2MKGDFD: Price of product is not tracked
+2026-07-04 15:34:20,684 INFO: B0G2MKGDFD: Started tracking price of product - 379.0
+2026-07-04 15:34:20,743 INFO: B0G2MKGDFD: Rating of product is not tracked
+2026-07-04 15:34:20,758 INFO: B0G2MKGDFD: Started tracking rating of product - 4.3
+2026-07-04 15:34:20,758 INFO: B0G2MKGDFD: Saved 1 product metadata in db
+2026-07-04 15:34:20,758 INFO: ##24/79: Saving or updating product - B0GFPLJM63
+2026-07-04 15:34:20,765 INFO: B0GFPLJM63: Product metadata is not available in table
+2026-07-04 15:34:20,838 INFO: B0GFPLJM63: Price of product is not tracked
+2026-07-04 15:34:20,851 INFO: B0GFPLJM63: Started tracking price of product - 299.0
+2026-07-04 15:34:20,911 INFO: B0GFPLJM63: Rating of product is not tracked
+2026-07-04 15:34:20,919 INFO: B0GFPLJM63: Started tracking rating of product - 4.4
+2026-07-04 15:34:20,919 INFO: B0GFPLJM63: Saved 1 product metadata in db
+2026-07-04 15:34:20,919 INFO: ##25/79: Saving or updating product - B0GGYT6S6V
+2026-07-04 15:34:20,935 INFO: B0GGYT6S6V: Product metadata is not available in table
+2026-07-04 15:34:21,010 INFO: B0GGYT6S6V: Price of product is not tracked
+2026-07-04 15:34:21,025 INFO: B0GGYT6S6V: Started tracking price of product - 569.0
+2026-07-04 15:34:21,089 INFO: B0GGYT6S6V: Rating of product is not tracked
+2026-07-04 15:34:21,105 INFO: B0GGYT6S6V: Started tracking rating of product - 4.4
+2026-07-04 15:34:21,105 INFO: B0GGYT6S6V: Saved 1 product metadata in db
+2026-07-04 15:34:21,105 INFO: ##26/79: Saving or updating product - B0B4289TYT
+2026-07-04 15:34:21,127 INFO: B0B4289TYT: Product metadata is not available in table
+2026-07-04 15:34:21,233 INFO: B0B4289TYT: Price of product is not tracked
+2026-07-04 15:34:21,249 INFO: B0B4289TYT: Started tracking price of product - 2449.0
+2026-07-04 15:34:21,297 INFO: B0B4289TYT: Rating of product is not tracked
+2026-07-04 15:34:21,313 INFO: B0B4289TYT: Started tracking rating of product - 4.7
+2026-07-04 15:34:21,313 INFO: B0B4289TYT: Saved 1 product metadata in db
+2026-07-04 15:34:21,313 INFO: ##27/79: Saving or updating product - B0CKSX2S72
+2026-07-04 15:34:21,333 INFO: B0CKSX2S72: Product metadata is not available in table
+2026-07-04 15:34:21,409 INFO: B0CKSX2S72: Price of product is not tracked
+2026-07-04 15:34:21,409 INFO: B0CKSX2S72: Started tracking price of product - 3324.0
+2026-07-04 15:34:21,475 INFO: B0CKSX2S72: Rating of product is not tracked
+2026-07-04 15:34:21,486 INFO: B0CKSX2S72: Started tracking rating of product - 4.3
+2026-07-04 15:34:21,486 INFO: B0CKSX2S72: Saved 1 product metadata in db
+2026-07-04 15:34:21,488 INFO: ##28/79: Saving or updating product - B0GYX4J8JJ
+2026-07-04 15:34:21,499 INFO: B0GYX4J8JJ: Product metadata is not available in table
+2026-07-04 15:34:21,567 INFO: B0GYX4J8JJ: Price of product is not tracked
+2026-07-04 15:34:21,578 INFO: B0GYX4J8JJ: Started tracking price of product - 4999.0
+2026-07-04 15:34:21,617 ERROR: B0GYX4J8JJ: Rating of product not tracked since it is None
+2026-07-04 15:34:21,630 INFO: B0GYX4J8JJ: Saved 1 product metadata in db
+2026-07-04 15:34:21,630 INFO: ##29/79: Saving or updating product - B0F91N6WQK
+2026-07-04 15:34:21,630 INFO: B0F91N6WQK: Product metadata is not available in table
+2026-07-04 15:34:21,711 INFO: B0F91N6WQK: Price of product is not tracked
+2026-07-04 15:34:21,711 INFO: B0F91N6WQK: Started tracking price of product - 1899.0
+2026-07-04 15:34:21,772 INFO: B0F91N6WQK: Rating of product is not tracked
+2026-07-04 15:34:21,772 INFO: B0F91N6WQK: Started tracking rating of product - 4.3
+2026-07-04 15:34:21,785 INFO: B0F91N6WQK: Saved 1 product metadata in db
+2026-07-04 15:34:21,785 INFO: ##30/79: Saving or updating product - B0DSW78XZF
+2026-07-04 15:34:21,794 INFO: B0DSW78XZF: Product metadata is not available in table
+2026-07-04 15:34:21,870 INFO: B0DSW78XZF: Price of product is not tracked
+2026-07-04 15:34:21,883 INFO: B0DSW78XZF: Started tracking price of product - 6349.0
+2026-07-04 15:34:21,941 INFO: B0DSW78XZF: Rating of product is not tracked
+2026-07-04 15:34:21,956 INFO: B0DSW78XZF: Started tracking rating of product - 4.4
+2026-07-04 15:34:21,956 INFO: B0DSW78XZF: Saved 1 product metadata in db
+2026-07-04 15:34:21,956 INFO: ##31/79: Saving or updating product - B0CPJFMRRR
+2026-07-04 15:34:21,966 INFO: B0CPJFMRRR: Product metadata is not available in table
+2026-07-04 15:34:22,029 INFO: B0CPJFMRRR: Price of product is not tracked
+2026-07-04 15:34:22,048 INFO: B0CPJFMRRR: Started tracking price of product - 2139.0
+2026-07-04 15:34:22,098 INFO: B0CPJFMRRR: Rating of product is not tracked
+2026-07-04 15:34:22,109 INFO: B0CPJFMRRR: Started tracking rating of product - 4.5
+2026-07-04 15:34:22,109 INFO: B0CPJFMRRR: Saved 1 product metadata in db
+2026-07-04 15:34:22,109 INFO: ##32/79: Saving or updating product - B0DJSZH7R3
+2026-07-04 15:34:22,121 INFO: B0DJSZH7R3: Product metadata is not available in table
+2026-07-04 15:34:22,212 INFO: B0DJSZH7R3: Price of product is not tracked
+2026-07-04 15:34:22,220 INFO: B0DJSZH7R3: Started tracking price of product - 6399.0
+2026-07-04 15:34:22,281 INFO: B0DJSZH7R3: Rating of product is not tracked
+2026-07-04 15:34:22,294 INFO: B0DJSZH7R3: Started tracking rating of product - 4.4
+2026-07-04 15:34:22,294 INFO: B0DJSZH7R3: Saved 1 product metadata in db
+2026-07-04 15:34:22,294 INFO: ##33/79: Saving or updating product - B0G433389V
+2026-07-04 15:34:22,304 INFO: B0G433389V: Product metadata is not available in table

@@ -6,7 +6,7 @@ from fake_useragent import UserAgent
 from app_logging import logger
 import time
 import random
-import os
+import os, sys
 
 
 # url = "https://www.amazon.in/iPhone-16-Plus-256-GB/dp/B0DGJ8DP1M/ref=sr_1_3?crid=NWE6WD0LU1CO&dib=eyJ2IjoiMSJ9.ePpqqbL-nn7bDcnfNguz2eyoq6xgQvt9lW2fONfrgdqICdGiOBZ_JevxefI77ShsTcRYnj84OnV4_7vB_kmqLN3LlhJslPplCjnUpy--CNL36R_QF2X0oYEsgJZqUzmaMT-sfE7WUffaROlUxAx5dpBUCztJkLLhAA6jdZN2271nLd6PilH5GhvAsoh3_Kz6q-UPjpz5xRWPPz62Ji77cPvCzAF41W4W8SJSIXTr0gE.3jMd3XQptpbFZ5pzvR_59KPc9v8ZrXpRTuuV_Xj-fm4&dib_tag=se&keywords=iphone%2B17%2Bpro&qid=1780913862&sprefix=iphone%2Caps%2C289&sr=8-3&th=1"
@@ -32,13 +32,29 @@ DEFAULT_HEADERS = {
     'Sec-Fetch-User': '?1',
 }
 
-CONFIG = {
-    "host": "aws-1-ap-south-1.pooler.supabase.com",
-    "user": "postgres.mtsadefjhnqdvmsqcjps",
-    "password": os.getenv("DB_PASSWORD"),
-    "database": "postgres",
-    "port": 5432
-}
+
+def get_proxy() -> dict:
+    username = os.getenv("PROXY_USERNAME")
+    # username = f"{os.getenv('PROXY_USERNAME')}_session-{random.randint(1000,9999)}_lifetime-10m"
+    password = os.getenv("PROXY_PASSWORD")
+    host = os.getenv("PROXY_HOSTNAME")
+    port = os.getenv("PROXY_PORT")
+
+    # IPRoyal supports session stickiness via _session parameter
+    # This keeps the same IP for a session (useful for multi-page scraping)
+    session_id = random.randint(1000, 9999)
+    
+    proxy_url = f"http://{username}:{password}@{host}:{port}"
+    
+    return {
+        "http": proxy_url,
+        "https": proxy_url,
+    }
+
+def estimate_bandwidth(response):
+    size_kb = len(response.content) / 1024
+    print(f"Response size: {size_kb:.1f}KB")
+    return size_kb
 
 async def ping_amazon(url: str):
     ua_generator = UserAgent(browsers=['Chrome'], os=['Windows', 'MacOS'])
@@ -141,6 +157,8 @@ async def ping_amazon2(url: str):
 
             # Let curl_cffi handle UA + TLS fingerprint — don't override it
             session.impersonate = "chrome120"
+            proxies = get_proxy()
+            session.proxies = proxies
             print("[INFO] Pinging amazon url")
             logger.info(f"{url}: Pinging amazon url")
             
@@ -158,7 +176,7 @@ async def ping_amazon2(url: str):
                     allow_redirects=True
                 )
                 print(f"Warmup request completed cookies acquired, delay - {warmup_delay}")
-                logger.info("Warm-up request completed, cookies acquired")
+                logger.info(f"Warm-up request completed, cookies acquired, delay - {warmup_delay}")
 
             # Step 2 — hit the actual target URL
             # Add Referer to look like user navigated from homepage
@@ -200,6 +218,8 @@ async def ping_amazon2(url: str):
 
             logger.info(f"Success: {url} (status {response.status_code})")
             print(f"Success: {url} (status {response.status_code})")
+            size = estimate_bandwidth(response)
+            logger.info(f"Estimated size of response - {size} KB")
             return response
                 
         except RequestsError as e:
