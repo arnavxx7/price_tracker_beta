@@ -1,6 +1,0 @@
-2026-07-04 14:53:50,198 DEBUG: Using proactor: IocpProactor
-2026-07-04 14:53:50,201 INFO: https://www.amazon.com/s?k=ps5: Pinging amazon url
-2026-07-04 14:53:53,001 INFO: Warm-up request completed, cookies acquired, delay - {warmup_delay}
-2026-07-04 14:53:53,006 INFO: Attempt 1: GET https://www.amazon.com/s?k=ps5
-2026-07-04 14:53:53,057 INFO: Success: https://www.amazon.com/s?k=ps5 (status 200)
-2026-07-04 14:53:53,058 INFO: Estimated size of response - 2.203125 KB
