@@ -99,9 +99,10 @@ def track_price_history(current_price: float, asin: str, currency: str, avlble: 
                         logger.warning(f"{asin}: Updated price of product is {current_price}, skipping insert")
                         return print(f"[WARN] {asin}: New price is none, skipping insert")
                     
-                    # diff = 0
-                    # if last_price is not None:
-                    #     diff = current_price - last_price
+                    
+                    if last_price is not None:
+                        last_price = round(last_price)
+                    current_price = round(current_price)
                     
                     if last_price is None or current_price!=last_price:
                         cur.execute("""
@@ -175,6 +176,10 @@ def track_rating_history(current_rating: float, asin: str):
                 if current_rating is None:
                     logger.warning(f"{asin}: Updated rating of product is {current_rating}, skipping insert")
                     return print(f"[WARN] {asin}: New rating is none, skipping insert")
+                
+                if last_rating is not None:
+                    last_rating = round(last_rating, 1)
+                current_rating = round(current_rating, 1)
 
                 if last_rating is None or last_rating != current_rating:
                     cur.execute("""
@@ -356,7 +361,7 @@ def save_to_database(product_data, conn):
             # except Exception as e:
             #         print(f"[ERROR] Unable to save {len(product_data)} products in db")
 
-            
+    conn.close()       
 
     
     # conn = mysql.connector.connect(**CONFIG)

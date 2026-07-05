@@ -42,8 +42,13 @@ for asin, url in rows:
         print(f"{asin}: Product information was not fetched due to captcha page or other reason, unable to update.")
         continue
     if product_info.get("price") is None and product_info.get("rating") is None:
-        with open(f"logs/{product_info.get("asin")}_debug_response.html", "w", encoding="utf-8") as f:
-            f.write(prod_html_content.text)
+        if not os.getenv("GITHUB_ACTIONS"):  # only save locally, not on runner
+            with open(f"logs/{product_info.get("asin")}_debug_response.html", "w", encoding="utf-8") as f:
+                f.write(prod_html_content.text)
+            
+        else:
+            # On GitHub Actions just log it instead
+            logger.warning(f"{asin}: Possible captcha or parsing failure")
 
     save_to_database(product_info, conn)
     i = i+1

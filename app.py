@@ -3,7 +3,7 @@ from get_product_info import amzn_product_info_scraper
 from get_search_results import get_search_results, parse_pagination_url
 from app_logging import logger
 from utils import save_to_database, extract_country_code
-from fastapi import FastAPI, HTTPException, status, Request
+from fastapi import FastAPI, HTTPException, status, Request, BackgroundTasks
 from fastapi.responses import Response, StreamingResponse, JSONResponse, HTMLResponse
 from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
@@ -39,7 +39,7 @@ app.add_middleware(
 )
 
 @app.get("/api/search_query")
-def search_query(q: str):
+def search_query(q: str, background_tasks: BackgroundTasks):
     print(f"Query received on fastapi server: {q}")
     logger.info(f"Fastapi server received this query from nextjs: {q}")
     if not q:
@@ -81,8 +81,7 @@ def search_query(q: str):
             }
 
         else:
-            save_to_database(product_info, conn) 
-            conn.close()
+            background_tasks.add_task(save_to_database, product_info, conn) 
             return {
                 "status": "success",
                 "details": f"Received product details for: {product_info.get("asin")}",
@@ -166,8 +165,7 @@ def search_query(q: str):
                 seen.add(asin)
             unique_products.append(p)
         
-        save_to_database(all_products, conn)
-        conn.close() 
+        background_tasks.add_task(save_to_database, all_products, conn) 
         return {
             "status": "success",
             "details": f"Found {len(unique_products)} unique products from amazon search pages for query: {q}",
