@@ -1,7 +1,7 @@
 "use client"
 
-import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useSearchParams, useRouter } from "next/navigation";
+import { use, useEffect, useState } from "react";
 
 interface Product {
   asin: string | null;
@@ -43,6 +43,29 @@ function PriceDisplay({ product }: { product: Product }) {
 }
 
 function ProductCard({ product }: { product: Product }) {
+  const router = useRouter();
+
+  function handleTitleClick() {
+    if (!product.url) return;
+
+    const productPageData = {
+      name: product.title,
+      price: product.price,
+      currency: product.currency,
+      brand_name: null,           // not available from search results
+      rating: product.rating,
+      asin: product.asin,
+      country_code: "com",        // since you're scraping amazon.com
+      prod_url: product.url,
+      original_price: product.original_price,
+      discount_percent: product.discount_percent,
+      img_url: product.img_url,
+      prime: product.prime
+    };
+
+    sessionStorage.setItem("productData", JSON.stringify(productPageData));
+    router.push(`/products?url=${encodeURIComponent(product.url ?? "")}`);
+  }
   return (
     <div className="product-card">
       <div className="product-image-wrapper">
@@ -61,13 +84,13 @@ function ProductCard({ product }: { product: Product }) {
         <div className="product-header">
           {product.title ? (
             <h2 className="product-title">
-              {product.url ? (
-                <a href={product.url} target="_blank" rel="noopener noreferrer">
-                  {product.title}
-                </a>
-              ) : (
-                product.title
-              )}
+              <span
+                onClick={handleTitleClick}
+                className="title-link"
+                style={{ cursor: product.url ? "pointer" : "default" }}
+              >
+                {product.title}
+              </span>
             </h2>
           ) : (
             <h2 className="product-title muted">Title unavailable</h2>
@@ -410,6 +433,15 @@ export default function search_result() {
         @media (max-width: 560px) {
           .product-card { flex-direction: column; }
           .product-image-wrapper { width: 100%; height: 160px; }
+        }
+        
+        .title-link {
+          color: inherit;
+          text-decoration: none;
+        }
+        .title-link:hover {
+          color: #fff;
+          text-decoration: underline;
         }
       `}</style>
 

@@ -2,7 +2,7 @@ from amzn import ping_amazon2
 from get_product_info import amzn_product_info_scraper
 from get_search_results import get_search_results, parse_pagination_url
 from app_logging import logger
-from utils import save_to_database, extract_country_code
+from utils import save_to_database, extract_country_code, is_url, search_db
 from fastapi import FastAPI, HTTPException, status, Request, BackgroundTasks
 from fastapi.responses import Response, StreamingResponse, JSONResponse, HTMLResponse
 from fastapi.middleware.cors import CORSMiddleware
@@ -14,9 +14,6 @@ from dotenv import load_dotenv
 import re
 
 
-def is_url(string):
-    pattern = r'^(http|https)'
-    return bool(re.match(pattern, string))
 
 load_dotenv()
 

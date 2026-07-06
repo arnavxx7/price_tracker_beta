@@ -3,11 +3,13 @@ from bs4 import BeautifulSoup
 from curl_cffi import requests
 from curl_cffi.requests.errors import RequestsError
 from fake_useragent import UserAgent
+from dotenv import load_dotenv
 from app_logging import logger
 import time
 import random
 import os, sys
 
+load_dotenv()
 
 # url = "https://www.amazon.in/iPhone-16-Plus-256-GB/dp/B0DGJ8DP1M/ref=sr_1_3?crid=NWE6WD0LU1CO&dib=eyJ2IjoiMSJ9.ePpqqbL-nn7bDcnfNguz2eyoq6xgQvt9lW2fONfrgdqICdGiOBZ_JevxefI77ShsTcRYnj84OnV4_7vB_kmqLN3LlhJslPplCjnUpy--CNL36R_QF2X0oYEsgJZqUzmaMT-sfE7WUffaROlUxAx5dpBUCztJkLLhAA6jdZN2271nLd6PilH5GhvAsoh3_Kz6q-UPjpz5xRWPPz62Ji77cPvCzAF41W4W8SJSIXTr0gE.3jMd3XQptpbFZ5pzvR_59KPc9v8ZrXpRTuuV_Xj-fm4&dib_tag=se&keywords=iphone%2B17%2Bpro&qid=1780913862&sprefix=iphone%2Caps%2C289&sr=8-3&th=1"
 
@@ -45,6 +47,7 @@ def get_proxy() -> dict:
     session_id = random.randint(1000, 9999)
     
     proxy_url = f"http://{username}:{password}@{host}:{port}"
+    print(proxy_url)
     
     return {
         "http": proxy_url,
@@ -148,7 +151,7 @@ async def ping_amazon(url: str):
 
 async def ping_amazon2(url: str):
     max_retries = 3
-    timeout = 30
+    timeout = 60
 
     for attempt in range(max_retries + 1):
         try:
@@ -181,7 +184,7 @@ async def ping_amazon2(url: str):
             # Step 2 — hit the actual target URL
             # Add Referer to look like user navigated from homepage
             request_headers = DEFAULT_HEADERS.copy()
-            request_headers["Referer"] = "https://www.amazon.in/"
+            request_headers["Referer"] = "https://www.amazon.com/"
 
             delay = random.uniform(2, 5) * (1 + attempt * 0.5)
             if attempt > 0:
@@ -223,13 +226,21 @@ async def ping_amazon2(url: str):
             return response
                 
         except RequestsError as e:
+            error_msg = str(e)
+            if "timed out" in error_msg.lower() or "28" in error_msg:
+                logger.warning(f"Timeout on attempt {attempt + 1} — switching proxy and retrying")
+                time.sleep(random.uniform(3, 6)) 
+                continue
+            
             logger.error(f"Network error on attempt {attempt + 1}: {e}")
+            print(f"Received the following error on attempt {attempt + 1}: {e}")
             if attempt == max_retries:
                 return None
             time.sleep(random.uniform(5, 10))
 
         except Exception as e:
             logger.error(f"Unexpected error on attempt {attempt + 1}: {e}")
+            print(f"Received the following error on attempt {attempt + 1}: {e}")
             if attempt == max_retries:
                 return None
             time.sleep(random.uniform(5, 10))

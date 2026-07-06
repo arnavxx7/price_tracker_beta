@@ -9,7 +9,7 @@ export async function GET(req: NextRequest) {
     console.log("This is the python api url", process.env.PYTHON_API_URL)
     // Forward the request to your FastAPI backend
     const res = await fetch(
-    `http://localhost:8000/api/search_query?q=${encodeURIComponent(query as string)}`,
+    `${process.env.PYTHON_API_URL}/api/search_query?q=${encodeURIComponent(query as string)}`,
     {
         method: "GET",
         headers: {

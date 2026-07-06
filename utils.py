@@ -15,6 +15,10 @@ CONFIG = {
     "port": 5432
 }
 
+def is_url(string):
+    pattern = r'^(http|https)'
+    return bool(re.match(pattern, string))
+
 def extract_asin(url: str):
     if not url:
         return None
@@ -53,6 +57,26 @@ def get_canonical_url(asin: str, country_code: str, url: str):
     canonical_url = f"https://amazon.{country_code}/dp/{asin}"
 
     return canonical_url
+
+def search_db(text_query: str) -> list:
+    conn = psycopg2.connect(**CONFIG)
+    try:
+        with conn.cursor() as cur:
+            cur.execute("""
+                SELECT * FROM amzn_product_info
+                WHERE 
+                    name ILIKE %s
+                    OR brand ILIKE %s
+                    OR asin = %s
+                ORDER BY rating DESC NULLS LAST, price ASC NULLS LAST
+                LIMIT 60
+            """, (f"%{text_query}%", f"%{text_query}%", text_query.upper()))
+            
+            columns = [desc[0] for desc in cur.description]
+            rows = cur.fetchall()
+            return [dict(zip(columns, row)) for row in rows]
+    finally:
+        conn.close()
 
 def track_price_history(current_price: float, asin: str, currency: str, avlble: bool):
      with psycopg2.connect(**CONFIG) as conn:
@@ -232,9 +256,9 @@ def save_to_database(product_data, conn):
             if not product_info_in_table:
                 logger.info(f"{product_data.get("asin")}: Product metadata not available in table")
                 insert_query = '''
-                    INSERT INTO amzn_product_info (asin, name, price, brand, rating, currency, url, created_at, last_checked_at) VALUES (%s, %s, %s, %s, %s, %s, %s, NOW(), NOW());
+                    INSERT INTO amzn_product_info (asin, name, price, brand, rating, currency, url, created_at, last_checked_at, prime, org_price, discount_percent, img_url) VALUES (%s, %s, %s, %s, %s, %s, %s, NOW(), NOW(), %s, %s, %s, %s);
                     '''
-                cur.execute(insert_query, (product_data.get("asin"), product_data.get("name"), product_data.get("price"), product_data.get("brand_name"), product_data.get("rating"), product_data.get("currency"), product_data.get("prod_url")))
+                cur.execute(insert_query, (product_data.get("asin"), product_data.get("name"), product_data.get("price"), product_data.get("brand_name"), product_data.get("rating"), product_data.get("currency"), product_data.get("prod_url"), product_data.get("prime"), product_data.get("org_price"), product_data.get("discount_percent"), product_data.get("img_url")))
                 conn.commit()
 
                 track_price_history(product_data.get("price"), product_data.get("asin"), product_data.get("currency"), True)
@@ -246,16 +270,16 @@ def save_to_database(product_data, conn):
                 # if product metadata available in main table, update the fields with latest values
                 logger.info(f"{product_data.get("asin")}: Product metadata available in table")
                 cur.execute(
-                    "SELECT name, brand, rating, currency, url, price FROM amzn_product_info WHERE asin = %s",
+                    "SELECT name, brand, rating, currency, url, price, prime, org_price, discount_percent, img_url FROM amzn_product_info WHERE asin = %s",
                     (product_data.get("asin"),)
                 )
 
                 row = cur.fetchone() 
 
                 if row:
-                    name, brand, rating, currency, url, price = row
-                prev_val = {"name": name, "brand": brand, "rating": rating, "currency": currency, "url": url, "price": price}
-                new_val = {"name": product_data.get("name"), "brand": product_data.get("brand_name"), "currency": product_data.get("currency"), "url": product_data.get("prod_url")}
+                    name, brand, rating, currency, url, price, prime, org_price, discount_percent, img_url = row
+                prev_val = {"name": name, "brand": brand, "rating": rating, "currency": currency, "url": url, "price": price, "prime": prime, "org_price": org_price, "discount_percent": discount_percent, "img_url": img_url}
+                new_val = {"name": product_data.get("name"), "brand": product_data.get("brand_name"), "currency": product_data.get("currency"), "url": product_data.get("prod_url"), "prime": product_data.get("prime"), "org_price": product_data.get("org_price"), "discount_percent": product_data.get("discount_percent"), "img_url": product_data.get("img_url")}
                 old_missing = [k for k, v in prev_val.items() if v is None]
                 logger.info(f"{product_data.get("asin")}: These fields are null in existing record in database - {old_missing}")
                 new_not_null = [k for k, v in new_val.items() if v is not None]
@@ -302,10 +326,10 @@ def save_to_database(product_data, conn):
                     if not product_info_in_table:
                         logger.info(f"{prod.get('asin')}: Product metadata is not available in table")
                         insert_query = '''
-                            INSERT INTO amzn_product_info (asin, name, price, brand, rating, currency, url, created_at, last_checked_at) VALUES (%s, %s, %s, %s, %s, %s, %s, NOW(), NOW());
+                            INSERT INTO amzn_product_info (asin, name, price, brand, rating, currency, url, created_at, last_checked_at, prime, org_price, discount_percent, img_url) VALUES (%s, %s, %s, %s, %s, %s, %s, NOW(), NOW(), %s, %s, %s, %s);
                             '''
 
-                        cur.execute(insert_query, (prod.get("asin"), prod.get("title"), prod.get("price"), None, prod.get("rating"), prod.get("currency"), prod.get("url")))
+                        cur.execute(insert_query, (prod.get("asin"), prod.get("title"), prod.get("price"), prod.get("brand"), prod.get("rating"), prod.get("currency"), prod.get("url"), prod.get("prime"), prod.get("original_price"), prod.get("discount_percent"), prod.get("img_url")))
                         conn.commit()
 
                         track_price_history(prod.get("price"), prod.get("asin"), prod.get("currency"), True)
@@ -317,16 +341,16 @@ def save_to_database(product_data, conn):
                         # if product metadata available in main table, update the values of fields with the lastest not null data
                         logger.info(f"{prod.get('asin')}: Product metadata is available in table")
                         cur.execute(
-                            "SELECT name, brand, rating, currency, url, price FROM amzn_product_info WHERE asin = %s",
+                            "SELECT name, brand, rating, currency, url, price, prime, org_price, discount_percent, img_url FROM amzn_product_info WHERE asin = %s",
                             (prod.get("asin"),)
                         )
 
                         row = cur.fetchone()
 
                         if row:
-                            name, brand, rating, currency, url, price = row
-                        prev_val = {"name": name, "brand": brand, "rating": rating, "currency": currency, "url": url, "price": price}
-                        new_val = {"name": prod.get("name"), "brand": prod.get("brand_name"), "currency": prod.get("currency"), "url": prod.get("prod_url")}
+                            name, brand, rating, currency, url, price, prime, org_price, discount_percent, img_url = row
+                        prev_val = {"name": name, "brand": brand, "rating": rating, "currency": currency, "url": url, "price": price, "prime": prime, "org_price": org_price, "discount_percent": discount_percent, "img_url": img_url}
+                        new_val = {"name": prod.get("name"), "brand": prod.get("brand_name"), "currency": prod.get("currency"), "url": prod.get("prod_url"),  "prime": prod.get("prime"), "org_price": prod.get("original_price"), "discount_percent": prod.get("discount_percent"), "img_url": prod.get("img_url")}
                         old_missing = [k for k, v in prev_val.items() if v is None]
                         logger.info(f"{prod.get("asin")}: These fields are null in existing record in database - {old_missing}")
                         new_not_null = [k for k, v in new_val.items() if v is not None]

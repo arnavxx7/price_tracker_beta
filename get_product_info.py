@@ -1,5 +1,6 @@
 from bs4 import BeautifulSoup
 import re   
+import json
 from curl_cffi import requests
 import asyncio
 from utils import extract_asin, extract_country_code, get_canonical_url
@@ -13,22 +14,15 @@ CURRENCY_MAPPING = {
     "¥": "JPY"
 }
 
-# url = "https://www.amazon.in/iPhone-16-Plus-256-GB/dp/B0DGJ8DP1M/ref=sr_1_3?crid=NWE6WD0LU1CO&dib=eyJ2IjoiMSJ9.ePpqqbL-nn7bDcnfNguz2eyoq6xgQvt9lW2fONfrgdqICdGiOBZ_JevxefI77ShsTcRYnj84OnV4_7vB_kmqLN3LlhJslPplCjnUpy--CNL36R_QF2X0oYEsgJZqUzmaMT-sfE7WUffaROlUxAx5dpBUCztJkLLhAA6jdZN2271nLd6PilH5GhvAsoh3_Kz6q-UPjpz5xRWPPz62Ji77cPvCzAF41W4W8SJSIXTr0gE.3jMd3XQptpbFZ5pzvR_59KPc9v8ZrXpRTuuV_Xj-fm4&dib_tag=se&keywords=iphone%2B17%2Bpro&qid=1780913862&sprefix=iphone%2Caps%2C289&sr=8-3&th=1"
 
-# url2 = "https://www.amazon.com/PlayStation%C2%AE5-console-1TB-PlayStation-5/dp/B0FRGTYSL5/ref=sr_1_1_mod_primary_new?sbo=RZvfv%2F%2FHxDF%2BO5021pAnSA%3D%3D&sr=8-1"
-
-
-# headers = {
-#     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36",
-#     "Accept-Language": 'en-US, en;q=0.9'
-# }
-
-# response = requests.get(url, headers=headers)
-# soup = BeautifulSoup(response.content, 'html.parser')
-# prod_name = soup.select_one('#productTitle').text.strip()
-# prod_price_whole = soup.select_one('.a-price-whole').text.strip()
-
-
+def extract_field(soup, selectors, extract_attribute=None):
+    for selector in selectors:
+        elem = soup.select_one(selector)
+        if elem:
+            if extract_attribute:
+                return elem.get(extract_attribute)
+            print(elem.text.strip())
+            return elem.text.strip()
 
 def amzn_product_info_scraper(html_content, url: str = None) -> dict:
     if not html_content:
@@ -49,7 +43,7 @@ def amzn_product_info_scraper(html_content, url: str = None) -> dict:
     prod_price_fraction_element = soup.select_one('.a-price-fraction')
     currency_element = soup.select_one('.a-price-symbol')
 
-    print("strat1", (prod_price_whole_element, prod_price_fraction_element, currency_element))
+    # print("strat1", (prod_price_whole_element, prod_price_fraction_element, currency_element))
 
     if prod_price_whole_element:
         prod_price_whole = prod_price_whole_element.text.strip().replace(".", "").replace(",", "")
@@ -61,7 +55,7 @@ def amzn_product_info_scraper(html_content, url: str = None) -> dict:
         if currency_element:
             currency = CURRENCY_MAPPING.get(currency_element.text.strip())
 
-    print("strat1", price, currency)
+    # print("strat1", price, currency)
 
     # Strategy 2: a-offscreen span (e.g. "₹69,900.00" as full string)
     if price is None:
@@ -72,7 +66,7 @@ def amzn_product_info_scraper(html_content, url: str = None) -> dict:
                 currency = CURRENCY_MAPPING.get(m.group(1), m.group(1))
                 price = float(m.group(2).replace(',', ''))
 
-    print("strat2", price, currency)
+    # print("strat2", price, currency)
 
     # Strategy 3: UCC widget / newer buybox — plain span with currency symbol
     if price is None:
@@ -84,7 +78,7 @@ def amzn_product_info_scraper(html_content, url: str = None) -> dict:
                 price = float(m.group(2).replace(',', ''))
                 break
 
-    print("strat3", price, currency)
+    # print("strat3", price, currency)
 
     prod_info["price"] = price
     prod_info["currency"] = currency
@@ -210,7 +204,78 @@ def amzn_product_info_scraper(html_content, url: str = None) -> dict:
             rating = float(rating_match.group(1))
 
     prod_info["rating"] = rating
+
+
+    original_price_selectors = [
+    'span.a-price.a-text-price.apex-basis-price-value span.a-offscreen', # Current standard layout
+    'span.a-price.a-text-price[data-a-strike="true"] span.a-offscreen',  # Alternative modern layout
+    '#priceBlockStrikePriceString',                                      # Legacy layout (still seen on some items)
+    '.basisPrice .a-offscreen'                                           # Fallback
+    ]
+
+    discount_selectors = [
+    'span.savingsPercentage',               # Most common layout
+    'span.apex-savings-percent',            # Newer "Apex" pricing layout
+    '.a-color-price.savingPriceOverride',   # Deal pages
+    'span:-soup-contains("% off")'          # Generic fallback using Soup text matching
+    ]
+
+    prime_selectors = [
+                    'i.a-icon-prime',                     # Common layout
+                    '.a-icon-prime',                      # Alternative layout
+                    'span:-soup-contains("Prime")',       # Text-based detection
+                    '.aok-relative.s-icon-text-medium',   # Format from example
+                    '[aria-label="Prime"]'                # Aria-label based
+                ]
+
+    org_price = extract_field(soup, original_price_selectors)
+    if org_price:
+        org_price = str(org_price)
+        if org_price[0] in list(CURRENCY_MAPPING.keys()):
+            org_price = float(org_price[1:])
+            prod_info["org_price"] = org_price
+
+    discount_percent = extract_field(soup, discount_selectors)
+
+    if discount_percent:
+        discount_percent = str(discount_percent)
+        discount_percent = discount_percent[1:].split("%")[0]
+        discount_percent = float(discount_percent)
+        prod_info["discount_percent"] = discount_percent
+
+    if not discount_percent:
+        if price and org_price:
+            discount_percent = round(100 - (price / org_price * 100))
+            prod_info['discount_percent'] = discount_percent
+
+    prime = extract_field(soup, prime_selectors)
+
+    if prime:
+        prod_info["prime"] = True
+    else:
+        prod_info["prime"] = False
+
     
+    img_element = soup.select_one('#landingImage') or soup.select_one('#imgBlkFront')
+    img_url = img_element.get('src') if img_element else None
+
+    # Try to get high-resolution image URL if available
+    if img_element and not img_url:
+        data_old_hires = img_element.get('data-old-hires')
+        data_a_dynamic_image = img_element.get('data-a-dynamic-image')
+        
+        if data_old_hires:
+            img_url = data_old_hires
+        elif data_a_dynamic_image:
+            # This attribute contains a JSON string with multiple image URLs
+            try:
+                image_dict = json.loads(data_a_dynamic_image)
+                # Get the URL with the highest resolution
+                if image_dict:
+                    img_url = list(image_dict.keys())[0]
+            except Exception:
+                pass
+    prod_info["img_url"] = img_url
     
     prod_info["asin"] = extract_asin(url)
     prod_info["country_code"] = extract_country_code(url)
