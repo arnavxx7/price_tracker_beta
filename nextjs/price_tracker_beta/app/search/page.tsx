@@ -1,7 +1,7 @@
 "use client"
 
 import { useSearchParams, useRouter } from "next/navigation";
-import { use, useEffect, useState } from "react";
+import { useRef, useEffect, useState } from "react";
 
 interface Product {
   asin: string | null;
@@ -9,6 +9,7 @@ interface Product {
   url: string | null;
   currency: string | null;
   price: number | null;
+  brand: string | null;
   original_price: number | null;
   discount_percent: number | null;
   img_url: string | null;
@@ -52,12 +53,12 @@ function ProductCard({ product }: { product: Product }) {
       name: product.title,
       price: product.price,
       currency: product.currency,
-      brand_name: null,           // not available from search results
+      brand_name: product.brand,         
       rating: product.rating,
       asin: product.asin,
       country_code: "com",        // since you're scraping amazon.com
       prod_url: product.url,
-      original_price: product.original_price,
+      org_price: product.original_price,
       discount_percent: product.discount_percent,
       img_url: product.img_url,
       prime: product.prime
@@ -143,9 +144,21 @@ export default function search_result() {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [scraping, setScraping] = useState(false);
+  const [currentPage, setCurrentPage] = useState(0);
+  const seenAsins = useRef<Set<string>>(new Set());
 
   useEffect(() => {
     if (!query) return;
+
+    // Reset state on new query
+    setProducts([]);
+    setLoading(true);
+    setScraping(false);
+    setError(null);
+    seenAsins.current = new Set();
+    
+    let eventSource: EventSource | null = null;
 
     const fetchResults = async () => {
       setLoading(true);

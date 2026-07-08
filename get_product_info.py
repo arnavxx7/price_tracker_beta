@@ -1,8 +1,6 @@
 from bs4 import BeautifulSoup
 import re   
 import json
-from curl_cffi import requests
-import asyncio
 from utils import extract_asin, extract_country_code, get_canonical_url
 
 
@@ -240,12 +238,24 @@ def amzn_product_info_scraper(html_content, url: str = None) -> dict:
     if discount_percent:
         discount_percent = str(discount_percent)
         discount_percent = discount_percent[1:].split("%")[0]
-        discount_percent = float(discount_percent)
+        try:
+            discount_percent = float(discount_percent)
+            if discount_percent == 0.0:
+                discount_percent = None
+            if discount_percent < 0.0 or discount_percent > 100.0:
+                discount_percent = None
+        except Exception as e:
+            discount_percent = None
+            print(e)
         prod_info["discount_percent"] = discount_percent
 
     if not discount_percent:
         if price and org_price:
             discount_percent = round(100 - (price / org_price * 100))
+            if discount_percent == 0.0:
+                discount_percent = None
+            if discount_percent < 0.0 or discount_percent > 100.0:
+                discount_percent = None
             prod_info['discount_percent'] = discount_percent
 
     prime = extract_field(soup, prime_selectors)

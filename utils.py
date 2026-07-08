@@ -58,23 +58,36 @@ def get_canonical_url(asin: str, country_code: str, url: str):
 
     return canonical_url
 
-def search_db(text_query: str) -> list:
+def search_db(query: str, search_type: str) -> list:
     conn = psycopg2.connect(**CONFIG)
     try:
-        with conn.cursor() as cur:
-            cur.execute("""
-                SELECT * FROM amzn_product_info
-                WHERE 
-                    name ILIKE %s
-                    OR brand ILIKE %s
-                    OR asin = %s
-                ORDER BY rating DESC NULLS LAST, price ASC NULLS LAST
-                LIMIT 60
-            """, (f"%{text_query}%", f"%{text_query}%", text_query.upper()))
-            
-            columns = [desc[0] for desc in cur.description]
-            rows = cur.fetchall()
-            return [dict(zip(columns, row)) for row in rows]
+        if search_type == "search":
+            with conn.cursor() as cur:
+                cur.execute("""
+                    SELECT 
+                            asin, 
+                            name,
+                            price,
+                            brand,
+                            rating,
+                            currency,
+                            url,
+                            prime,
+                            org_price,
+                            discount_percent,
+                            img_url,
+                            ts_rank(search_vector, websearch_to_tsquery('english', %s)) AS rank
+                    FROM amzn_product_info
+                    WHERE search_vector @@ websearch_to_tsquery('english', %s)
+                    ORDER BY rank DESC NULLS LAST
+                    LIMIT 60
+                """, (query, query))
+                
+                columns = [desc[0] for desc in cur.description]
+                columns[1] = "title"
+                columns[8] = "original_price"
+                rows = cur.fetchall()
+                return [dict(zip(columns, row)) for row in rows]
     finally:
         conn.close()
 
@@ -385,7 +398,7 @@ def save_to_database(product_data, conn):
             # except Exception as e:
             #         print(f"[ERROR] Unable to save {len(product_data)} products in db")
 
-    conn.close()       
+    # conn.close()       
 
     
     # conn = mysql.connector.connect(**CONFIG)

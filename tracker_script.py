@@ -22,20 +22,20 @@ logger.info("Starting session")
 conn = psycopg2.connect(**CONFIG)
 logger.info(f"Connected to db - {CONFIG["database"]}")
 cur = conn.cursor()
-cur.execute("SELECT asin, url FROM amzn_product_info")
+cur.execute("SELECT asin, url FROM amzn_product_info WHERE search_vector @@ websearch_to_tsquery('english', 'ps5');")
 rows = cur.fetchall()  # fetch all first, so cursor stays free for save_to_database
 num = len(rows)
 logger.info(f"Updating the fields of {num} records")
 
 
-cur.close()  # close this cursor, save_to_database will use its own connection
+# cur.close()  # close this cursor, save_to_database will use its own connection
 i=1
 for asin, url in rows:
     logger.info(f"\nUpdating record - {i}/{num}\n")
     print(f"\nUpdating record - {i}/{num}\n")
     prod_html_content = asyncio.run(ping_amazon2(url))
     product_info = amzn_product_info_scraper(prod_html_content, url)
-
+    print(product_info)
 
     if len(product_info) == 0:
         logger.error(f"{asin}: Product information was not fetched due to captcha page or other reason, unable to update.")
