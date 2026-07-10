@@ -6,6 +6,7 @@ from fake_useragent import UserAgent
 from dotenv import load_dotenv
 from app_logging import logger
 import time
+import asyncio
 import random
 import os, sys
 
@@ -156,7 +157,7 @@ async def ping_amazon2(url: str):
     for attempt in range(max_retries + 1):
         try:
             # Fresh session per attempt
-            session = requests.Session()
+            session = requests.AsyncSession()
 
             # Let curl_cffi handle UA + TLS fingerprint — don't override it
             session.impersonate = "chrome120"
@@ -170,9 +171,9 @@ async def ping_amazon2(url: str):
             # (only on first attempt to avoid hammering)
             if attempt == 0:
                 warmup_delay = random.uniform(1.5, 3.0)
-                time.sleep(warmup_delay)
+                await asyncio.sleep(warmup_delay)
 
-                session.get(
+                await session.get(
                     "https://www.amazon.in/",
                     headers=DEFAULT_HEADERS,
                     timeout=timeout,
@@ -190,12 +191,12 @@ async def ping_amazon2(url: str):
             if attempt > 0:
                 print(f"Retry attempt {attempt + 1}/{max_retries + 1}, waiting {delay:.2f}s")
                 logger.info(f"Retry attempt {attempt + 1}/{max_retries + 1}, waiting {delay:.2f}s")
-                time.sleep(delay)
+                await asyncio.sleep(delay)
             
             
             logger.info(f"Attempt {attempt + 1}: GET {url}")
             print(f"Attempt {attempt + 1}: GET {url}")
-            response = session.get(
+            response = await session.get(
                 url,
                 headers=request_headers,
                 timeout=timeout,
@@ -229,7 +230,7 @@ async def ping_amazon2(url: str):
             error_msg = str(e)
             if "timed out" in error_msg.lower() or "28" in error_msg:
                 logger.warning(f"Timeout on attempt {attempt + 1} — switching proxy and retrying")
-                time.sleep(random.uniform(3, 6)) 
+                await asyncio.sleep(random.uniform(3, 6)) 
                 continue
             
             logger.error(f"Network error on attempt {attempt + 1}: {e}")
@@ -243,7 +244,7 @@ async def ping_amazon2(url: str):
             print(f"Received the following error on attempt {attempt + 1}: {e}")
             if attempt == max_retries:
                 return None
-            time.sleep(random.uniform(5, 10))
+            await asyncio.sleep(random.uniform(5, 10))
         
     return None
 

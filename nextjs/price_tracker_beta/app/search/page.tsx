@@ -1,5 +1,6 @@
 "use client"
 
+// import { unique } from "next/dist/build/utils";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useRef, useEffect, useState } from "react";
 
@@ -45,7 +46,6 @@ function PriceDisplay({ product }: { product: Product }) {
 
 function ProductCard({ product }: { product: Product }) {
   const router = useRouter();
-
   function handleTitleClick() {
     if (!product.url) return;
 
@@ -63,12 +63,12 @@ function ProductCard({ product }: { product: Product }) {
       img_url: product.img_url,
       prime: product.prime
     };
-
+  
     sessionStorage.setItem("productData", JSON.stringify(productPageData));
     router.push(`/products?url=${encodeURIComponent(product.url ?? "")}`);
   }
   return (
-    <div className="product-card">
+    <div className="product-card animate-new-product" >
       <div className="product-image-wrapper">
         {product.img_url ? (
           <img
@@ -139,7 +139,7 @@ function ProductCard({ product }: { product: Product }) {
 export default function search_result() {
   const searchParams = useSearchParams();
   const query = searchParams.get("q") ?? "";
-  console.log("This is the query received here at /search from home page:", query)
+  // console.log("This is the query received here at /search from home page:", query)
 
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(false);
@@ -147,6 +147,8 @@ export default function search_result() {
   const [scraping, setScraping] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
   const seenAsins = useRef<Set<string>>(new Set());
+  const [total_products_db, setProductsDb] = useState(0);
+  const [total_products_scraped, setProductsScraped] = useState(0);
 
   useEffect(() => {
     if (!query) return;
@@ -161,34 +163,77 @@ export default function search_result() {
     let eventSource: EventSource | null = null;
 
     const fetchResults = async () => {
-      setLoading(true);
-      setError(null);
 
       try {
-        // get response from fastapi for search url
+        // get response from fastapi database endpoint for search url
         const stored = sessionStorage.getItem("searchResults");
         if (stored) {
             const parsed: Product[] = JSON.parse(stored);
-  
             // Deduplicate by ASIN, keeping first occurrence
-            const seen = new Set<string>();
-            const unique = parsed.filter(product => {
-              if (!product.asin) return true; // keep products without ASIN
-              if (seen.has(product.asin)) return false;
-              seen.add(product.asin);
-              return true;
-            });
-            
+            // const seen = new Set<string>();
+            // const unique = parsed.filter(product => {
+            //   if (!product.asin) return true; // keep products without ASIN
+            //   if (seen.has(product.asin)) return false;
+            //   seen.add(product.asin);
+            //   return true;
+            // });
+            const unique = dedupe(parsed, seenAsins.current);
+            setProductsDb(unique.length);
             setProducts(unique);
         } else {
           setError("No results found. Please search again.");
         }
+        
+        setLoading(false);
+        // Step 2 — open SSE stream for live scrape results
+        setScraping(true);
+        let total_products_scraped = 0;
+        eventSource = new EventSource(
+          `/api/scrape_stream?q=${encodeURIComponent(query)}`
+        );
+        
+        eventSource.onmessage = (event) => {
+          const msg = JSON.parse(event.data);
+          console.log("This is the status of the new message received by event source = ", msg.status);
+          if (msg.status !== "done" || msg.status !== "error") {
+            console.log(`Found ${msg.num_products} products on page: ${msg.page}`)
+          }
+          
+          if (msg.status === "success") {
+            setCurrentPage(msg.page)
+            const newOnes = dedupe(msg.content, seenAsins.current);
+      
+            if (newOnes.length > 0) {
+              setProducts(prev => [...prev, ...newOnes  ]);
+            }
+            setProductsScraped(prevCount => prevCount + newOnes.length);
+            
+          }
+
+          if (msg.status === "done" || msg.status === "error") {
+            setScraping(false);
+            eventSource?.close();
+          }
+
+          if (msg.status === "error") {
+            console.log(`Recevied following error on page ${msg.page}: ${msg.details}`)
+          }
+
+        };
+
+        eventSource.onerror = () => {
+          setScraping(false);
+          eventSource?.close();
+        };
+
+
         // const res = await fetch(`/api/search_query?q=${encodeURIComponent(query)}`);
         // if (!res.ok) throw new Error(`Server error: ${res.status}`);
         // const data: Product[] = await res.json();
         // setProducts(data);
       } catch (err) {
         setError("Failed to fetch results. Please try again.");
+        setScraping(false);
         console.error(err);
       } finally {
         setLoading(false);
@@ -197,6 +242,16 @@ export default function search_result() {
 
     fetchResults();
   }, [query]);
+
+    // Dedupe helper — mutates the seen set
+  function dedupe(list: Product[], seen: Set<string>): Product[] {
+    return list.filter(p => {
+      if (!p.asin) return true;
+      if (seen.has(p.asin)) return false;
+      seen.add(p.asin);
+      return true;
+    });
+  }
 
   return (
     <>
@@ -456,6 +511,55 @@ export default function search_result() {
           color: #fff;
           text-decoration: underline;
         }
+
+        .scraping-bar {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          font-size: 0.78rem;
+          color: #7c6bff;
+          margin-bottom: 16px;
+          padding: 8px 14px;
+          background: rgba(124, 107, 255, 0.08);
+          border: 1px solid rgba(124, 107, 255, 0.15);
+          border-radius: 8px;
+          width: fit-content;
+        }
+        .scraping-dot {
+          width: 7px;
+          height: 7px;
+          border-radius: 50%;
+          background-color: #ef4444; /* Red dot */
+          animation: pulse 1.2s ease-in-out infinite;
+        }
+        @keyframes pulse {
+          0%, 100% { opacity: 1; transform: scale(1); }
+          50%       { opacity: 0.4; transform: scale(0.75); }
+        }
+
+        .header-stats {
+          display: flex;
+          align-items: center;
+          gap: 1rem; /* Space between the badges */
+          font-size: 0.9rem;
+        }
+
+        /* Base style for the little stat pills */
+        .stat-badge {
+          padding: 0.4rem 0.8rem;
+          border-radius: 9999px; /* Rounds the edges like a pill */
+          background-color: #f3f4f6; /* Light gray */
+          color: #374151;
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+        } 
+        
+        .total-stat {
+          background-color: #111;
+          color: white;
+        }
+
       `}</style>
 
       <div className="page">
@@ -467,6 +571,24 @@ export default function search_result() {
             <p className="result-count">{products.length} products found</p>
           )}
         </div>
+
+        {/* Right side: Live Stats */}
+        {!loading && !error && (
+            <div className="header-stats">
+              <span className="stat-badge db-stat">
+                <strong>{total_products_db}</strong> from DB
+              </span>
+              
+              <span className="stat-badge live-stat">
+                {scraping && <span className="scraping-dot" />}
+                <strong>{total_products_scraped}</strong> scraped live
+              </span>
+              
+              <span className="stat-badge total-stat">
+                <strong>{products.length}</strong> total
+              </span>
+            </div>
+          )}
 
         {loading && (
           <div className="state-message">

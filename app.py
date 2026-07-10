@@ -202,9 +202,9 @@ def scrape_product(url: str, background_tasks: BackgroundTasks):
         
     
 @app.get("/api/scrape_stream")
-def scrape_stream(q: str, background_tasks: BackgroundTasks):
+async def scrape_stream(q: str, background_tasks: BackgroundTasks):
 
-    def event_generator():
+    async def event_generator():
         if is_url(q):
             print("Recieved an url")
             logger.info(f"Received an url: {q}")
@@ -215,7 +215,7 @@ def scrape_stream(q: str, background_tasks: BackgroundTasks):
             country_code = "com"
             url =  f"https://www.amazon.{country_code}/s?k={q.replace(' ', '+')}"
         
-        html_content = asyncio.run(ping_amazon2(url))
+        html_content = await ping_amazon2(url)
         conn = psycopg2.connect(**CONFIG)
 
         print("[INFO] Search url detected") 
@@ -237,13 +237,14 @@ def scrape_stream(q: str, background_tasks: BackgroundTasks):
                 logger.info(f"Scraping search page {current_page}/{max_pages}: {current_url}")
 
                 if current_page!=1:
-                    html_content = asyncio.run(ping_amazon2(current_url))
+                    html_content = await ping_amazon2(current_url)
             
 
                 if not html_content or not html_content.content:
                     print("[ERROR] Received empty html or failed to fetch search page")
                     logger.error("Received empty html or failed to fetch search page")
-                    yield f"{json.dumps({"status": 'error', 'page': current_page, 'details': 'Failed to fetch page'})}\n\n"
+                    payload = json.dumps({"status": 'error', 'page': current_page, 'details': 'Failed to fetch page'})
+                    yield f"data: {payload}\n\n"
                     break
 
                 country_code = extract_country_code(current_url)
@@ -255,8 +256,9 @@ def scrape_stream(q: str, background_tasks: BackgroundTasks):
                 if not products:
                     print(f"[ERROR] No products found on page {current_page} (or page was blocked)")
                     logger.error(f"No products found on page {current_page} (or page was blocked)")
-                    yield f"{json.dumps({'status': 'error', 'page': current_page, 'details': 'No products found or page blocked'})}\n\n"
-                    break
+                    payload = json.dumps({'status': 'error', 'page': current_page, 'details': 'No products found or page blocked'})
+                    yield f"data: {payload}\n\n"
+
                 # deduplicate products before sending
                 new_products = []
                 for p in products:
@@ -268,7 +270,13 @@ def scrape_stream(q: str, background_tasks: BackgroundTasks):
                     new_products.append(p)
                 
                 if new_products:
-                    yield f"{json.dumps({'status': 'success', 'details': f'Found {len(new_products)}', 'url-type': 'search', 'content-type': f'{type(new_products)}', 'content': new_products})}"
+                    payload = json.dumps({'status': 'success', 
+                                          'num_products': f'{len(new_products)}', 
+                                          'url-type': 'search', 
+                                          'content-type': f'{type(new_products)}', 
+                                          'content': new_products, 
+                                          'page': current_page})
+                    yield f"data: {payload}\n\n"
 
                 
                 print(f"[INFO] Found {len(new_products)} products on page {current_page}")
@@ -289,12 +297,14 @@ def scrape_stream(q: str, background_tasks: BackgroundTasks):
                 current_page += 1
 
             except Exception as e:
-                yield f"data: {json.dumps({'status': 'error', 'details': str(e)})}\n\n"
+                payload = json.dumps({'status': 'error', 'details': str(e)})
+                yield f"data: {payload}\n\n"
                 break
 
         # Signal completion
         background_tasks.add_task(save_to_database, all_products, conn) 
-        yield f"{json.dumps({'status': 'done', 'total_pages': current_page})}\n\n"
+        payload = json.dumps({'status': 'done', 'total_pages': current_page})
+        yield f"data: {payload}\n\n"
 
     return StreamingResponse(
         event_generator(),
@@ -302,5 +312,6 @@ def scrape_stream(q: str, background_tasks: BackgroundTasks):
         headers={
             "Cache-Control": "no-cache",
             "X-Accel-Buffering": "no",  # important for nginx
+            "Connection": "keep-alive",
         }
     )

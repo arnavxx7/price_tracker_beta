@@ -42,9 +42,9 @@ import re
 # # Example usage
 # print(is_url("htt://www.amazon.in/s?k=ps5"))  # True
 # print(is_url("not_a_url"))   
-url = "https://www.amazon.com/adidas-Argentina-Replica-Jersey-White/dp/B0F7WYSPZK/ref=sr_1_1?sr=8-1&psc=1"
-match = re.search(r'/dp/(.*?)/', url)
-print(match.group(1))
+# url = "https://www.amazon.com/adidas-Argentina-Replica-Jersey-White/dp/B0F7WYSPZK/ref=sr_1_1?sr=8-1&psc=1"
+# match = re.search(r'/dp/(.*?)/', url)
+# print(match.group(1))
 
 from get_product_info import amzn_product_info_scraper
 from get_search_results import get_search_results
@@ -54,9 +54,9 @@ import json
 from bs4 import BeautifulSoup
 
 # test_url = "https://www.amazon.com/Samsung-32-Inch-H5000F-Tracking-Security/dp/B0DYVMZ4TV/ref=sr_1_2?sr=8-2"
-# test_url = "https://www.amazon.com/s?k=backpack"
+test_url = "https://www.amazon.com/s?k=backpack"
 # test_url2 = "https://www.amazon.com/Porsche-Collectors-Cup-no-60Y/dp/B0D3863V9Z/?_encoding=UTF8&ref_=pd_hp_d_btf_ci_mcx_mr_ca_id_hp_d"
-# html_content = asyncio.run(ping_amazon2(test_url))
+html_content = asyncio.run(ping_amazon2(test_url))
 
 # with open(f"debug_response.html", "w", encoding="utf-8") as f:
 #     f.write(html_content.text)
