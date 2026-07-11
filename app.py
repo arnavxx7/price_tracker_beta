@@ -92,17 +92,20 @@ def search_user_input(q: str):
         }
     all_products_db = []
     if is_url(q):
+        print(f"Received an url = {q}")
         url = q
-        is_product_url = re.search("/dp/(.*?)/", url)
+        is_product_url = re.search(r"/dp/([A-Z0-9]{10})(?:[/?]|$)", url)
         if is_product_url:
-            search_type = "product"
+            print(f"Received product url = {q}")
+            # search_type = "product"
             asin = is_product_url.group(1)
             print(asin)
             logger.info(f"Received product url with asin = {asin}")
             product_info_db = search_db(asin, "product")
             if len(product_info_db)==0:
                 return {
-                    "status": "error",
+                    "status": "no_db",
+                    "url-type": "product",
                     "details": f"{asin}: Product not in db"
                 }
 
@@ -114,21 +117,23 @@ def search_user_input(q: str):
                 "content": product_info_db
             }
         else:
-            search_type = "search"
+            # search_type = "search"
+            print("Received search url with text: ", text_query)
             match = re.search(r'[?&]k=([^&]+)', url)
             text_query = match.group(1).replace('+', ' ')
-            print(text_query)
             logger.info(f"Received search url, with text = {text_query}")
             all_products_db = search_db(text_query, "search")
         
     else:
         logger.info(f"Received text query, with text = {q}")
+        print(f"Received text query, with text = {q}")
         all_products_db = search_db(q, "search")
 
     if len(all_products_db) == 0:
             return {
-                "status": "error",
-                "details": f"{url}: No matching results in db"
+                "status": "no_db",
+                "url-type": "search",
+                "details": f"{q}: No matching results in db"
             }
         
     # Deduplicate by ASIN before returning
@@ -143,7 +148,7 @@ def search_user_input(q: str):
         unique_products.append(p)
     return {
             "status": "success",
-            "details": f"Found {len(unique_products)} unique products from amazon search pages for query: {q}",
+            "details": f"Found {len(unique_products)} unique products from database for query: {q}",
             "url-type": "search",
             "content-type": f"{type(all_products_db)}",
             "content": unique_products
@@ -315,3 +320,38 @@ async def scrape_stream(q: str, background_tasks: BackgroundTasks):
             "Connection": "keep-alive",
         }
     )
+
+
+@app.get("/api/price_chart")
+def get_price_data(asin: str):
+    conn = psycopg2.connect(**CONFIG)
+
+    with conn.cursor() as cur:
+        cur.execute("""
+                SELECT price, currency, recorded_at
+                FROM amzn_price_history
+                WHERE asin = %s
+                ORDER BY recorded_at;
+                    """, (asin,))
+        
+        rows = cur.fetchall()
+    
+    conn.close()
+    if rows:
+        price_points = []
+        for row in rows:
+            dt = row[2]
+            dt_yaxis = f"{dt.day} {dt.strftime('%b')}" # 4 Jul
+            dt_hover = f"{dt.strftime('%a')}, {dt.day} {dt.strftime('%b %Y')}" # Sat, 4 Jui 2026
+            price_point_dict = {"price": row[0], "currency": row[1], "date_yaxis": dt_yaxis, "date_hover": dt_hover} 
+            price_points.append(price_point_dict)
+        return {
+            "status": "success",
+            "num_dp": len(price_points),
+            "dp": price_points  
+        }
+    
+    return {
+        "status": "error",
+        "details": "No price points received"
+    }

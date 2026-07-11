@@ -88,6 +88,34 @@ def search_db(query: str, search_type: str) -> list:
                 columns[8] = "original_price"
                 rows = cur.fetchall()
                 return [dict(zip(columns, row)) for row in rows]
+        
+        elif search_type == "product":
+            with conn.cursor() as cur:
+                cur.execute("""
+                    SELECT 
+                            asin, 
+                            name,
+                            price,
+                            brand,
+                            rating,
+                            currency,
+                            url,
+                            prime,
+                            org_price,
+                            discount_percent,
+                            img_url
+                    FROM amzn_product_info
+                    WHERE asin = %s
+                    LIMIT 1
+                            """, (query,))
+                
+                columns = [desc[0] for desc in cur.description]
+                columns[3] = "brand_name"
+                row = cur.fetchall()
+                if row:
+                    print(row)
+                    return dict(zip(columns, row[0]))
+                return {}
     finally:
         conn.close()
 
@@ -247,7 +275,6 @@ def track_rating_history(current_rating: float, asin: str):
                     # print("--------------------------------------\n")
 
             
-
 
 def save_to_database(product_data, conn):
     # product url
@@ -412,6 +439,5 @@ def save_to_database(product_data, conn):
     #     conn.close()
 
     return "[INFO] Product data successfully saved to database"
-
 
 

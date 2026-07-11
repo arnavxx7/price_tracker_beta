@@ -16,8 +16,28 @@ export default function Home() {
     const data = await res.json();
     console.log("Response from fastapi:", data);
     if (data.status === "error") {
-      console.log("Received error when fetching data from url")
+      console.error("Received following error when fetching data from database", data.details)
       // setError(data.details);
+      return;
+    }
+
+    if (data.status === "no_db" && data["url-type"] === "product") {
+      console.log(data.details);
+      const res_scrape_prod = await fetch(`/api/scrape_product?url=${encodeURIComponent(query)}`)
+      const data_scrape_prod = await res_scrape_prod.json();
+      if (data_scrape_prod.status === "error") {
+        console.error("Received following error when scraping product info:", data_scrape_prod.details)
+        return; 
+      }
+      sessionStorage.setItem("productData", JSON.stringify(data_scrape_prod.content));
+      router.push(`/products?url=${encodeURIComponent(query)}`);
+      return;
+    }
+
+
+    if (data.status === "no_db" && data["url-type"] === "search") {
+      console.log(data.details);
+      router.push(`/search?q=${encodeURIComponent(query)}`)
       return;
     }
 

@@ -1,6 +1,11 @@
 "use client";
 
+import { fetchExternalImage } from "next/dist/server/image-optimizer";
 import { useSearchParams, useRouter } from "next/navigation";
+import { parse } from "path";
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
+// import { RechartsDevtools } from '@recharts/devtools';
+
 import { useEffect, useState } from "react";
 
 interface Product {
@@ -42,6 +47,7 @@ export default function ProductPage() {
   const [product, setProduct] = useState<Product | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [price_points, setPricePoints] = useState([]);
 
   useEffect(() => {
     if (!prod_url) return;
@@ -53,10 +59,28 @@ export default function ProductPage() {
       try {
         //  get response from fastapi for product url
         const res = sessionStorage.getItem("productData");
-        console.log(res)
+        console.log("This is the product information = ", res);
         if (res) {
-          setProduct(JSON.parse(res));
-        
+          const parsedProduct = JSON.parse(res);
+          setProduct(parsedProduct);
+          
+          if (parsedProduct && parsedProduct.asin) {
+            const price_chart_res = await fetch(
+              `/api/price_chart?asin=${encodeURIComponent(parsedProduct.asin)}`
+            );
+
+            if (price_chart_res.ok) {
+              const chartData = await price_chart_res.json();
+
+              if (chartData.status === "success" && chartData.dp) {
+                  setPricePoints(chartData.dp);
+              }
+            }
+            else {
+              console.error(`Failed to fetch price chart data points: ${price_chart_res}`)
+            }
+          }
+          
         } else {
           setError("No product data found. Please try again.");
         }
@@ -99,6 +123,7 @@ export default function ProductPage() {
   }
   
   console.log("Product details: ", product)
+  console.log("These are the price points fetched: ", price_points)
   return (
     <>
       <style>{`
@@ -520,8 +545,53 @@ export default function ProductPage() {
 
             {/* ── Chart placeholder ── */}
             <div className="chart-placeholder">
-              <span>📈</span>
-              Price history chart coming soon
+              {/* <span>📈</span>
+              Price history chart coming soon */}
+                <LineChart
+                      style={{ width: '100%', maxWidth: '700px', height: '100%', maxHeight: '70vh', aspectRatio: 1.618 }}
+                      responsive
+                      data={price_points}
+                      margin={{
+                        top: 5,
+                        right: 0,
+                        left: 0,
+                        bottom: 5,
+                      }}
+                    >
+                      <CartesianGrid strokeDasharray="3 3" stroke="white" />
+                      <XAxis dataKey="date_yaxis" stroke="blue" />
+                      <YAxis width="auto" stroke="yellow" />
+                      <Tooltip
+                        cursor={{
+                          stroke: 'purple',
+                        }}
+                        contentStyle={{
+                          backgroundColor: 'var(--color-surface-raised)',
+                          borderColor: 'var(--color-border-2)',
+                        }}
+                      />
+                      <Legend />
+                      <Line
+                        type="monotone"
+                        dataKey="price"
+                        stroke="red"
+                        dot={{
+                          fill: 'var(--color-surface-base)',
+                        }}
+                        activeDot={{ r: 8, stroke: 'var(--color-surface-base)' }}
+                      />
+                      {/* <Line
+                        type="monotone"
+                        dataKey="uv"
+                        stroke="var(--color-chart-2)"
+                        dot={{
+                          fill: 'var(--color-surface-base)',
+                        }}
+                        activeDot={{ stroke: 'var(--color-surface-base)' }}
+                      /> */}
+                      {/* <RechartsDevtools /> */}
+                  </LineChart>
+
             </div>
           </>
         )}

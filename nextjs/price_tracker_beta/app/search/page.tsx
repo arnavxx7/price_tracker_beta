@@ -180,9 +180,10 @@ export default function search_result() {
             const unique = dedupe(parsed, seenAsins.current);
             setProductsDb(unique.length);
             setProducts(unique);
-        } else {
-          setError("No results found. Please search again.");
-        }
+        } 
+        // else {
+        //   setError("No results found. Please search again.");
+        // }
         
         setLoading(false);
         // Step 2 — open SSE stream for live scrape results
@@ -195,11 +196,9 @@ export default function search_result() {
         eventSource.onmessage = (event) => {
           const msg = JSON.parse(event.data);
           console.log("This is the status of the new message received by event source = ", msg.status);
-          if (msg.status !== "done" || msg.status !== "error") {
-            console.log(`Found ${msg.num_products} products on page: ${msg.page}`)
-          }
           
           if (msg.status === "success") {
+            console.log(`Found ${msg.num_products} products on page: ${msg.page}`)
             setCurrentPage(msg.page)
             const newOnes = dedupe(msg.content, seenAsins.current);
       
@@ -570,10 +569,9 @@ export default function search_result() {
           {!loading && !error && products.length > 0 && (
             <p className="result-count">{products.length} products found</p>
           )}
-        </div>
 
-        {/* Right side: Live Stats */}
-        {!loading && !error && (
+          {/* Right side: Live Stats */}
+          {!loading && !error && (
             <div className="header-stats">
               <span className="stat-badge db-stat">
                 <strong>{total_products_db}</strong> from DB
@@ -588,7 +586,8 @@ export default function search_result() {
                 <strong>{products.length}</strong> total
               </span>
             </div>
-          )}
+          )}   
+        </div>
 
         {loading && (
           <div className="state-message">
