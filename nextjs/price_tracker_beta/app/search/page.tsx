@@ -1,5 +1,6 @@
 "use client"
 
+import { timeStamp } from "console";
 // import { unique } from "next/dist/build/utils";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useRef, useEffect, useState } from "react";
@@ -153,6 +154,18 @@ export default function search_result() {
   useEffect(() => {
     if (!query) return;
 
+    const cacheKey = `search_${query}`;
+    const cached = sessionStorage.getItem(cacheKey);
+
+    if (cached) {
+      const {products: cachedProducts, asins: cachedasins} = JSON.parse(cached);
+
+      seenAsins.current = new Set(cachedasins);
+      setProducts(cachedProducts);
+      setLoading(false);
+      return;
+    }
+
     // Reset state on new query
     setProducts([]);
     setLoading(true);
@@ -203,7 +216,18 @@ export default function search_result() {
             const newOnes = dedupe(msg.content, seenAsins.current);
       
             if (newOnes.length > 0) {
-              setProducts(prev => [...prev, ...newOnes  ]);
+              // append the products list with the new products received, and save them in cache
+              setProducts(prev => {
+                  const updated = [...prev, ...newOnes]; // append the products list with new ones
+                  sessionStorage.setItem(cacheKey, JSON.stringify({  // save them in cache
+                    products: updated,
+                    asins: Array.from(seenAsins.current),
+                    timeStamp: Date.now()
+                  }));
+              return updated;   // return the updated list
+              }
+              );
+
             }
             setProductsScraped(prevCount => prevCount + newOnes.length);
             
@@ -212,6 +236,15 @@ export default function search_result() {
           if (msg.status === "done" || msg.status === "error") {
             setScraping(false);
             eventSource?.close();
+            //  IN CASE OF DONE OR ERROR JUST SAVE THE LATEST LIST OF PRODUCTS IN THE CACHE
+            setProducts(prev => {
+              sessionStorage.setItem(cacheKey, JSON.stringify({
+                products: prev,
+                asins: Array.from(seenAsins.current),
+                timestamp: Date.now()
+              }));
+              return prev;
+            });
           }
 
           if (msg.status === "error") {
@@ -240,6 +273,11 @@ export default function search_result() {
     };
 
     fetchResults();
+
+    return () => {
+      eventSource?.close();
+    };
+    
   }, [query]);
 
     // Dedupe helper — mutates the seen set

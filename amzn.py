@@ -68,7 +68,7 @@ async def ping_amazon(url: str):
     headers['User-Agent'] = ua_generator.random
     session.headers = headers
     session.impersonate = "chrome120"
-    session.get("https://www.amazon.in/", headers=headers)
+    session.get("https://www.amazon.com/", headers=headers)
 
 
     merged_headers = session.headers.copy()

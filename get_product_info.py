@@ -117,19 +117,36 @@ def amzn_product_info_scraper(html_content, url: str = None) -> dict:
 
     brand_name = None
 
-    # Method 1: Byline "Visit the X Store" or "Brand: X"
-    byline = soup.select_one('#bylineInfo')
-    if byline:
-        txt = byline.text.strip()
-        # "Visit the Nike Store"
-        match = re.search(r'visit the (.+?) store', txt, re.IGNORECASE)
-        if match:
-            brand_name = match.group(1).strip()
-        # "Brand: Nike"
+    premium_byline = soup.select_one('#premiumBylineInfo_feature_div')
+
+    if premium_byline:
+        logo = premium_byline.select_one('img[class*="logoByLine"], img[id*="brandLogo"]')
+        if logo and logo.get('alt'):
+            brand_name = logo['alt'].strip()
+
+        # Fallback: "Visit the adidas Store" link text
         if not brand_name:
-            match = re.search(r'brand[:\s]+(.+)', txt, re.IGNORECASE)
+            store_link = premium_byline.select_one('#visitStoreDesktopUrl, #brandLogoBylineLink')
+            if store_link:
+                match = re.search(r'visit the (.+?) store', store_link.text.strip(), re.IGNORECASE)
+                if match:
+                    brand_name = match.group(1).strip()
+
+    if not brand_name:
+        # Method 1: Byline "Visit the X Store" or "Brand: X"
+        byline = soup.select_one('#bylineInfo')
+        if byline:
+            txt = byline.text.strip()
+            print(txt)
+            # "Visit the Nike Store"
+            match = re.search(r'visit the (.+?) store', txt, re.IGNORECASE)
             if match:
                 brand_name = match.group(1).strip()
+            # "Brand: Nike"
+            if not brand_name:
+                match = re.search(r'brand[:\s]+(.+)', txt, re.IGNORECASE)
+                if match:
+                    brand_name = match.group(1).strip()
 
     # Method 2: Product details table (very reliable when present)
     if not brand_name:
@@ -180,6 +197,13 @@ def amzn_product_info_scraper(html_content, url: str = None) -> dict:
             if elem and elem.text.strip():
                 brand_name = elem.text.strip()
                 break
+    
+    byline_div = soup.select_one('#bylineInfo_feature_div')
+    if byline_div and 'Platform:' in byline_div.text:
+        link = byline_div.select_one('a')
+        if link:
+            brand_name = link.text.strip()
+
 
     # Cleanup
     if brand_name:
@@ -189,6 +213,8 @@ def amzn_product_info_scraper(html_content, url: str = None) -> dict:
         brand_name = brand_name.strip('.:,')
         # If result is suspiciously long it's probably not a brand name
         if len(brand_name) > 50:
+            brand_name = None
+        if "$" in brand_name:
             brand_name = None
 
     prod_info["brand_name"] = brand_name
@@ -229,6 +255,7 @@ def amzn_product_info_scraper(html_content, url: str = None) -> dict:
     org_price = extract_field(soup, original_price_selectors)
     if org_price:
         org_price = str(org_price)
+        org_price = org_price.replace(",", "")
         if org_price[0] in list(CURRENCY_MAPPING.keys()):
             org_price = float(org_price[1:])
             prod_info["org_price"] = org_price

@@ -1,11 +1,12 @@
 "use client"
 import Image from "next/image";
-import { useState } from "react";
+import { cache, useState } from "react";
 import { useRouter } from "next/navigation";
 
 export default function Home() {
   const [query, setQuery] = useState("");
   const router = useRouter();
+  const cacheKey = `search_${query}`;
 
   async function handleSearch() {
     if (!query.trim()) return;
@@ -37,11 +38,13 @@ export default function Home() {
 
     if (data.status === "no_db" && data["url-type"] === "search") {
       console.log(data.details);
+      sessionStorage.removeItem(cacheKey);
       router.push(`/search?q=${encodeURIComponent(query)}`)
       return;
     }
 
     if (data["url-type"] === "search") {
+      sessionStorage.removeItem(cacheKey);
       sessionStorage.setItem("searchResults", JSON.stringify(data.content));
       router.push(`/search?q=${encodeURIComponent(query)}`);
     } else if (data["url-type"] === "product") {

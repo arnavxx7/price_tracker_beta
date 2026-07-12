@@ -22,7 +22,7 @@ logger.info("Starting session")
 conn = psycopg2.connect(**CONFIG)
 logger.info(f"Connected to db - {CONFIG["database"]}")
 cur = conn.cursor()
-cur.execute("SELECT asin, url FROM amzn_product_info WHERE search_vector @@ websearch_to_tsquery('english', 'ps5');")
+cur.execute("SELECT asin, url FROM amzn_product_info WHERE brand IS NULL LIMIT 100")
 rows = cur.fetchall()  # fetch all first, so cursor stays free for save_to_database
 num = len(rows)
 logger.info(f"Updating the fields of {num} records")
