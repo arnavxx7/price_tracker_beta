@@ -150,6 +150,11 @@ export default function search_result() {
   const seenAsins = useRef<Set<string>>(new Set());
   const [total_products_db, setProductsDb] = useState(0);
   const [total_products_scraped, setProductsScraped] = useState(0);
+  const [jobId, setJobId] = useState<string | null>(null);
+  const nextIndex = useRef<number>(0);  
+  const pollRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  const jobKey = `scrape_job_${query}`;
 
   useEffect(() => {
     if (!query) return;
@@ -158,12 +163,21 @@ export default function search_result() {
     const cached = sessionStorage.getItem(cacheKey);
 
     if (cached) {
-      const {products: cachedProducts, asins: cachedasins} = JSON.parse(cached);
+      const {products: cachedProducts, asins: cachedasins, job_id: cached_job_id} = JSON.parse(cached);
 
       seenAsins.current = new Set(cachedasins);
       setProducts(cachedProducts);
       setLoading(false);
+      // checking if a job is still running
+      if (cached_job_id) {
+        setJobId(cached_job_id);
+        checkAndResumePoll(cached_job_id, cacheKey);
+      }
+
       return;
+    }
+    else {
+      sessionStorage.removeItem(cacheKey);
     }
 
     // Reset state on new query
@@ -172,115 +186,149 @@ export default function search_result() {
     setScraping(false);
     setError(null);
     seenAsins.current = new Set();
+    nextIndex.current = 0;
     
-    let eventSource: EventSource | null = null;
 
-    const fetchResults = async () => {
-
+    const init = async () => {
       try {
-        // get response from fastapi database endpoint for search url
-        const stored = sessionStorage.getItem("searchResults");
-        if (stored) {
-            const parsed: Product[] = JSON.parse(stored);
-            // Deduplicate by ASIN, keeping first occurrence
-            // const seen = new Set<string>();
-            // const unique = parsed.filter(product => {
-            //   if (!product.asin) return true; // keep products without ASIN
-            //   if (seen.has(product.asin)) return false;
-            //   seen.add(product.asin);
-            //   return true;
-            // });
-            const unique = dedupe(parsed, seenAsins.current);
-            setProductsDb(unique.length);
-            setProducts(unique);
-        } 
-        // else {
-        //   setError("No results found. Please search again.");
-        // }
-        
+        // Shwoing db results instantly
+        const dbRes = sessionStorage.getItem("searchResultsDB");
+        if (dbRes) {
+          const parsed: Product[] = JSON.parse(dbRes);
+          const unique = dedupe(parsed, seenAsins.current);
+          setProductsDb(unique.length);
+          setProducts(unique);
+          nextIndex.current = unique.length;
+          saveToCache(cacheKey, unique, null);
+        }
         setLoading(false);
-        // Step 2 — open SSE stream for live scrape results
-        setScraping(true);
-        let total_products_scraped = 0;
-        eventSource = new EventSource(
-          `/api/scrape_stream?q=${encodeURIComponent(query)}`
-        );
-        
-        eventSource.onmessage = (event) => {
-          const msg = JSON.parse(event.data);
-          console.log("This is the status of the new message received by event source = ", msg.status);
-          
-          if (msg.status === "success") {
-            console.log(`Found ${msg.num_products} products on page: ${msg.page}`)
-            setCurrentPage(msg.page)
-            const newOnes = dedupe(msg.content, seenAsins.current);
-      
-            if (newOnes.length > 0) {
-              // append the products list with the new products received, and save them in cache
-              setProducts(prev => {
-                  const updated = [...prev, ...newOnes]; // append the products list with new ones
-                  sessionStorage.setItem(cacheKey, JSON.stringify({  // save them in cache
-                    products: updated,
-                    asins: Array.from(seenAsins.current),
-                    timeStamp: Date.now()
-                  }));
-              return updated;   // return the updated list
-              }
-              );
-
-            }
-            setProductsScraped(prevCount => prevCount + newOnes.length);
-            
-          }
-
-          if (msg.status === "done" || msg.status === "error") {
-            setScraping(false);
-            eventSource?.close();
-            //  IN CASE OF DONE OR ERROR JUST SAVE THE LATEST LIST OF PRODUCTS IN THE CACHE
-            setProducts(prev => {
-              sessionStorage.setItem(cacheKey, JSON.stringify({
-                products: prev,
-                asins: Array.from(seenAsins.current),
-                timestamp: Date.now()
-              }));
-              return prev;
-            });
-          }
-
-          if (msg.status === "error") {
-            console.log(`Recevied following error on page ${msg.page}: ${msg.details}`)
-          }
-
-        };
-
-        eventSource.onerror = () => {
-          setScraping(false);
-          eventSource?.close();
-        };
-
-
-        // const res = await fetch(`/api/search_query?q=${encodeURIComponent(query)}`);
-        // if (!res.ok) throw new Error(`Server error: ${res.status}`);
-        // const data: Product[] = await res.json();
-        // setProducts(data);
-      } catch (err) {
-        setError("Failed to fetch results. Please try again.");
-        setScraping(false);
+        // Starting background scraping job
+        const start_scrape_res = await fetch(`/api/start_scrape?q=${encodeURIComponent(query)}`);
+        const start_scrape_data = await start_scrape_res.json();
+        const id = start_scrape_data.job_id;
+        setJobId(id);
+        // Saving the newly created job id in cache,
+        saveToCache(cacheKey, products, id);
+        // Start polling  - sending api requests every 3s
+        startPolling(id, cacheKey);
+      }
+      catch (err) {
+        setError("Failed to fetch results");
+        setLoading(false);
         console.error(err);
-      } finally {
-        setLoading(false);
       }
     };
 
-    fetchResults();
+    init();
+
+    // const fetchResults = async () => {
+
+    //   try {
+    //     // get response from fastapi database endpoint for search url
+    //     const stored = sessionStorage.getItem("searchResults");
+    //     if (stored) {
+    //         const parsed: Product[] = JSON.parse(stored);
+    //         // Deduplicate by ASIN, keeping first occurrence
+    //         // const seen = new Set<string>();
+    //         // const unique = parsed.filter(product => {
+    //         //   if (!product.asin) return true; // keep products without ASIN
+    //         //   if (seen.has(product.asin)) return false;
+    //         //   seen.add(product.asin);
+    //         //   return true;
+    //         // });
+    //         const unique = dedupe(parsed, seenAsins.current);
+    //         setProductsDb(unique.length);
+    //         setProducts(unique);
+    //     } 
+    //     // else {
+    //     //   setError("No results found. Please search again.");
+    //     // }
+        
+    //     setLoading(false);
+    //     // Step 2 — open SSE stream for live scrape results
+    //     setScraping(true);
+    //     let total_products_scraped = 0;
+    //     eventSource = new EventSource(
+    //       `/api/scrape_stream?q=${encodeURIComponent(query)}`
+    //     );
+        
+    //     eventSource.onmessage = (event) => {
+    //       const msg = JSON.parse(event.data);
+    //       console.log("This is the status of the new message received by event source = ", msg.status);
+          
+    //       if (msg.status === "success") {
+    //         console.log(`Found ${msg.num_products} products on page: ${msg.page}`)
+    //         setCurrentPage(msg.page)
+    //         const newOnes = dedupe(msg.content, seenAsins.current);
+      
+    //         if (newOnes.length > 0) {
+    //           // append the products list with the new products received, and save them in cache
+    //           setProducts(prev => {
+    //               const updated = [...prev, ...newOnes]; // append the products list with new ones
+    //               sessionStorage.setItem(cacheKey, JSON.stringify({  // save them in cache
+    //                 products: updated,
+    //                 asins: Array.from(seenAsins.current),
+    //                 timeStamp: Date.now()
+    //               }));
+    //           return updated;   // return the updated list
+    //           }
+    //           );
+
+    //         }
+    //         setProductsScraped(prevCount => prevCount + newOnes.length);
+            
+    //       }
+
+    //       if (msg.status === "done" || msg.status === "error") {
+    //         setScraping(false);
+    //         eventSource?.close();
+    //         //  IN CASE OF DONE OR ERROR JUST SAVE THE LATEST LIST OF PRODUCTS IN THE CACHE
+    //         setProducts(prev => {
+    //           sessionStorage.setItem(cacheKey, JSON.stringify({
+    //             products: prev,
+    //             asins: Array.from(seenAsins.current),
+    //             timestamp: Date.now()
+    //           }));
+    //           return prev;
+    //         });
+    //       }
+
+    //       if (msg.status === "error") {
+    //         console.log(`Recevied following error on page ${msg.page}: ${msg.details}`)
+    //       }
+
+    //     };
+
+    //     eventSource.onerror = () => {
+    //       setScraping(false);
+    //       eventSource?.close();
+    //     };
+
+
+    //     // const res = await fetch(`/api/search_query?q=${encodeURIComponent(query)}`);
+    //     // if (!res.ok) throw new Error(`Server error: ${res.status}`);
+    //     // const data: Product[] = await res.json();
+    //     // setProducts(data);
+    //   } catch (err) {
+    //     setError("Failed to fetch results. Please try again.");
+    //     setScraping(false);
+    //     console.error(err);
+    //   } finally {
+    //     setLoading(false);
+    //   }
+    // };
+
+    // fetchResults();
 
     return () => {
-      eventSource?.close();
-    };
+        // Don't stop the scrape — just stop polling
+        if (pollRef.current) clearInterval(pollRef.current);
+      };
     
   }, [query]);
 
-    // Dedupe helper — mutates the seen set
+  
+  // Dedupe helper — mutates the seen set
   function dedupe(list: Product[], seen: Set<string>): Product[] {
     return list.filter(p => {
       if (!p.asin) return true;
@@ -289,6 +337,69 @@ export default function search_result() {
       return true;
     });
   }
+
+  function startPolling(id: string, cacheKey: string) {
+    setScraping(true);
+
+    pollRef.current = setInterval(async () => {
+      try {
+        const res = await fetch(
+          `/api/scrape_status?since_index=${nextIndex.current}&job_id=${id}&q=${query}`
+        )
+        const data = await res.json();
+        
+        if (data.new_products?.length > 0) {
+        const newOnes = dedupe(data.new_products, seenAsins.current);
+        if (newOnes.length > 0) {
+          setProducts(prev => {
+            const updated = [...prev, ...newOnes];
+            saveToCache(cacheKey, updated, id);
+            return updated;
+          });
+        }
+      }
+
+      // Advance index regardless (skip already-seen products)
+      nextIndex.current = data.next_index;
+      setCurrentPage(data.page);
+
+      if (data.status === "done" || data.status === "not_found") {
+        setScraping(false);
+        if (pollRef.current) clearInterval(pollRef.current);
+      }
+      }
+      catch (err) {
+        console.error("Poll error: ", err);
+      } 
+    }, 3000) // check every 3s
+  }
+
+  async function checkAndResumePoll(id:  string, cacheKey: string) {
+      // Check if job is still running before resuming poll
+    try {
+      const res = await fetch(`/api/scrape_status?since_index=${nextIndex.current}&job_id=${id}&q=${query}`);
+      const data = await res.json();
+
+      if (data.status === "running") {
+        setScraping(true);
+        startPolling(id, cacheKey);
+      }
+      // If done, do nothing — cached results are already shown
+    } catch (err) {
+      console.error("Resume poll check failed:", err);
+    }
+  }
+
+  function saveToCache(cacheKey: string, prods: Product[], id: string | null) {
+  sessionStorage.setItem(cacheKey, JSON.stringify({
+    products: prods,
+    asins: Array.from(seenAsins.current),
+    timestamp: Date.now(),
+    job_id: id
+  }));
+  }
+
+
 
   return (
     <>

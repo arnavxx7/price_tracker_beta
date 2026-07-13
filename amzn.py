@@ -64,7 +64,7 @@ async def ping_amazon(url: str):
     ua_generator = UserAgent(browsers=['Chrome'], os=['Windows', 'MacOS'])
     headers = DEFAULT_HEADERS.copy()
 
-    session = requests.Session()
+    session = requests.AsyncSession()
     headers['User-Agent'] = ua_generator.random
     session.headers = headers
     session.impersonate = "chrome120"
@@ -91,7 +91,7 @@ async def ping_amazon(url: str):
             logger.info(f"{url}: Pinging amazon url")
             print(f"Request attempt {attempt+1}/{max_retries+1}: GET {url} (delay: {delay:.2f}s)")
             logger.info(f"Request attempt {attempt+1}/{max_retries+1}: GET {url} (delay: {delay:.2f}s)")
-            time.sleep(delay)
+            asyncio.sleep(delay)
 
 
             response = session.get(
@@ -121,7 +121,7 @@ async def ping_amazon(url: str):
                     # Apply a longer delay before the next retry for anti-bot
                     captcha_delay = delay * 3
                     print(f"Detected anti-bot measure. Waiting {captcha_delay:.2f}s before retry")
-                    time.sleep(captcha_delay)
+                    asyncio.sleep(captcha_delay)
                     continue
                 
                 print("Failed to bypass anti-bot measures after all retries")
@@ -136,14 +136,14 @@ async def ping_amazon(url: str):
             if attempt == max_retries:
                 print(f"Max retries reached. Network error: {e}")
                 return None
-            time.sleep(delay * 2)  # Longer delay after network error
+            asyncio.sleep(delay * 2)  # Longer delay after network error
                 
         except Exception as e:
             print(f"Unexpected error on attempt {attempt+1}: {e}")
             if attempt == max_retries:
                 print(f"Max retries reached. Error: {e}")
                 return None
-            time.sleep(delay * 2)
+            asyncio.sleep(delay * 2)
 
 
     # res = await session.get(url, impersonate="chrome")
@@ -157,7 +157,7 @@ async def ping_amazon2(url: str):
     for attempt in range(max_retries + 1):
         try:
             # Fresh session per attempt
-            session = requests.Session()
+            session = requests.AsyncSession()
 
             # Let curl_cffi handle UA + TLS fingerprint — don't override it
             session.impersonate = "chrome120"
@@ -171,9 +171,9 @@ async def ping_amazon2(url: str):
             # (only on first attempt to avoid hammering)
             if attempt == 0:
                 warmup_delay = random.uniform(1.5, 3.0)
-                time.sleep(warmup_delay)
+                await asyncio.sleep(warmup_delay)
 
-                session.get(
+                await session.get(
                     "https://www.amazon.in/",
                     headers=DEFAULT_HEADERS,
                     timeout=timeout,
@@ -191,12 +191,12 @@ async def ping_amazon2(url: str):
             if attempt > 0:
                 print(f"Retry attempt {attempt + 1}/{max_retries + 1}, waiting {delay:.2f}s")
                 logger.info(f"Retry attempt {attempt + 1}/{max_retries + 1}, waiting {delay:.2f}s")
-                time.sleep(delay)
+                await asyncio.sleep(delay)
             
             
             logger.info(f"Attempt {attempt + 1}: GET {url}")
             print(f"Attempt {attempt + 1}: GET {url}")
-            response = session.get(
+            response = await session.get(
                 url,
                 headers=request_headers,
                 timeout=timeout,
@@ -230,21 +230,21 @@ async def ping_amazon2(url: str):
             error_msg = str(e)
             if "timed out" in error_msg.lower() or "28" in error_msg:
                 logger.warning(f"Timeout on attempt {attempt + 1} — switching proxy and retrying")
-                time.sleep(random.uniform(3, 6)) 
+                await asyncio.sleep(random.uniform(3, 6)) 
                 continue
             
             logger.error(f"Network error on attempt {attempt + 1}: {e}")
             print(f"Received the following error on attempt {attempt + 1}: {e}")
             if attempt == max_retries:
                 return None
-            time.sleep(random.uniform(5, 10))
+            await asyncio.sleep(random.uniform(5, 10))
 
         except Exception as e:
             logger.error(f"Unexpected error on attempt {attempt + 1}: {e}")
             print(f"Received the following error on attempt {attempt + 1}: {e}")
             if attempt == max_retries:
                 return None
-            time.sleep(random.uniform(5, 10))
+            await asyncio.sleep(random.uniform(5, 10))
         
     return None
 

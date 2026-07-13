@@ -45,7 +45,7 @@ export default function Home() {
 
     if (data["url-type"] === "search") {
       sessionStorage.removeItem(cacheKey);
-      sessionStorage.setItem("searchResults", JSON.stringify(data.content));
+      sessionStorage.setItem("searchResultsDB", JSON.stringify(data.content));
       router.push(`/search?q=${encodeURIComponent(query)}`);
     } else if (data["url-type"] === "product") {
       sessionStorage.setItem("productData", JSON.stringify(data.content));
