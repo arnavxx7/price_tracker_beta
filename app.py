@@ -483,13 +483,28 @@ def run_scrape_job(job_id: uuid, q: str):
         print(f"{job_id}: Received this error in scraping job, {str(e)}")
 
     finally:
-        threading.Thread(
-            target=save_to_database,
-            args=(job["products"]),
-            daemon=True
-        ).start()
+        # conn = psycopg2.connect(**CONFIG)
+        # threading.Thread(
+        #     target=save_to_database,
+        #     args=(job["products"], conn),
+        #     daemon=True
+        # ).start()
         job["status"] = "done"
         print(f"{job_id}: Scraping job completed, with {len(job["products"])} produts scraped")
+        print(f"""
+                  {job["status"]}
+
+                                       ._ o o
+                                       \_`-)|_
+                                    ,""       \ 
+                                  ,"  ## |   ಠ ಠ. 
+                                ," ##   ,-\__    `.
+                              ,"       /     `--._;)
+                            ,"     ## /
+                          ,"   ##    /
+
+
+                    """.encode('utf-8'))
 
 
 

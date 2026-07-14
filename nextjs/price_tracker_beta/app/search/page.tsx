@@ -147,12 +147,14 @@ export default function search_result() {
   const [error, setError] = useState<string | null>(null);
   const [scraping, setScraping] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
-  const seenAsins = useRef<Set<string>>(new Set());
-  const [total_products_db, setProductsDb] = useState(0);
-  const [total_products_scraped, setProductsScraped] = useState(0);
   const [jobId, setJobId] = useState<string | null>(null);
+  
+  const seenAsins = useRef<Set<string>>(new Set());
   const nextIndex = useRef<number>(0);  
   const pollRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const productsRef = useRef<Product[]>([]);
+  const productsDbRef = useRef<number>(0);
+  const productsScrapedRef = useRef<number>(0);
 
   const jobKey = `scrape_job_${query}`;
 
@@ -163,10 +165,18 @@ export default function search_result() {
     const cached = sessionStorage.getItem(cacheKey);
 
     if (cached) {
-      const {products: cachedProducts, asins: cachedasins, job_id: cached_job_id} = JSON.parse(cached);
+      
+      const {products: cachedProducts, asins: cachedasins, job_id: cached_job_id, num_prod_db: cached_num_prod_db, num_prod_scraped: cached_num_prod_scraped, total_products: cached_total_products} = JSON.parse(cached);
+      console.log("Job id found in cache = ", cached_job_id);
 
+      console.log("Number of products found in cache = ", cachedProducts.length);
+      console.log("Total number of products in cache = ", cached_total_products);
+      console.log("Number of products from DB in cache = ", cached_num_prod_db);
+      console.log("Number of products scraped in cache = ", cached_num_prod_scraped);
       seenAsins.current = new Set(cachedasins);
-      setProducts(cachedProducts);
+      updateProducts(cachedProducts);
+      updateTotalDb(cached_num_prod_db);
+      updateTotalScraped(cached_num_prod_scraped);
       setLoading(false);
       // checking if a job is still running
       if (cached_job_id) {
@@ -196,10 +206,10 @@ export default function search_result() {
         if (dbRes) {
           const parsed: Product[] = JSON.parse(dbRes);
           const unique = dedupe(parsed, seenAsins.current);
-          setProductsDb(unique.length);
-          setProducts(unique);
+          updateTotalDb(unique.length);
+          updateProducts(unique);
           nextIndex.current = unique.length;
-          saveToCache(cacheKey, unique, null);
+          saveToCache(cacheKey, null);
         }
         setLoading(false);
         // Starting background scraping job
@@ -208,7 +218,7 @@ export default function search_result() {
         const id = start_scrape_data.job_id;
         setJobId(id);
         // Saving the newly created job id in cache,
-        saveToCache(cacheKey, products, id);
+        saveToCache(cacheKey, id);
         // Start polling  - sending api requests every 3s
         startPolling(id, cacheKey);
       }
@@ -323,6 +333,8 @@ export default function search_result() {
     return () => {
         // Don't stop the scrape — just stop polling
         if (pollRef.current) clearInterval(pollRef.current);
+        console.log("Unmounting - Navigating away");
+        console.log("This is pollRef = ", pollRef.current);
       };
     
   }, [query]);
@@ -338,25 +350,44 @@ export default function search_result() {
     });
   }
 
+  function updateProducts(updated: Product[]) {
+    productsRef.current = updated;
+    setProducts(updated);
+  }
+
+  function updateTotalDb(n: number) {
+    productsDbRef.current = n;
+   
+  }
+
+  function updateTotalScraped(n: number) {
+    productsScrapedRef.current = n;
+  
+  }
+
   function startPolling(id: string, cacheKey: string) {
     setScraping(true);
 
-    pollRef.current = setInterval(async () => {
+    const intervalId = setInterval(async () => {
       try {
         const res = await fetch(
           `/api/scrape_status?since_index=${nextIndex.current}&job_id=${id}&q=${query}`
         )
         const data = await res.json();
+        console.log("This is the job status received by polling = ", data?.status)
         
         if (data.new_products?.length > 0) {
         const newOnes = dedupe(data.new_products, seenAsins.current);
         if (newOnes.length > 0) {
-          setProducts(prev => {
-            const updated = [...prev, ...newOnes];
-            saveToCache(cacheKey, updated, id);
-            return updated;
-          });
+          const updated_products = [...productsRef.current, ...newOnes];
+          updateProducts(updated_products);
+
+          const updated_total_scraped = productsScrapedRef.current + newOnes.length;
+          updateTotalScraped(updated_total_scraped);
+
+          saveToCache(cacheKey, id);
         }
+
       }
 
       // Advance index regardless (skip already-seen products)
@@ -364,8 +395,12 @@ export default function search_result() {
       setCurrentPage(data.page);
 
       if (data.status === "done" || data.status === "not_found") {
-        setScraping(false);
-        if (pollRef.current) clearInterval(pollRef.current);
+        console.log("Job done\n\n\n");
+        console.log("This is the interval id = ", intervalId);
+        setScraping(false); 
+        pollRef.current = null;   
+        clearInterval(intervalId);
+        saveToCache(cacheKey, id) // clearing job id, since job is done or error.
       }
       }
       catch (err) {
@@ -390,13 +425,27 @@ export default function search_result() {
     }
   }
 
-  function saveToCache(cacheKey: string, prods: Product[], id: string | null) {
-  sessionStorage.setItem(cacheKey, JSON.stringify({
-    products: prods,
-    asins: Array.from(seenAsins.current),
-    timestamp: Date.now(),
-    job_id: id
-  }));
+  async function checkStatus(id:  string) {
+      const res = await fetch(`/api/scrape_status?since_index=${nextIndex.current}&job_id=${id}&q=${query}`);
+      const data = await res.json();
+
+      return data?.status;
+  }
+
+  function saveToCache(cacheKey: string, id: string | null) {
+    const prods = productsRef.current;
+    const num_prod_db = productsDbRef.current;
+    const num_prod_scraped = productsScrapedRef.current;
+    console.log(`${prods.length} products saved in cache`);
+    sessionStorage.setItem(cacheKey, JSON.stringify({
+      products: prods,
+      asins: Array.from(seenAsins.current),
+      timestamp: Date.now(),
+      job_id: id,
+      num_prod_db: num_prod_db,
+      num_prod_scraped: num_prod_scraped,
+      total_products: num_prod_db + num_prod_scraped
+    }));
   }
 
 
@@ -716,23 +765,23 @@ export default function search_result() {
             Results for <span>&ldquo;{query}&rdquo;</span>
           </h1>
           {!loading && !error && products.length > 0 && (
-            <p className="result-count">{products.length} products found</p>
+            <p className="result-count">{productsRef.current.length} products found</p>
           )}
 
           {/* Right side: Live Stats */}
           {!loading && !error && (
             <div className="header-stats">
               <span className="stat-badge db-stat">
-                <strong>{total_products_db}</strong> from DB
+                <strong>{productsDbRef.current}</strong> from DB
               </span>
               
               <span className="stat-badge live-stat">
                 {scraping && <span className="scraping-dot" />}
-                <strong>{total_products_scraped}</strong> scraped live
+                <strong>{productsScrapedRef.current}</strong> scraped live
               </span>
               
               <span className="stat-badge total-stat">
-                <strong>{products.length}</strong> total
+                <strong>{productsRef.current.length}</strong> total
               </span>
             </div>
           )}   

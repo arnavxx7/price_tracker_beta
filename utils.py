@@ -425,7 +425,7 @@ def save_to_database(product_data, conn):
             # except Exception as e:
             #         print(f"[ERROR] Unable to save {len(product_data)} products in db")
 
-    # conn.close()       
+    conn.close()       
 
     
     # conn = mysql.connector.connect(**CONFIG)
