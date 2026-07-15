@@ -300,6 +300,12 @@ def get_search_results(html_content, base_url: str = None, country_code: str = N
                     if discount_match:
                         product_data['discount_percent'] = int(discount_match.group(1))      
 
+                if product_data.get("discount_percent"):
+                    pattern = r'^(100(\.0+)?|\d{1,2}(\.\d+)?)%?$'
+                    if re.match(pattern, product_data['discount_percent']):
+                        product_data["discount_percent"] = round(product_data["discount_percent"])
+                    else:
+                        product_data['discount_percent'] = None
 
                 # Extract product image (multiple possible selectors)
                 img_selectors = [

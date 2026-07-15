@@ -483,12 +483,12 @@ def run_scrape_job(job_id: uuid, q: str):
         print(f"{job_id}: Received this error in scraping job, {str(e)}")
 
     finally:
-        # conn = psycopg2.connect(**CONFIG)
-        # threading.Thread(
-        #     target=save_to_database,
-        #     args=(job["products"], conn),
-        #     daemon=True
-        # ).start()
+        conn = psycopg2.connect(**CONFIG)
+        threading.Thread(
+            target=save_to_database,
+            args=(job["products"], conn),
+            daemon=True
+        ).start()
         job["status"] = "done"
         print(f"{job_id}: Scraping job completed, with {len(job["products"])} produts scraped")
         print(f"""
@@ -501,16 +501,8 @@ def run_scrape_job(job_id: uuid, q: str):
                                 ," ##   ,-\__    `.
                               ,"       /     `--._;)
                             ,"     ## /
-                          ,"   ##    /
+                          ,"   ##    \   """.encode('utf-8'))
 
-
-                    """.encode('utf-8'))
-
-
-
-
-    
-    
 
 @app.get("/api/price_chart")
 def get_price_data(asin: str):

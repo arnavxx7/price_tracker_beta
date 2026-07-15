@@ -17,6 +17,7 @@ interface Product {
   img_url: string | null;
   rating: number | null;
   prime: boolean | null;
+  source?: "db" | "scraped";
 }
 
 function PriceDisplay({ product }: { product: Product }) {
@@ -45,7 +46,7 @@ function PriceDisplay({ product }: { product: Product }) {
   );
 }
 
-function ProductCard({ product }: { product: Product }) {
+function ProductCard({ product, index }: { product: Product, index: number }) {
   const router = useRouter();
   function handleTitleClick() {
     if (!product.url) return;
@@ -62,7 +63,8 @@ function ProductCard({ product }: { product: Product }) {
       org_price: product.original_price,
       discount_percent: product.discount_percent,
       img_url: product.img_url,
-      prime: product.prime
+      prime: product.prime,
+      source: product.source
     };
   
     sessionStorage.setItem("productData", JSON.stringify(productPageData));
@@ -70,6 +72,7 @@ function ProductCard({ product }: { product: Product }) {
   }
   return (
     <div className="product-card animate-new-product" >
+      <span className="product-number">#{index + 1}</span>
       <div className="product-image-wrapper">
         {product.img_url ? (
           <img
@@ -104,6 +107,11 @@ function ProductCard({ product }: { product: Product }) {
             )}
             {product.asin && (
               <span className="badge badge-asin">ASIN: {product.asin}</span>
+            )}
+            {product.source && (
+              <span className={`badge ${product.source === "db" ? "badge-db": "badge-scraped"}`}>
+                {product.source === "db" ? "DB" : "Scraped"}
+                </span>
             )}
           </div>
         </div>
@@ -206,8 +214,9 @@ export default function search_result() {
         if (dbRes) {
           const parsed: Product[] = JSON.parse(dbRes);
           const unique = dedupe(parsed, seenAsins.current);
+          const taggedDb = unique.map(p => ({...p, source: "db" as const }));
           updateTotalDb(unique.length);
-          updateProducts(unique);
+          updateProducts(taggedDb);
           nextIndex.current = unique.length;
           saveToCache(cacheKey, null);
         }
@@ -378,8 +387,9 @@ export default function search_result() {
         
         if (data.new_products?.length > 0) {
         const newOnes = dedupe(data.new_products, seenAsins.current);
+        const taggedScraped = newOnes.map(p => ({...p, source: "scraped" as const}));
         if (newOnes.length > 0) {
-          const updated_products = [...productsRef.current, ...newOnes];
+          const updated_products = [...productsRef.current, ...taggedScraped];
           updateProducts(updated_products);
 
           const updated_total_scraped = productsScrapedRef.current + newOnes.length;
@@ -425,12 +435,12 @@ export default function search_result() {
     }
   }
 
-  async function checkStatus(id:  string) {
-      const res = await fetch(`/api/scrape_status?since_index=${nextIndex.current}&job_id=${id}&q=${query}`);
-      const data = await res.json();
+  // async function checkStatus(id:  string) {
+  //     const res = await fetch(`/api/scrape_status?since_index=${nextIndex.current}&job_id=${id}&q=${query}`);
+  //     const data = await res.json();
 
-      return data?.status;
-  }
+  //     return data?.status;
+  // }
 
   function saveToCache(cacheKey: string, id: string | null) {
     const prods = productsRef.current;
@@ -505,6 +515,18 @@ export default function search_result() {
           border-radius: 10px;
           padding: 18px;
           transition: border-color 0.15s;
+          position: relative;  
+        }
+
+        .product-number {
+          position: absolute;
+          top: 10px;
+          left: 10px;
+          font-size: 0.68rem;
+          font-weight: 700;
+          color: #3e3e56;
+          font-family: monospace;
+          line-height: 1;
         }
 
         .product-card:hover {
@@ -600,6 +622,18 @@ export default function search_result() {
           color: #666;
           font-family: monospace;
         }
+
+        .badge-db {
+            background: #1a2a1a;
+            color: #4caf82;
+            border: 1px solid rgba(76, 175, 130, 0.3);
+          }
+
+        .badge-scraped {
+            background: #1a1a2e;
+            color: #7c6bff;
+            border: 1px solid rgba(124, 107, 255, 0.3);
+          }
 
         /* ── Price ── */
         .product-meta {
@@ -811,6 +845,7 @@ export default function search_result() {
               <ProductCard
                 key={product.asin ?? `no-asin-${index}`}
                 product={product}
+                index={index}
               />
             ))}
           </div>

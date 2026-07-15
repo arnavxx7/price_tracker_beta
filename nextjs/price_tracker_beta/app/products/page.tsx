@@ -22,6 +22,7 @@ interface Product {
   org_price?: number | null;
   discount_percent?: number | null;
   prime?: boolean | null;
+  source?: "db" | "scraped" | null;
 
   // Shared fields
   asin: string | null;
@@ -253,6 +254,18 @@ export default function ProductPage() {
         .badge-asin  { background: #1e1e2e; color: #555; font-family: monospace; border: 1px solid #2a2a3a; }
         .badge-marketplace { background: #1e1e2e; color: #7c6bff; border: 1px solid rgba(124,107,255,0.2); }
 
+        .badge-db {
+            background: #1a2a1a;
+            color: #4caf82;
+            border: 1px solid rgba(76, 175, 130, 0.3);
+          }
+
+        .badge-scraped {
+            background: #1a1a2e;
+            color: #7c6bff;
+            border: 1px solid rgba(124, 107, 255, 0.3);
+          }
+
         /* ── Price hero ── */
         .price-hero {
           display: flex;
@@ -445,6 +458,9 @@ export default function ProductPage() {
                 <div className="badges-row">
                   {product.prime && <span className="badge badge-prime">✓ Prime</span>}
                   {product.asin && <span className="badge badge-asin">ASIN: {product.asin}</span>}
+                  {product.source && <span className={`badge ${product.source === "db" ? "badge-db": "badge-scraped"}`}>
+                    {product.source === "db" ? "DB" : "Scraped"}
+                    </span>}
                   <span className="badge badge-marketplace">amazon.{displayCountryCode}</span>
                 </div>
 

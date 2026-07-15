@@ -284,6 +284,14 @@ def amzn_product_info_scraper(html_content, url: str = None) -> dict:
             if discount_percent < 0.0 or discount_percent > 100.0:
                 discount_percent = None
             prod_info['discount_percent'] = discount_percent
+        
+
+    if prod_info.get('discount_percent'):
+        pattern = r'^(100(\.0+)?|\d{1,2}(\.\d+)?)%?$'
+        if re.match(pattern, prod_info['discount_percent']):
+            prod_info["discount_percent"] = round(prod_info["discount_percent"])
+        else:
+            prod_info['discount_percent'] = None
 
     prime = extract_field(soup, prime_selectors)
 

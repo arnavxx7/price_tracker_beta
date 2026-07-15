@@ -283,6 +283,13 @@ def save_to_database(product_data, conn):
             logger.error("Unable to save or update the product in database since ASIN was not provided")
             return "[ERROR] Product data not saved to database due to no ASIN"
         
+        if product_data.get("discount_percent"):
+            pattern = r'^(100(\.0+)?|\d{1,2}(\.\d+)?)%?$'
+            if re.match(pattern, product_data['discount_percent']):
+                product_data["discount_percent"] = round(product_data["discount_percent"])
+            else:
+                product_data['discount_percent'] = None 
+        
         logger.info(f"{product_data.get("asin")}: Saving this product")
         
         
@@ -355,7 +362,14 @@ def save_to_database(product_data, conn):
             for prod in product_data:
                 if not prod.get("asin"):
                     logger.error("Unable to save or update the product in database since ASIN was not provided")
-                    return "[ERROR] Product data not saved to database due to no ASIN"    
+                    return "[ERROR] Product data not saved to database due to no ASIN" 
+
+                if prod.get("discount_percent"):
+                    pattern = r'^(100(\.0+)?|\d{1,2}(\.\d+)?)%?$'
+                    if re.match(pattern, prod['discount_percent']):
+                        prod["discount_percent"] = round(prod["discount_percent"])
+                    else:
+                        prod['discount_percent'] = None 
 
                 # print("#", i)                    
                 logger.info(f"##{i}/{len(product_data)}: Saving or updating product - {prod.get("asin")}")
