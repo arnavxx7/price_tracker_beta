@@ -50,9 +50,8 @@ for asin, url in rows:
             # On GitHub Actions just log it instead
             logger.warning(f"{asin}: Possible captcha or parsing failure")
 
-    save_to_database(product_info, conn)
+    save_to_database(product_info, conn, True)
     i = i+1
 
 
-conn.close()
 logger.info("Session completed")

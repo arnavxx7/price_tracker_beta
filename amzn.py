@@ -233,15 +233,15 @@ async def ping_amazon2(url: str):
                 await asyncio.sleep(random.uniform(3, 6)) 
                 continue
             
-            logger.error(f"Network error on attempt {attempt + 1}: {e}")
-            print(f"Received the following error on attempt {attempt + 1}: {e}")
+            logger.error(f"{url}: Network error on attempt {attempt + 1}: {e}")
+            print(f"{url}: Received the following error on attempt {attempt + 1}: {e}")
             if attempt == max_retries:
                 return None
             await asyncio.sleep(random.uniform(5, 10))
 
         except Exception as e:
-            logger.error(f"Unexpected error on attempt {attempt + 1}: {e}")
-            print(f"Received the following error on attempt {attempt + 1}: {e}")
+            logger.error(f"{url}: Unexpected error on attempt {attempt + 1}: {e}")
+            print(f"{url}: Received the following error on attempt {attempt + 1}: {e}")
             if attempt == max_retries:
                 return None
             await asyncio.sleep(random.uniform(5, 10))

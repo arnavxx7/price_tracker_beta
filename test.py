@@ -29,20 +29,23 @@ CURRENCY_MAPPING = {
 
 # print(CURRENCY_MAPPING.get("₹"))
 
-with open("debug_response.html", 'r', encoding='utf-8') as file:
-    html_content = file.read()
+# with open("debug_response.html", 'r', encoding='utf-8') as file:
+    # html_content = file.read()
 
 # if "captcha" in html_content.lower() or "api-services-support@amazon.com" in html_content.lower():
 #     print("CAPTCHA or anti-bot measure detected in response")
 
 import re
+url = "https://www.amazon.com/dp/B0F4LYY835?th=1&psc=1"
+# is_product_url = re.search("/dp/(.*?)", url)
+# print(is_product_url.group(1))
 # def is_url(string):
 #     pattern = r'^(http|https)'
 #     return bool(re.match(pattern, string))
 # # Example usage
 # print(is_url("htt://www.amazon.in/s?k=ps5"))  # True
 # print(is_url("not_a_url"))   
-url = "www.amazon.com/dp/B006FEK6WM?"
+# url = "www.amazon.com/dp/B006FEK6WM?"
 match = re.search(r"/dp/([A-Z0-9]{10})(?:[/?]|$)", url)
 print(match.group(1))
 
@@ -53,20 +56,20 @@ import asyncio
 import json
 from bs4 import BeautifulSoup
 
-test_url = "https://www.amazon.com/dp/B0CL5KNB9M"
-test_url2 = "https://www.amazon.com/dp/B0BBYB1R1R"
+# test_url = "https://www.amazon.com/dp/B0CL5KNB9M"
+# test_url2 = "https://www.amazon.com/dp/B0BBYB1R1R"
 # test_url2 = "https://www.amazon.com/s?k=new+balance+830+fresh+foam&crid=36J3QOHL8N6X4&sprefix=new+balance+830+fresh+foa%2Caps%2C317&ref=nb_sb_noss"
-html_content = asyncio.run(ping_amazon2(test_url))
+# html_content = asyncio.run(ping_amazon2(test_url))
 
 # with open(f"debug_response.html", "w", encoding="utf-8") as f: 
 #     f.write(html_content.text)
 
 
 # soup = BeautifulSoup(html_content, "html.parser")
-product_info = amzn_product_info_scraper(html_content, test_url)
+# product_info = amzn_product_info_scraper(html_content, test_url)
 # search_results = get_search_results(html_content)
 
-print(product_info)
+# print(product_info)
 # print(len(search_results))
 # print(search_results[0].keys())
 # for prod in search_results:

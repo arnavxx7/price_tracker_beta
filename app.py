@@ -172,7 +172,7 @@ def scrape_product(url: str, background_tasks: BackgroundTasks):
         }
 
     html_content = asyncio.run(ping_amazon2(url))
-    is_product_url = re.search("/dp/(.*?)/", url) # check if url is product or search 
+    is_product_url = re.search(r"/dp/([A-Z0-9]{10})(?:[/?]|$)", url) # check if url is product or search 
 
     conn = psycopg2.connect(**CONFIG)
 
@@ -193,7 +193,7 @@ def scrape_product(url: str, background_tasks: BackgroundTasks):
             }
 
         else:
-            background_tasks.add_task(save_to_database, product_info, conn) 
+            background_tasks.add_task(save_to_database, product_info, conn, False) 
             return {
                 "status": "success",
                 "details": f"Received product details for: {product_info.get("asin")}",
@@ -486,7 +486,7 @@ def run_scrape_job(job_id: uuid, q: str):
         conn = psycopg2.connect(**CONFIG)
         threading.Thread(
             target=save_to_database,
-            args=(job["products"], conn),
+            args=(job["products"], conn, False),
             daemon=True
         ).start()
         job["status"] = "done"

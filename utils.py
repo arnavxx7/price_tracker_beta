@@ -276,7 +276,7 @@ def track_rating_history(current_rating: float, asin: str):
 
             
 
-def save_to_database(product_data, conn):
+def save_to_database(product_data, conn, is_tracker_script: bool):
     # product url
     if type(product_data)==dict:
         if not product_data.get("asin"):
@@ -285,10 +285,13 @@ def save_to_database(product_data, conn):
         
         if product_data.get("discount_percent"):
             pattern = r'^(100(\.0+)?|\d{1,2}(\.\d+)?)%?$'
-            if re.match(pattern, product_data['discount_percent']):
+            if isinstance(product_data["discount_percent"], str):
+                if re.match(pattern, product_data['discount_percent']):
+                    product_data["discount_percent"] = round(float(product_data["discount_percent"]))
+                else:
+                    product_data['discount_percent'] = None 
+            elif isinstance(product_data["discount_percent"], float):
                 product_data["discount_percent"] = round(product_data["discount_percent"])
-            else:
-                product_data['discount_percent'] = None 
         
         logger.info(f"{product_data.get("asin")}: Saving this product")
         
@@ -366,10 +369,13 @@ def save_to_database(product_data, conn):
 
                 if prod.get("discount_percent"):
                     pattern = r'^(100(\.0+)?|\d{1,2}(\.\d+)?)%?$'
-                    if re.match(pattern, prod['discount_percent']):
+                    if isinstance(prod["discount_percent"], str):
+                        if re.match(pattern, prod['discount_percent']):
+                            prod["discount_percent"] = round(float(prod["discount_percent"]))
+                        else:
+                            prod['discount_percent'] = None 
+                    elif isinstance(prod["discount_percent"], float):
                         prod["discount_percent"] = round(prod["discount_percent"])
-                    else:
-                        prod['discount_percent'] = None 
 
                 # print("#", i)                    
                 logger.info(f"##{i}/{len(product_data)}: Saving or updating product - {prod.get("asin")}")
@@ -439,7 +445,9 @@ def save_to_database(product_data, conn):
             # except Exception as e:
             #         print(f"[ERROR] Unable to save {len(product_data)} products in db")
 
-    conn.close()       
+    if not is_tracker_script:
+        conn.close()     
+
 
     
     # conn = mysql.connector.connect(**CONFIG)
