@@ -122,6 +122,14 @@ export default function ProductPage() {
     return () => subscription.unsubscribe()
   }, []);
 
+  const [targetPrice, setTargetPrice] = useState<number>(0.00);
+
+  useEffect(() => {
+    if (product?.price) {
+        setTargetPrice(product.price - 10);
+    }
+    }, [product]); // runs whenever product changes
+
   // Normalise fields — handle both search result shape and product scraper shape
   const displayName = product?.name ?? product?.title ?? null;
   const displayUrl = product?.prod_url ?? product?.url ?? null;
@@ -180,17 +188,40 @@ export default function ProductPage() {
         setLoginModalOpen(true);
       }
       else {
-        console.log("User already logged in, proceeding to set price alert page");
+        console.log("User already logged in, proceeding to set price alert");
    
       }
   }
 
-  function handlePriceAlert() {
-    console.log("Send price alert to Fastapi");
+
+  const handlePriceAlert = async (target_price: number) => {
+    // fexcthing the logged in user
+    const { data: {user} } = await supabase.auth.getUser();
+
+    const alert_json = {
+      user_id: user?.id,
+      asin: product?.asin,
+      target_price: target_price,
+      current_price: product?.price,
+      is_active: true,
+    }
+    console.log("Alert creation: sending following json to Fastapi backend", alert_json);
+    try {
+      const res = await fetch(`/api/alerts/create`, {
+        method: "POST",
+        headers: {"Content-Type" : "application/json"},
+        body: JSON.stringify(alert_json)
+      });
+
+      const data = await res.json();
+      console.log("Alert created:", data);
+    } catch(err) {
+      console.error("Failed to create alert: ", err);
+    }
+
   }
-  
   // console.log("Product details: ", product)
-  console.log("These are the price points fetched: ", price_points)
+  console.log("These are the price points fetched: ", price_points);
   
   return (
     <>
@@ -693,10 +724,10 @@ export default function ProductPage() {
                 <div className="alert-form">
                   <div className="input-group">
                     <span>{currencySymbol}</span>
-                    <input type="number" defaultValue={product.price ? (product.price - 10).toFixed(2) : "129.99"} />
+                    <input type="number" value={targetPrice} onChange={(e) => setTargetPrice(parseFloat(e.target.value))} />
                   </div>
                   <button className="btn-outline" 
-                    onClick={userLoggedInFlag ? handlePriceAlert : handleLogin}>
+                    onClick={userLoggedInFlag ? () => handlePriceAlert(targetPrice) : handleLogin}>
                    {userLoggedInFlag ? "🔔 Alert me at this price" : "👤 Log In and Set Price Alert"}
                   </button>
                 </div>

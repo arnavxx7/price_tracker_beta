@@ -2,7 +2,7 @@ name: run tracker_script.py
 
 on:
   schedule:
-    - cron: '45 12 */3 * *' 
+    - cron: '45 12 */7 * *' 
 
   workflow_dispatch:
 

@@ -15,6 +15,14 @@ import json
 import os
 from dotenv import load_dotenv
 import re
+from pydantic import BaseModel
+
+class AlertCreationRequest(BaseModel): 
+    user_id: str | None
+    asin: str | None
+    target_price: float
+    current_price: float | None
+    is_active: bool | None
 
 
 
@@ -504,6 +512,31 @@ def run_scrape_job(job_id: uuid, q: str):
                           ,"   ##    \   """.encode('utf-8'))
 
 
+@app.post("/api/alerts/create")
+def create_alert(payload: AlertCreationRequest):
+    print(f"Recieved alert creation request on fastapi for asin: {payload.asin} by user: {payload.user_id}")
+    try:
+        conn = psycopg2.connect(**CONFIG)
+
+        with conn.cursor() as cur:
+            cur.execute("""
+                INSERT INTO price_alerts (user_id, asin, target_price, current_price, channel, is_active)
+                        VALUES (%s, %s, %s, %s, %s, %s)
+                        ON CONFLICT (user_id, asin)
+                        DO UPDATE SET
+                            target_price = EXCLUDED.target_price,
+                            current_price = EXCLUDED.current_price,
+                            is_active = true
+                        """, (payload.user_id, payload.asin, payload.target_price, payload.current_price, "email", payload.is_active))
+            conn.commit()
+            return {"status": "success", "details": f"Alert created for asin: {payload.asin} by user: {payload.user_id} @ price: {payload.target_price}"}
+    except Exception as e:
+        conn.rollback()
+        raise HTTPException(status_code=500, detail=str(e))
+    finally:
+        conn.close()
+
+        
 @app.get("/api/price_chart")
 def get_price_data(asin: str):
     conn = psycopg2.connect(**CONFIG)

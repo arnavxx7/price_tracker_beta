@@ -463,3 +463,18 @@ def save_to_database(product_data, conn, is_tracker_script: bool):
     return "[INFO] Product data successfully saved to database"
 
 
+def send_alerts(product_info: dict, conn):
+    print(f"Checking price alerts for product: {product_info.get("asin")}")
+
+    with conn.cursor() as cur:
+        cur.execute("SELECT EXISTS(SELECT 1 FROM price_alerts WHERE asin = %s)", (product_info.get("asin")),)
+        alert_exists = bool(cur.fetchone()[0])
+
+        if not alert_exists:
+            return print(f"No alert found for product: {product_info.get('asin')}")
+        
+        
+        
+
+    
+

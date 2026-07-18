@@ -48,19 +48,18 @@ export default function LoginModal({ isOpen, url, onClose }: {isOpen: boolean, u
         const { data, error } = await supabase.auth.signInWithOAuth({
             provider: 'google',
             options: {
-                redirectTo: `${url}`,
-            }
+                redirectTo: `http://localhost:3000/products?url=${url}`,
+            }       
             })
-
         if (error) {
             setSubmitting(false);
             setError(error.message);
         }
 
         else {
-            console.log("Google OAuth Ran successfully!!")
+            console.log("Google OAuth Ran successfully!! = redirecting to google")
             setSubmitting(false);
-            setReceived(true);
+            onClose();
         }
     }
 
@@ -285,7 +284,7 @@ export default function LoginModal({ isOpen, url, onClose }: {isOpen: boolean, u
 
                         {/* Email OTP Login */}
                         <div className="otp-section">
-                        <p className="otp-label"> Continue via Magic Link</p>
+                        <p className="otp-label">Continue via Magic Link</p>
                         <input 
                             type="email" 
                             placeholder="Enter Email" 
