@@ -4,8 +4,14 @@ import os
 from dotenv import load_dotenv
 from psycopg2 import sql
 from app_logging import logger
+from supabase import create_client, Client
+import resend
 
 load_dotenv()
+supabase_url = os.getenv("SUPABASE_URL")
+supabase_key = os.getenv("SUPABASE_KEY")
+
+supabase: Client = create_client(supabase_url, supabase_key)
 
 CONFIG = {
     "host": "aws-1-ap-south-1.pooler.supabase.com",
@@ -464,17 +470,213 @@ def save_to_database(product_data, conn, is_tracker_script: bool):
 
 
 def send_alerts(product_info: dict, conn):
-    print(f"Checking price alerts for product: {product_info.get("asin")}")
+    asin = product_info.get("asin")
+    new_price = product_info.get("price")
+
+    if not asin or new_price is None:
+        return
+    
+    print(f"Checking price alerts for product: {asin}")
 
     with conn.cursor() as cur:
-        cur.execute("SELECT EXISTS(SELECT 1 FROM price_alerts WHERE asin = %s)", (product_info.get("asin")),)
+        cur.execute("SELECT EXISTS(SELECT 1 FROM price_alerts WHERE asin = %s)", (asin,))
         alert_exists = bool(cur.fetchone()[0])
 
         if not alert_exists:
-            return print(f"No alert found for product: {product_info.get('asin')}")
+            return print(f"No alert exists for product: {asin}")
         
+        # get all alerts for a specific product asin where current price is less than target price
+        cur.execute("""SELECT id, user_id, asin, target_price, current_price, channel, triggered_count 
+                        FROM price_alerts
+                        WHERE asin = %s
+                        AND is_active = true
+                        AND target_price > %s
+                        AND (last_triggered IS NULL OR last_triggered < NOW() - INTERVAL '24 hours')
+                    """, (asin, new_price))
         
+        rows = cur.fetchall() # multiple users could be watching the same alert
+
+        if not rows:
+            print("No eligible alerts found for product: ", asin)
+            return 
+        
+        for row in rows:
+        
+            alert_id, user_id, asin, target_price, old_price, channel, triggered_count = row
         
 
+            try:    
+                print("Current price = ", new_price)
+                print("Target price = ", target_price)
+                print("Current price is less than target price, sending alert")
+
+                res = supabase.auth.admin.get_user_by_id(user_id)
+                user_email = res.user.email
+
+                if not user_email:
+                    print(f"No user email found for user id", user_id)
+                    continue
+                
+                email_html = get_alert_email_html(asin, new_price, target_price)
+                # send alert
+                email = resend.Emails.send({
+                    "from": "arnavmalhotra73@gmail.com",
+                    "to": user_email,
+                    "subject": "The product you wanted has just had a price drop - trial",
+                    "html": email_html
+                })
+                print(email)
+
+                cur.execute("""
+                    UPDATE price_alerts
+                    SET current_price = %s,
+                        triggered_count = %s,
+                        last_triggered = NOW()
+                    WHERE id = %s
+                            """, (new_price, triggered_count + 1, alert_id))
+                
+                cur.execute("""
+                    INSERT INTO alert_history (alert_id, asin, old_price, new_price, sent_at, channel, status)
+                            VALUES (%s, %s, %s, %s, NOW(), %s, %s)
+                            """, (alert_id, asin, old_price, new_price, channel, "sent"))
+                
+                conn.commit()
+                print(f"Alert sent for {asin} - new price {new_price} below target price {target_price}")
+            
+            except Exception as e:
+                conn.rollback()
+                cur.execute("""
+                    INSERT INTO alert_history (alert_id, asin, old_price, new_price, sent_at, channel, status)
+                            VALUES (%s, %s, %s, %s, NOW(), %s, %s)
+                            """, (alert_id, asin, old_price, new_price, channel, "failed"))
+                conn.commit()
+                print(f"[ERROR]: Failed to send alert for {asin}: {e}")
+
+        
+def get_alert_email_html(asin: str, new_price: float, target_price: float, currency_symbol: str = "$") -> str:
+    return f"""
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body style="margin:0; padding:0; background:#0a0a0f; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background:#0a0a0f; padding:40px 16px;">
+    <tr>
+      <td align="center">
+        <table width="560" cellpadding="0" cellspacing="0" style="max-width:560px; width:100%;">
+
+          <!-- Header -->
+          <tr>
+            <td style="padding-bottom:24px; text-align:center;">
+              <span style="font-size:22px; font-weight:700; color:#ffffff; letter-spacing:-0.5px;">
+                ⬡ PriceLens
+              </span>
+            </td>
+          </tr>
+
+          <!-- Main card -->
+          <tr>
+            <td style="background:#13131a; border:1px solid #2a2a3a; border-radius:16px; padding:32px;">
+
+              <!-- Icon + title -->
+              <table width="100%" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td style="padding-bottom:24px; text-align:center;">
+                    <div style="display:inline-block; background:rgba(76,175,130,0.12); border:1px solid rgba(76,175,130,0.25); border-radius:50%; width:56px; height:56px; line-height:56px; text-align:center; font-size:24px;">
+                      📉
+                    </div>
+                    <h1 style="margin:16px 0 6px; font-size:22px; font-weight:700; color:#ffffff; letter-spacing:-0.5px;">
+                      Price drop detected!
+                    </h1>
+                    <p style="margin:0; font-size:14px; color:#6e6e88;">
+                      A product on your watchlist just dropped below your target.
+                    </p>
+                  </td>
+                </tr>
+              </table>
+
+              <!-- Divider -->
+              <div style="border-top:1px solid #2a2a3a; margin-bottom:24px;"></div>
+
+              <!-- Price comparison -->
+              <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:24px;">
+                <tr>
+                  <td width="48%" style="background:#0a0a0f; border:1px solid #2a2a3a; border-radius:10px; padding:16px; text-align:center;">
+                    <p style="margin:0 0 4px; font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; color:#6e6e88;">Current price</p>
+                    <p style="margin:0; font-size:28px; font-weight:700; color:#4caf82; letter-spacing:-1px;">{currency_symbol}{new_price:,.2f}</p>
+                  </td>
+                  <td width="4%" style="text-align:center;">
+                    <span style="font-size:18px; color:#3e3e56;">→</span>
+                  </td>
+                  <td width="48%" style="background:#0a0a0f; border:1px solid #2a2a3a; border-radius:10px; padding:16px; text-align:center;">
+                    <p style="margin:0 0 4px; font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; color:#6e6e88;">Your target</p>
+                    <p style="margin:0; font-size:28px; font-weight:700; color:#ffffff; letter-spacing:-1px;">{currency_symbol}{target_price:,.2f}</p>
+                  </td>
+                </tr>
+              </table>
+
+              <!-- ASIN -->
+              <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:24px;">
+                <tr>
+                  <td style="background:#0a0a0f; border:1px solid #2a2a3a; border-radius:10px; padding:14px 16px;">
+                    <table width="100%" cellpadding="0" cellspacing="0">
+                      <tr>
+                        <td style="font-size:12px; color:#6e6e88;">Product ASIN</td>
+                        <td style="text-align:right; font-size:13px; font-family:monospace; color:#a99fff; font-weight:600;">{asin}</td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+
+              <!-- CTA -->
+              <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:24px;">
+                <tr>
+                  <td align="center">
+                    <a href="https://amazon.com/dp/{asin}"
+                       style="display:inline-block; background:linear-gradient(135deg,#7c6bff,#9f6bff); color:#ffffff; text-decoration:none; font-size:14px; font-weight:600; padding:14px 32px; border-radius:10px; letter-spacing:-0.1px;">
+                      View on Amazon →
+                    </a>
+                  </td>
+                </tr>
+              </table>
+
+              <!-- Divider -->
+              <div style="border-top:1px solid #2a2a3a; margin-bottom:20px;"></div>
+
+              <!-- Unsubscribe -->
+              <p style="margin:0; font-size:12px; color:#3e3e56; text-align:center;">
+                Don't want alerts for this product?
+                <a href="https://yourdomain.com/unsubscribe?asin={asin}"
+                   style="color:#6e6e88; text-decoration:underline;">
+                  Turn off this alert
+                </a>
+              </p>
+
+            </td>
+          </tr>
+
+          <!-- Footer -->
+          <tr>
+            <td style="padding-top:24px; text-align:center;">
+              <p style="margin:0; font-size:12px; color:#3e3e56;">
+                You're receiving this because you set a price alert on PriceLens.
+                <br/>
+                <a href="https://yourdomain.com/alerts" style="color:#3e3e56; text-decoration:underline;">
+                  Manage all alerts
+                </a>
+              </p>
+            </td>
+          </tr>
+
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>
+    """
     
 

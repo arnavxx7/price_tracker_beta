@@ -4,7 +4,7 @@ import psycopg2
 import os
 from dotenv import load_dotenv
 from get_product_info import amzn_product_info_scraper
-from utils import save_to_database
+from utils import save_to_database, send_alerts
 from app_logging import logger
 
 
@@ -51,6 +51,7 @@ for asin, url in rows:
             logger.warning(f"{asin}: Possible captcha or parsing failure")
 
     save_to_database(product_info, conn, True)
+    send_alerts(product_info, conn)
     i = i+1
 
 
