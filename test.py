@@ -99,3 +99,20 @@ from bs4 import BeautifulSoup
 # for result in results:
 #     print(result)
 
+import resend
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+resend.api_key = os.getenv("RESEND_EMAIL_API_KEY")
+
+email =  resend.Emails.send({
+                    "from": "arnavmalhotra73@gmail.com",
+                    "to": "arnavmalhotra1037@gmail.com",
+                    "subject": "The product you wanted has just had a price drop - trial",
+                    "html": "<<p> <strong>Pyshceeee it works</strong> </p>"
+                })
+
+
+print(email)

@@ -5,6 +5,7 @@ import { useSearchParams, useRouter } from "next/navigation";
 // import { parse } from "path";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import LoginModal from "../components/login_modal";
+import PriceIntelligence from "../components/price_intelligence";
 import { RechartsDevtools } from '@recharts/devtools';
 import { supabase } from "../utils/supabase";
 import { useEffect, useMemo, useState } from "react";
@@ -51,6 +52,11 @@ export default function ProductPage() {
   const [error, setError] = useState<string | null>(null);
   const [price_points, setPricePoints] = useState([]);
   const [isLoginModalOpen, setLoginModalOpen] = useState<boolean>(false);
+  const [priceStats, setPriceStats] = useState({
+    lowestPrice: null as number | null,
+    highestPrice: null as number | null,
+    averagePrice: null as number | null
+  })
 
   useEffect(() => {
     if (!prod_url) return;
@@ -75,8 +81,20 @@ export default function ProductPage() {
             if (price_chart_res.ok) {
               const chartData = await price_chart_res.json();
 
-              if (chartData.status === "success" && chartData.dp) {
+              if (chartData.status === "success") {
+
+                  if (chartData.dp) {
                   setPricePoints(chartData.dp);
+                  }
+
+                  if (chartData.stats) {
+                    setPriceStats({
+                      lowestPrice: chartData.stats.min_price,
+                      highestPrice: chartData.stats.max_price,
+                      averagePrice: chartData.stats.avg_price,
+                    });
+                  }
+                  
               }
             }
             else {
@@ -138,37 +156,69 @@ export default function ProductPage() {
     ? (CURRENCY_SYMBOLS[product.currency] ?? product.currency)
     : "";
 
-  // Computing the stats
-  const { lowestPrice, highestPrice, averagePrice } = useMemo(() => {
-    if (!price_points || price_points.length === 0) {
+  // --- DEFINE DERIVED PRICE POSITION ANALYSIS ---
+  const priceAnalysis = useMemo(() => {
+    const currentPrice = product?.price;
+    const { lowestPrice, highestPrice, averagePrice } = priceStats;
+    let verdict = "";
+    let reason = ""
+    let percentile = 0;
+
+    if (currentPrice == null || lowestPrice == null || highestPrice == null || averagePrice == null) {
+      verdict = "Insufficient Data";
+      reason = "One or more stats is null";
       return {
-        lowestPrice: product?.price ?? 0,
-        highestPrice: product?.org_price ?? product?.price ?? 0,
-        averagePrice: product?.price ?? 0,
+          verdict: verdict,
+          reason: reason,
+          percentile: null
       };
     }
-
-  const prices = price_points.map((dp: any) => dp.price).filter((p) => p != null);
-    console.log("Prices from price_points = ", prices);
-    if (prices.length === 0) {
-            return {
-        lowestPrice: product?.price ?? 0,
-        highestPrice: product?.org_price ?? product?.price ?? 0,
-        averagePrice: product?.price ?? 0,
-      };
+    
+    if (highestPrice > lowestPrice) {
+      percentile = ((currentPrice - lowestPrice) / (highestPrice - lowestPrice)) * 100;
     }
 
-  const min = Math.min(...prices);
-  const max = Math.max(...prices);
-  const avg = prices.reduce((a, b) => a + b, 0) / prices.length;
+    // Cap the percentile between 0 and 100 (in case the current price is a brand new all-time low or high)
+    percentile = Math.max(0, Math.min(100, percentile));
 
-  return {
-      lowestPrice: min,
-      highestPrice: max,
-      averagePrice: Math.round(avg)
+    
+    if (percentile < 30) {
+      verdict = "Buy Now";
+      if (percentile === 0) {
+        reason = `Price is at it's all-time lowest!!!`;
+      }
+      else {
+      reason = `Price is in the lowest ${percentile}%`;
+      }
+    } 
+    else if (percentile >= 30 && percentile <= 70) {
+      // The Caveat: Check against average price
+      if (currentPrice < averagePrice) {
+        verdict = "Buy Now";
+        reason = "Price is below average";
+      } else {
+        verdict = "Wait";
+        reason = "Expect price to drop in a few weeks";
+      }
+    } 
+    else {
+      verdict = "Caution";
+      if (percentile === 100) {
+        reason = `Price is at it's all-time highest`;
+      }
+      else {
+      reason = `Price is ${percentile-50}% above average`;
+      }
+    }
+
+    // Return the rounded percentile alongside the verdict so you can feed it to your UI gauge
+    return { 
+      verdict: verdict, 
+      reason: reason, 
+      percentile: Math.round(percentile) 
     };
-  
-  }, [price_points, product]);
+  }, [product, priceStats]);
+
 
   function renderStars(rating: number) {
     const rounded = Math.round(rating);
@@ -597,22 +647,6 @@ export default function ProductPage() {
                 </div>
               </div>
 
-              {/* Stats Row */}
-              <div className="stats-grid">
-                <div className="stat-card">
-                  <span className="stat-label">Lowest Ever</span>
-                  <span className="stat-val val-low">{currencySymbol}{lowestPrice.toLocaleString()}</span>
-                </div>
-                <div className="stat-card">
-                  <span className="stat-label">Average</span>
-                  <span className="stat-val val-avg">{currencySymbol}{averagePrice.toLocaleString()}</span>
-                </div>
-                <div className="stat-card">
-                  <span className="stat-label">Highest Ever</span>
-                  <span className="stat-val val-high">{currencySymbol}{highestPrice.toLocaleString()}</span>
-                </div>
-              </div>
-
               {/* Price History Chart */}
               <div className="card">
                 <div className="chart-header">
@@ -684,37 +718,14 @@ export default function ProductPage() {
 
             {/* ── RIGHT COLUMN ── */}
             <div className="col-right">
-              
-              {/* Deal Score */}
-              <div className="card">
-                <span className="card-header">Deal Score</span>
-                <div className="gauge-container">
-                  {/* Fake SVG Gauge to match image */}
-                  <svg viewBox="0 0 100 50" className="gauge-svg">
-                    <path d="M 10 50 A 40 40 0 0 1 90 50" fill="none" stroke="#2a2a35" strokeWidth="8" strokeLinecap="round" />
-                    {/* The green progress arc (approx 72%) */}
-                    <path d="M 10 50 A 40 40 0 0 1 70 15" fill="none" stroke="#10b981" strokeWidth="8" strokeLinecap="round" />
-                  </svg>
-                  <div className="score-val">72</div>
-                  <div className="score-sub">out of 100</div>
-                  <div className="score-text">Good deal — buy now</div>
-                  <div className="score-desc">Price is in the bottom 28% historically</div>
-                </div>
-              </div>
-
-              {/* Best Time To Buy */}
-              <div className="card">
-                <span className="card-header">Best Time To Buy</span>
-                <div className="time-filters">
-                  <button className="time-pill active">2–3 days</button>
-                  <button className="time-pill">1 week</button>
-                  <button className="time-pill">1 month</button>
-                </div>
-                <div className="prediction-box">
-                  <div className="pred-title">↓ Likely to drop slightly</div>
-                  <div className="pred-desc">Based on 6-month seasonal pattern</div>
-                </div>
-              </div>
+                
+              {/* Price Intelligence */}
+              <PriceIntelligence
+                priceAnalysis={priceAnalysis}
+                priceStats={priceStats}
+                currentPrice={product.price}
+                currencySymbol={currencySymbol}
+              />
 
               {/* Set Price Alert */}
               <div className="card">

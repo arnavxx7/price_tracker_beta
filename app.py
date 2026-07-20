@@ -560,10 +560,17 @@ def get_price_data(asin: str):
             dt_hover = f"{dt.strftime('%a')}, {dt.day} {dt.strftime('%b %Y')}" # Sat, 4 Jui 2026
             price_point_dict = {"price": row[0], "currency": row[1], "date_yaxis": dt_yaxis, "date_hover": dt_hover} 
             price_points.append(price_point_dict)
+            prices = []
+            if price_points:
+                for point in price_points:
+                    prices.append(point["price"])
+            avg_price = sum(prices)/len(prices)
+            stats = {"min_price": min(prices), "max_price": max(prices), "avg_price": avg_price}
         return {
             "status": "success",
             "num_dp": len(price_points),
-            "dp": price_points  
+            "dp": price_points,
+            "stats": stats  
         }
     
     return {
