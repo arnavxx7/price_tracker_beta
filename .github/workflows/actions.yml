@@ -33,6 +33,9 @@ jobs:
           PROXY_HOSTNAME: ${{ secrets.PROXY_HOSTNAME }}
           PROXY_PASSWORD: ${{ secrets.PROXY_PASSWORD }}
           PROXY_PORT:  ${{ secrets.PROXY_PORT }}
+          SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          RESEND_EMAIL_API_KEY: ${{ secrets.RESEND_EMAIL_API_KEY }}
         run: python tracker_script.py
 
       - name: Upload logs
