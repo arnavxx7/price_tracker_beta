@@ -279,10 +279,9 @@ def amzn_product_info_scraper(html_content, url: str = None) -> dict:
     if not discount_percent:
         if price and org_price:
             discount_percent = round(100 - (price / org_price * 100))
-            if discount_percent == 0.0:
-                discount_percent = None
-            if discount_percent < 0.0 or discount_percent > 100.0:
-                discount_percent = None
+            if discount_percent is not None:
+                if discount_percent <= 0.0 or discount_percent > 100.0:
+                    discount_percent = None
             prod_info['discount_percent'] = discount_percent
         
 
