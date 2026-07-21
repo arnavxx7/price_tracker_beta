@@ -16,10 +16,10 @@ supabase: Client = create_client(supabase_url, supabase_key)
 resend.api_key = os.getenv("RESEND_EMAIL_API_KEY")
 
 CONFIG = {
-    "host": "aws-1-ap-south-1.pooler.supabase.com",
-    "user": "postgres.mtsadefjhnqdvmsqcjps",
+    "host": os.getenv("DB_HOSTNAME"),
+    "user": os.getenv("DB_USERNAME"),
     "password": os.getenv("DB_PASSWORD"),
-    "database": "postgres",
+    "database": os.getenv("DB_NAME"),
     "port": 5432
 }
 
