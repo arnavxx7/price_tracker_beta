@@ -7,6 +7,8 @@ export default function Home() {
   const [query, setQuery] = useState("");
   const router = useRouter();
   const cacheKey = `search_${query}`;
+  const [urlError, setUrlError] = useState<string | null>(null);
+  const [focused, setFocused] = useState(false);
 
   async function handleSearch() {
     if (!query.trim()) return;
@@ -58,6 +60,26 @@ export default function Home() {
     if (e.key === "Enter") handleSearch();
   }
 
+  function validateInput(value: string): boolean {
+    const looksLikeUrl = /^(www\.|http|ftp|amazon\.|walmart\.|target\.)/i.test(value.trim());
+
+    if (!looksLikeUrl) {
+    setUrlError(null);
+    return true; // plain text search — always valid
+    }
+
+    const validUrl = /^https?:\/\/.+/i.test(value.trim());
+
+    if (!validUrl) {
+      setUrlError("Please enter a valid URL starting with https://");
+      return false;
+    }
+    
+    setUrlError(null);
+    return true;
+
+  }
+
   return (
         <main className="root">
 
@@ -77,40 +99,48 @@ export default function Home() {
         </p>
 
         {/* Search */}
-        <div className={"search-wrap"}>
-          <div className="search-inner">
-            <svg className="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <circle cx="11" cy="11" r="8" />
-              <line x1="21" y1="21" x2="16.65" y2="16.65" />
-            </svg>
-            <input
-              className="search-input"
-              type="text"
-              placeholder="Search a product or paste a URL…"
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              onKeyDown={handleKeyDown}
-              autoComplete="off"
-              spellCheck={false}
-            />
-            {query && (
-              <button
-                className="clear-btn"
-                onClick={() => setQuery("")}
-                aria-label="Clear search"
-              >
-                ✕
-              </button>
-            )}
+        <div className="search-container">
+          <div className={`search-wrap  ${focused ? "search-wrap--focused" : ""}  ${urlError ? "search-wrap--error" : ""}`}>
+            <div className="search-inner">
+              <svg className="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="11" cy="11" r="8" />
+                <line x1="21" y1="21" x2="16.65" y2="16.65" />
+              </svg>
+              <input
+                className={`search-input`}
+                type="text"
+                placeholder="Search a product or paste a URL…"
+                value={query}
+                onChange={(e) => {setQuery(e.target.value); validateInput(e.target.value);}}
+                onKeyDown={handleKeyDown}
+                onFocus={() => setFocused(true)}    // ← add this
+                onBlur={() => setFocused(false)}    // ← add this
+                autoComplete="off"
+                spellCheck={false}
+              />
+              {query && (
+                <button
+                  className="clear-btn"
+                  onClick={() => { setQuery(""); setUrlError(null); } }
+                  aria-label="Clear search"
+                >
+                  ✕
+                </button>
+              )}
           </div>
           <button
             className="search-btn"
             onClick={handleSearch}
-            disabled={!query.trim()}
+            disabled={!query.trim() || !!urlError}
           >
             Check Price
           </button>
+
         </div>
+        {urlError && (
+            <p className="search-error">{urlError}</p>
+          )}
+      </div>
       </section>
 
 
@@ -227,18 +257,22 @@ export default function Home() {
         }
 
         /* Search */
-        .search-wrap {
+        .search-container {
           width: 100%;
           max-width: 660px;
           display: flex;
-          gap: 10px;
-          background: rgba(255,255,255,0.04);
-          border: 1.5px solid rgba(255,255,255,0.1);
-          border-radius: 16px;
-          padding: 6px 6px 6px 8px;
-          transition: border-color 0.2s, box-shadow 0.2s;
-          margin-bottom: 20px;
+          flex-direction: column;  /* stacks search-wrap and error vertically */
         }
+
+        .search-wrap {
+              width: 100%;           /* ← add this */
+              display: flex;
+              gap: 10px;
+              background: rgba(255,255,255,0.04);
+              border: 1.5px solid rgba(255,255,255,0.1);
+              border-radius: 16px;
+              padding: 6px 6px 6px 8px;
+        }  
         .search-wrap--focused {
           border-color: rgba(124, 107, 255, 0.6);
           box-shadow: 0 0 0 3px rgba(124, 107, 255, 0.12);
@@ -269,6 +303,17 @@ export default function Home() {
           font-family: inherit;
         }
         .search-input::placeholder { color: #3e3e56; }
+
+        .search-error {
+          font-size: 12px;
+          color: #e05555;
+          margin: 6px 0 0 4px;
+        }
+
+        .search-wrap--error {
+          border-color: rgba(224, 85, 85, 0.5);
+          box-shadow: 0 0 0 3px rgba(224, 85, 85, 0.08);
+        }
 
         .clear-btn {
           background: transparent;
