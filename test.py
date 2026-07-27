@@ -35,8 +35,7 @@ CURRENCY_MAPPING = {
 # if "captcha" in html_content.lower() or "api-services-support@amazon.com" in html_content.lower():
 #     print("CAPTCHA or anti-bot measure detected in response")
 
-import re
-url = "https://www.amazon.com/dp/B0F4LYY835?th=1&psc=1"
+
 # is_product_url = re.search("/dp/(.*?)", url)
 # print(is_product_url.group(1))
 # def is_url(string):
@@ -46,26 +45,32 @@ url = "https://www.amazon.com/dp/B0F4LYY835?th=1&psc=1"
 # print(is_url("htt://www.amazon.in/s?k=ps5"))  # True
 # print(is_url("not_a_url"))   
 # url = "www.amazon.com/dp/B006FEK6WM?"
-match = re.search(r"/dp/([A-Z0-9]{10})(?:[/?]|$)", url)
-print(match.group(1))
+# match = re.search(r"/dp/([A-Z0-9]{10})(?:[/?]|$)", url)
+# print(match.group(1))
 
 from get_product_info import amzn_product_info_scraper
-from get_search_results import get_search_results
 from amzn import ping_amazon2
 import asyncio
 import json
+import time
+import random
 from bs4 import BeautifulSoup
+import requests
 
-# test_url = "https://www.amazon.com/dp/B0CL5KNB9M"
-# test_url2 = "https://www.amazon.com/dp/B0BBYB1R1R"
-# test_url2 = "https://www.amazon.com/s?k=new+balance+830+fresh+foam&crid=36J3QOHL8N6X4&sprefix=new+balance+830+fresh+foa%2Caps%2C317&ref=nb_sb_noss"
-# html_content = asyncio.run(ping_amazon2(test_url))
+HEADERS = {
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+    "Accept-Language": "en-US,en;q=0.9",
+}
 
-# with open(f"debug_response.html", "w", encoding="utf-8") as f: 
-#     f.write(html_content.text)
+def get_response(url):
+    r = requests.get(url, headers=HEADERS, timeout=15)
+    r.raise_for_status()
+    return r
 
-
-# soup = BeautifulSoup(html_content, "html.parser")
+url = "https://www.amazon.com/amazon-fire-tv-stick-4K-select/dp/B0C6W3D4RM/ref=zg_bs_g_amazon-devices_d_sccl_2/142-3225097-9928409?psc=1"
+html_content = get_response(url)
+product_info = amzn_product_info_scraper(html_content, url)
+print(product_info)
 # product_info = amzn_product_info_scraper(html_content, test_url)
 # search_results = get_search_results(html_content)
 
@@ -99,20 +104,20 @@ from bs4 import BeautifulSoup
 # for result in results:
 #     print(result)
 
-import resend
-import os
-from dotenv import load_dotenv
+# import resend
+# import os
+# from dotenv import load_dotenv
 
-load_dotenv()
+# load_dotenv()
 
-resend.api_key = os.getenv("RESEND_EMAIL_API_KEY")
+# resend.api_key = os.getenv("RESEND_EMAIL_API_KEY")
 
-email =  resend.Emails.send({
-                    "from": "arnavmalhotra73@gmail.com",
-                    "to": "arnavmalhotra1037@gmail.com",
-                    "subject": "The product you wanted has just had a price drop - trial",
-                    "html": "<<p> <strong>Pyshceeee it works</strong> </p>"
-                })
+# email =  resend.Emails.send({
+#                     "from": "arnavmalhotra73@gmail.com",
+#                     "to": "arnavmalhotra1037@gmail.com",
+#                     "subject": "The product you wanted has just had a price drop - trial",
+#                     "html": "<<p> <strong>Pyshceeee it works</strong> </p>"
+#                 })
 
 
-print(email)
+# print(email)
