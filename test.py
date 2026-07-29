@@ -29,8 +29,9 @@ CURRENCY_MAPPING = {
 
 # print(CURRENCY_MAPPING.get("₹"))
 
-# with open("debug_response.html", 'r', encoding='utf-8') as file:
-    # html_content = file.read()
+
+
+
 
 # if "captcha" in html_content.lower() or "api-services-support@amazon.com" in html_content.lower():
 #     print("CAPTCHA or anti-bot measure detected in response")
@@ -48,7 +49,7 @@ CURRENCY_MAPPING = {
 # match = re.search(r"/dp/([A-Z0-9]{10})(?:[/?]|$)", url)
 # print(match.group(1))
 
-from get_product_info import amzn_product_info_scraper
+# from get_product_info import amzn_product_info_scraper
 from amzn import ping_amazon2
 import asyncio
 import json
@@ -57,20 +58,34 @@ import random
 from bs4 import BeautifulSoup
 import requests
 
+
+with open("debug_response.html", 'r', encoding='utf-8') as file:
+    html_content = file.read()
+
+soup = BeautifulSoup(html_content, "html.parser")
+
+elements = soup.find_all(class_ ='p13n-sc-price')
+
+print(len(elements))
+
+for el in elements:
+    print(el.text.strip())
+# print(elements)
+
 HEADERS = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
     "Accept-Language": "en-US,en;q=0.9",
 }
 
-def get_response(url):
-    r = requests.get(url, headers=HEADERS, timeout=15)
-    r.raise_for_status()
-    return r
+# def get_response(url):
+#     r = requests.get(url, headers=HEADERS, timeout=15)
+#     r.raise_for_status()
+#     return r
 
-url = "https://www.amazon.com/amazon-fire-tv-stick-4K-select/dp/B0C6W3D4RM/ref=zg_bs_g_amazon-devices_d_sccl_2/142-3225097-9928409?psc=1"
-html_content = get_response(url)
-product_info = amzn_product_info_scraper(html_content, url)
-print(product_info)
+# url = "https://www.amazon.com/amazon-fire-tv-stick-4K-select/dp/B0C6W3D4RM/ref=zg_bs_g_amazon-devices_d_sccl_2/142-3225097-9928409?psc=1"
+# html_content = get_response(url)
+# product_info = amzn_product_info_scraper(html_content, url)
+# print(product_info)
 # product_info = amzn_product_info_scraper(html_content, test_url)
 # search_results = get_search_results(html_content)
 

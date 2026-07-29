@@ -680,5 +680,56 @@ def get_alert_email_html(asin: str, new_price: float, target_price: float, curre
 </body>
 </html>
     """
+
+
+
+def log_product_view(asin: str):
+    conn = psycopg2.connect(**CONFIG)
+
+    try:
+        with conn.cursor() as cur:
+            cur.execute("""
+                INSERT INTO product_views (asin, view_count, last_viewed_at)
+                VALUES (%s, 1, NOW())
+                ON CONFLICT (asin) DO UPDATE
+                SET view_count = product_views.view_count + 1,
+                    last_viewed_at = NOW()
+                """, (asin,))
+
+            cur.execute("""
+                UPDATE amzn_product_info
+                SET priority = CASE
+                    WHEN (
+                        SELECT view_count FROM product_views WHERE asin = %s
+                    ) >= 10 THEN 'high'
+                    WHEN (
+                        SELECT view_count FROM product_views WHERE asin = %s
+                    ) >= 3 THEN 'normal'
+                    ELSE priority
+                END
+                WHERE asin = %s
+                """, (asin, asin, asin))
+
+            conn.commit()
+        
+    finally:
+        conn.close()
     
+
+def tracking_interval(last_checked_at, priority, has_alert: bool) -> int:
+    if last_checked_at is None:
+        return 0
+    
+    if has_alert:
+        return 1
+
+    elif priority == "high":
+        return 3
+
+    elif priority == "normal":
+        return 7
+
+    else:
+        return 20
+
 

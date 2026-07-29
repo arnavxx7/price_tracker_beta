@@ -4,6 +4,7 @@ from bs4 import BeautifulSoup
 import requests
 import json
 import re
+from playwright.sync_api import sync_playwright
 
 HEADERS = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
@@ -11,6 +12,25 @@ HEADERS = {
 }
 
 CURRENCY_MAPPING = {"$": "USD", "£": "GBP", "€": "EUR", "¥": "JPY"}
+
+def get_response_playwright(url, price_selector="span.p13n-sc-price, ._cDEzb_p13n-sc-price_3mJ9Z, .a-price .a-offscreen", timeout=10000):
+    """
+    Loads url in a headless browser, waits for at least one price element
+    to appear in the DOM, then returns the fully-hydrated HTML.
+    """
+    with sync_playwright() as p:
+        browser = p.chromium.launch(headless=True)
+        context = browser.new_context(
+            user_agent=(
+                "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+                "AppleWebKit/537.36 (KHTML, like Gecko) "
+                "Chrome/126.0.0.0 Safari/537.36"
+            ),
+            viewport={"width": 1280, "height": 1600},
+        )
+        page = context.new_page()
+        page.goto(url, wait_until="domcontentloaded", timeout=timeout)
+        print(page)
 
 
 def parse_money(text):
@@ -146,40 +166,44 @@ print(f"Found {len(categories)} categories")
 results = {}
 i = 0
 for name, url in categories.items():
-    cat_items = []
+    # cat_items = []
     for page in (1, 2):
         html_response = get_response(f"{url}?pg={page}")
+        get_response_playwright(f"{url}?pg={page}")
         soup = BeautifulSoup(html_response.content, "html.parser")
+        elements = soup.find_all(class_ ='p13n-sc-price')
+        print(f"Found {len(elements)} price elements on page {page} in category {name}")
         page_items = parse_items(soup)
-        cat_items.extend(page_items)
-        for item in page_items:
-            if not item["price"]:
-                with open('debug_response.html', 'w', encoding = 'utf-8') as f:
-                    f.write(html_response.text)
-                break
+        print(f"Found {len(page_items)} products on page {page} in category {name}")
+        print(f"Price list extracted for all products: {[item["price"] for item in page_items]}. Length of list = {len([item["price"] for item in page_items])}")
+        print("\n")
+        # cat_items.extend(page_items)
+        if name == "Amazon Renewed":
+            with open('debug_response.html', 'w', encoding = 'utf-8') as f:
+                f.write(html_response.text)
         time.sleep(random.uniform(0.1, 0.3))
-    results[name] = cat_items
-    print(f"{name}: {len(cat_items)} items")
+    # results[name] = cat_items
+    # print(f"{name}: {len(cat_items)} items")
     i += 1
     if i > 5:
         break
 
-null_counts = {}
-for category, items in results.items():
-    print(category)
-    for item in items:
-        for field, value in item.items():
-            if not value:
-                null_counts[field] = null_counts.get(field, 0) + 1
-    print(null_counts["price"])
-tp = 0
-for category, items in results.items():
-    tp = tp + len(items)
-    print(tp)
+# null_counts = {}
+# for category, items in results.items():
+#     print(category)
+#     for item in items:
+#         for field, value in item.items():
+#             if not value:
+#                 null_counts[field] = null_counts.get(field, 0) + 1
+#     print(null_counts["price"])
+# tp = 0
+# for category, items in results.items():
+#     tp = tp + len(items)
+#     print(tp)
 
     
-for key, value in null_counts.items():
-    print(f"{key} is none for {value}/{tp} products")
-print("\n\n Done")
+# for key, value in null_counts.items():
+#     print(f"{key} is none for {value}/{tp} products")
+# print("\n\n Done")
 
 

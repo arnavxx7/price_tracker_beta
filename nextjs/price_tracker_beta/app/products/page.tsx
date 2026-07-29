@@ -141,12 +141,31 @@ export default function ProductPage() {
   }, []);
 
   const [targetPrice, setTargetPrice] = useState<number>(0.00);
-
+  // set placeholder for target price field
   useEffect(() => {
     if (product?.price) {
         setTargetPrice(product.price - 10);
     }
     }, [product]); // runs whenever product changes
+
+  useEffect(() => {
+      // track product view
+      if (!product?.asin) return;
+      const asin = product.asin;
+
+      const trackview = async(asin: string) => {
+          const res = await fetch("/api/track/view", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ asin })
+          })
+          const data = await res.json();
+
+          console.log(`Status of tracking product view: ${data?.status}`)
+      };
+
+      trackview(asin);
+    }, [product]);
 
   // Normalise fields — handle both search result shape and product scraper shape
   const displayName = product?.name ?? product?.title ?? null;
