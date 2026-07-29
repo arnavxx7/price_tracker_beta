@@ -2,7 +2,7 @@ from amzn import ping_amazon2
 from get_product_info import amzn_product_info_scraper
 from get_search_results import get_search_results, parse_pagination_url
 from app_logging import logger
-from utils import save_to_database, extract_country_code, is_url, search_db
+from utils import save_to_database, extract_country_code, is_url, search_db, log_product_view
 from fastapi import FastAPI, HTTPException, status, Request, BackgroundTasks
 from fastapi.responses import Response, StreamingResponse, JSONResponse, HTMLResponse
 from fastapi.middleware.cors import CORSMiddleware
@@ -577,3 +577,16 @@ def get_price_data(asin: str):
         "status": "error",
         "details": "No price points received"
     }
+
+
+
+@app.post("/api/track/view")
+def track_view(payload: dict, background_tasks: BackgroundTasks):
+    asin = payload.get("asin")
+
+    if not asin:
+        return {"status": "error"}
+
+    background_tasks.add_task(log_product_view, asin)
+    return {"status": "ok"}
+

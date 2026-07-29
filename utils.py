@@ -716,20 +716,5 @@ def log_product_view(asin: str):
         conn.close()
     
 
-def tracking_interval(last_checked_at, priority, has_alert: bool) -> int:
-    if last_checked_at is None:
-        return 0
-    
-    if has_alert:
-        return 1
-
-    elif priority == "high":
-        return 3
-
-    elif priority == "normal":
-        return 7
-
-    else:
-        return 20
 
 

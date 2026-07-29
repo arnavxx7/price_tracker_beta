@@ -22,7 +22,21 @@ logger.info("Starting session")
 conn = psycopg2.connect(**CONFIG)
 logger.info(f"Connected to db - {CONFIG["database"]}")
 cur = conn.cursor()
-cur.execute("SELECT asin, url FROM amzn_product_info WHERE brand IS NULL LIMIT 100")
+cur.execute("""
+        SELECT p.asin, p.url
+        FROM amzn_product_info p
+        WHERE p.last_checked_at IS NULL
+        OR NOW() - p.last_checked_at >= (
+                CASE
+                    WHEN EXISTS (
+                        SELECT 1 FROM price_alerts pa WHERE pa.asin = p.asin
+                    ) THEN INTERVAL '1 day'
+                    WHEN p.priority = 'high'   THEN INTERVAL '3 days'
+                    WHEN p.priority = 'normal' THEN INTERVAL '7 days'
+                    ELSE INTERVAL '20 days'
+                END
+        )
+            """)
 rows = cur.fetchall()  # fetch all first, so cursor stays free for save_to_database
 num = len(rows)
 logger.info(f"Updating the fields of {num} records")
