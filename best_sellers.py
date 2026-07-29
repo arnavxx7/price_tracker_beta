@@ -203,7 +203,6 @@ for name, url in categories.items():
         html_response = get_response_playwright(f"{url}?pg={page}")
         soup = BeautifulSoup(html_response, "html.parser")
 
-
         page_items = parse_items(soup)
         # print(f"Found {len(page_items)} products on page {page} in category {name}")
         # print(f"Price list extracted for all products: {[item["price"] for item in page_items]}. Length of list = {len([item["price"] for item in page_items])}")
@@ -217,7 +216,7 @@ for name, url in categories.items():
     results[name] = cat_items
     print(f"{name}: {len(cat_items)} items")
     i += 1
-    if i > 5:
+    if i > 3:
         break
 
 null_counts = {}
@@ -237,5 +236,16 @@ print("\n\n Done")
 
 
 conn = psycopg2.connect(**CONFIG)
-
-cur = conn.cursor()
+with conn.cursor() as cur:
+    for category, products in results.items():
+        for prod in products:
+            cur.execute("""
+                INSERT INTO amzn_product_info
+                 (asin, name, img_url, url, currency, price, rating, priority)
+                VALUES (%s, %s, %s, %s, %s, %s, %s, 'medium')
+                ON CONFLICT (asin) DO NOTHING
+                    """, (
+                        prod["asin"], prod["title"], prod["img_url"], prod["product_url"], prod["currency"], prod["price"], prod["rating"],
+                    ))
+conn.commit()
+            
