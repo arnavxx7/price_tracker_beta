@@ -4,6 +4,9 @@ import { timeStamp } from "console";
 // import { unique } from "next/dist/build/utils";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useRef, useEffect, useState } from "react";
+import { Session } from "@supabase/supabase-js";
+import LoginModal from "../components/login_modal";
+import { supabase } from "../utils/supabase";
 
 interface Product {
   asin: string | null;
@@ -165,6 +168,45 @@ export default function search_result() {
   const productsScrapedRef = useRef<number>(0);
 
   const jobKey = `scrape_job_${query}`;
+
+  const [session, setSession] = useState<Session | null>(null);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+  const [isLoginModalOpen, setLoginModalOpen] = useState<boolean>(false);
+
+  useEffect(() => {
+    // get the current login status - check whether user is logged in or not
+      supabase.auth.getSession().then(({ data }) => setSession(data.session));
+    //  Keep watch for user login/logout
+      const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {
+        setSession(session);
+      });
+    // Stop watching once page is removed
+      return () => listener.subscription.unsubscribe();
+  }, []);
+
+  useEffect(() => {
+      // function checks if user clicked outside the dropdown - if yes then close the dropdown, else keep it open
+      function handleClickOutside(e: MouseEvent) {
+        if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+          setDropdownOpen(false);
+        }
+      }
+      document.addEventListener("mousedown", handleClickOutside);  // event listener listens for mouse click, if clicked then fires the function 
+      return () => document.removeEventListener("mousedown", handleClickOutside);  // when page is removed, remove the listener
+    }, []);
+
+
+  async function handleLogin() {
+    if (!session) {
+        setLoginModalOpen(true);
+    }    
+  }
+
+  async function handleLogout() {
+    await supabase.auth.signOut();
+    setDropdownOpen(false);
+  }
 
   useEffect(() => {
     if (!query) return;

@@ -1,7 +1,11 @@
 "use client"
 import Image from "next/image";
-import { cache, useState } from "react";
+import { cache, useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { supabase } from "./utils/supabase";
+import { Session } from "@supabase/supabase-js";
+import LoginModal from "./components/login_modal";
+
 
 export default function Home() {
   const [query, setQuery] = useState("");
@@ -9,6 +13,45 @@ export default function Home() {
   const cacheKey = `search_${query}`;
   const [urlError, setUrlError] = useState<string | null>(null);
   const [focused, setFocused] = useState(false);
+  const [session, setSession] = useState<Session | null>(null);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+  const [isLoginModalOpen, setLoginModalOpen] = useState<boolean>(false);
+
+  useEffect(() => {
+    // get the current login status - check whether user is logged in or not
+      supabase.auth.getSession().then(({ data }) => setSession(data.session));
+    //  Keep watch for user login/logout
+      const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {
+        setSession(session);
+      });
+    // Stop watching once page is removed
+      return () => listener.subscription.unsubscribe();
+  }, []);
+
+  useEffect(() => {
+    // function checks if user clicked outside the dropdown - if yes then close the dropdown else keep it open
+    function handleClickOutside(e: MouseEvent) {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+        setDropdownOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);  // event listener listens for mouse click, if clicked then fires the function 
+    return () => document.removeEventListener("mousedown", handleClickOutside);  // when page is removed, remove the listener
+  }, []);
+
+  async function handleLogin() {
+    if (!session) {
+        setLoginModalOpen(true);
+    }    
+  }
+
+  async function handleLogout() {
+    await supabase.auth.signOut();
+    setDropdownOpen(false);
+  }
+
+
 
   async function handleSearch() {
     if (!query.trim()) return;
@@ -82,7 +125,8 @@ export default function Home() {
 
   return (
         <main className="root">
-
+        
+       
       {/* Hero */}
       <section className="hero">
         <div className="eyebrow">Real prices. No manipulation.</div>
@@ -143,6 +187,11 @@ export default function Home() {
       </div>
       </section>
 
+      <LoginModal 
+        isOpen={isLoginModalOpen} 
+        onClose={() => setLoginModalOpen(false)} 
+        /> 
+
 
       <style>{`
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -190,17 +239,81 @@ export default function Home() {
           transition: color 0.15s;
         }
         .nav-links a:hover { color: #e8e8f0; }
-        .nav-cta {
-          background: rgba(124, 107, 255, 0.15);
-          color: #a99fff !important;
-          padding: 8px 16px;
-          border-radius: 8px;
-          border: 1px solid rgba(124, 107, 255, 0.3);
-          transition: background 0.15s !important;
-        }
+
         .nav-cta:hover {
           background: rgba(124, 107, 255, 0.25) !important;
           color: #c4bcff !important;
+        }
+
+        .nav-cta {
+          background: linear-gradient(135deg, #7c6bff, #9f6bff);
+          color: #fff !important;
+          border: none;
+          font-family: inherit;
+          cursor: pointer;
+          font-weight: 600;
+        }
+
+        .profile-wrap {
+          position: relative;
+        }
+
+        .profile-btn {
+          width: 36px;
+          height: 36px;
+          border-radius: 50%;
+          background: linear-gradient(135deg, #7c6bff, #b06bff);
+          color: #fff;
+          border: none;
+          font-weight: 700;
+          font-size: 14px;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .profile-dropdown {
+          position: absolute;
+          top: 46px;
+          right: 0;
+          background: #14141c;
+          border: 1px solid rgba(255,255,255,0.08);
+          border-radius: 12px;
+          padding: 6px;
+          min-width: 200px;
+          box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+          z-index: 20;
+        }
+
+        .dropdown-email {
+          font-size: 12px;
+          color: #6e6e88;
+          padding: 8px 10px;
+          border-bottom: 1px solid rgba(255,255,255,0.06);
+          margin-bottom: 4px;
+          word-break: break-all;
+        }
+
+        .dropdown-item {
+          width: 100%;
+          text-align: left;
+          background: transparent;
+          border: none;
+          color: #e8e8f0;
+          font-size: 13px;
+          padding: 9px 10px;
+          border-radius: 8px;
+          cursor: pointer;
+          font-family: inherit;
+        }
+
+        .dropdown-item:hover {
+          background: rgba(255,255,255,0.06);
+        }
+
+        .dropdown-item--danger {
+          color: #e05555;
         }
 
         /* Hero */

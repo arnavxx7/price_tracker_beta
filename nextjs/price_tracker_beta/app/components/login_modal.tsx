@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { supabase } from "../utils/supabase"
 
-export default function LoginModal({ isOpen, url, onClose }: {isOpen: boolean, url: string, onClose: () => void}) {
+export default function LoginModal({ isOpen, onClose }: {isOpen: boolean, onClose: () => void}) {
     const [email, setEmail] = useState("");
     const [received, setReceived] = useState<boolean>(false);
     const [submitting, setSubmitting] = useState<boolean>(false);
@@ -10,58 +10,58 @@ export default function LoginModal({ isOpen, url, onClose }: {isOpen: boolean, u
 
     if (!isOpen) return null;
 
-    const handleMagicLink = async() => {
-        if (!email || !email.includes("@")) {
-            setError("Please enter a valid email address");
-            console.info("Please enter a valid email address");
-            return;
+        const handleMagicLink = async() => {
+            if (!email || !email.includes("@")) {
+                setError("Please enter a valid email address");
+                console.info("Please enter a valid email address");
+                return;
+            }
+
+            setSubmitting(true);
+            
+            const { data, error } = await supabase.auth.signInWithOtp({
+                email: email,
+                options: {
+                // I want users to be signed up
+                shouldCreateUser: true,
+                emailRedirectTo: window.location.origin + window.location.pathname + window.location.search,
+                },
+            });
+
+            if (error) {
+                setError(error.message);
+                setSubmitting(false);
+            }
+            else {
+                console.log(`Magic link sent to email = ${email}`);
+                setSubmitting(false);
+                setReceived(true);
+            }
+
+
         }
 
-        setSubmitting(true);
-         
-        const { data, error } = await supabase.auth.signInWithOtp({
-            email: email,
-            options: {
-            // I want users to be signed up
-            shouldCreateUser: true,
-            emailRedirectTo: window.location.origin + window.location.pathname,
-            },
-        });
+        const handleGoogleOAuth = async() => {
 
-        if (error) {
-            setError(error.message);
-            setSubmitting(false);
+            setSubmitting(true);
+
+            const { data, error } = await supabase.auth.signInWithOAuth({
+                provider: 'google',
+                options: {
+                    redirectTo: window.location.origin + window.location.pathname + window.location.search,
+                }       
+                })
+            if (error) {
+                setSubmitting(false);
+                setError(error.message);
+            }
+
+            else {
+                console.log("Google OAuth Ran successfully!! = redirecting to google")
+                setSubmitting(false);
+                onClose();
+            }
         }
-        else {
-            console.log(`Magic link sent to email = ${email}`);
-            setSubmitting(false);
-            setReceived(true);
-        }
-
-
-    }
-
-    const handleGoogleOAuth = async() => {
-
-        setSubmitting(true);
-
-        const { data, error } = await supabase.auth.signInWithOAuth({
-            provider: 'google',
-            options: {
-                redirectTo: `http://localhost:3000/products?url=${url}`,
-            }       
-            })
-        if (error) {
-            setSubmitting(false);
-            setError(error.message);
-        }
-
-        else {
-            console.log("Google OAuth Ran successfully!! = redirecting to google")
-            setSubmitting(false);
-            onClose();
-        }
-    }
 
     return (
         <>

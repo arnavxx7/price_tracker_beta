@@ -780,7 +780,6 @@ export default function ProductPage() {
     
       <LoginModal 
         isOpen={isLoginModalOpen} 
-        url={prod_url}
         onClose={() => setLoginModalOpen(false)} 
         /> 
     </>
