@@ -5,6 +5,20 @@ import requests
 import json
 import re
 from playwright.sync_api import sync_playwright
+import psycopg2
+from dotenv import load_dotenv
+import os
+
+
+load_dotenv()
+
+CONFIG = {
+    "host": os.getenv("DB_HOSTNAME"),
+    "user": os.getenv("DB_USERNAME"),
+    "password": os.getenv("DB_PASSWORD"),
+    "database": os.getenv("DB_NAME"),
+    "port": 5432
+}
 
 HEADERS = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
@@ -13,7 +27,7 @@ HEADERS = {
 
 CURRENCY_MAPPING = {"$": "USD", "£": "GBP", "€": "EUR", "¥": "JPY"}
 
-def get_response_playwright(url, price_selector="span.p13n-sc-price, ._cDEzb_p13n-sc-price_3mJ9Z, .a-price .a-offscreen", timeout=10000):
+def get_response_playwright(url, timeout=10000):
     """
     Loads url in a headless browser, waits for at least one price element
     to appear in the DOM, then returns the fully-hydrated HTML.
@@ -28,9 +42,27 @@ def get_response_playwright(url, price_selector="span.p13n-sc-price, ._cDEzb_p13
             ),
             viewport={"width": 1280, "height": 1600},
         )
+        context.add_cookies([{
+            "name": "i18n-prefs",
+            "value": "USD",
+            "domain": ".amazon.com",
+            "path": "/"
+        }])
         page = context.new_page()
         page.goto(url, wait_until="domcontentloaded", timeout=timeout)
-        print(page)
+
+        prev = 0
+
+        while True:
+            page.mouse.wheel(0, 3000)
+            page.wait_for_timeout(500)
+            count = page.locator("div#gridItemRoot").count()
+            if count == prev:
+                break
+            prev = count
+
+        return page.content()
+
 
 
 def parse_money(text):
@@ -166,44 +198,54 @@ print(f"Found {len(categories)} categories")
 results = {}
 i = 0
 for name, url in categories.items():
-    # cat_items = []
+    cat_items = []
     for page in (1, 2):
-        html_response = get_response(f"{url}?pg={page}")
-        get_response_playwright(f"{url}?pg={page}")
-        soup = BeautifulSoup(html_response.content, "html.parser")
-        elements = soup.find_all(class_ ='p13n-sc-price')
-        print(f"Found {len(elements)} price elements on page {page} in category {name}")
+        html_response = get_response_playwright(f"{url}?pg={page}")
+        soup = BeautifulSoup(html_response, "html.parser")
+
         page_items = parse_items(soup)
-        print(f"Found {len(page_items)} products on page {page} in category {name}")
-        print(f"Price list extracted for all products: {[item["price"] for item in page_items]}. Length of list = {len([item["price"] for item in page_items])}")
-        print("\n")
-        # cat_items.extend(page_items)
-        if name == "Amazon Renewed":
-            with open('debug_response.html', 'w', encoding = 'utf-8') as f:
-                f.write(html_response.text)
+        # print(f"Found {len(page_items)} products on page {page} in category {name}")
+        # print(f"Price list extracted for all products: {[item["price"] for item in page_items]}. Length of list = {len([item["price"] for item in page_items])}")
+        # print("\n")
+        cat_items.extend(page_items)
+        # if name == "Amazon Renewed":
+        #     with open('debug_response.html', 'w', encoding = 'utf-8') as f:
+        #         f.write(html_response)
+
         time.sleep(random.uniform(0.1, 0.3))
-    # results[name] = cat_items
-    # print(f"{name}: {len(cat_items)} items")
+    results[name] = cat_items
+    print(f"{name}: {len(cat_items)} items")
     i += 1
-    if i > 5:
+    if i > 3:
         break
 
-# null_counts = {}
-# for category, items in results.items():
-#     print(category)
-#     for item in items:
-#         for field, value in item.items():
-#             if not value:
-#                 null_counts[field] = null_counts.get(field, 0) + 1
-#     print(null_counts["price"])
-# tp = 0
-# for category, items in results.items():
-#     tp = tp + len(items)
-#     print(tp)
+null_counts = {}
+for category, items in results.items():
+    for item in items:
+        for field, value in item.items():
+            if not value:
+                null_counts[field] = null_counts.get(field, 0) + 1
+tp = 0
+for category, items in results.items():
+    tp = tp + len(items)
 
     
-# for key, value in null_counts.items():
-#     print(f"{key} is none for {value}/{tp} products")
-# print("\n\n Done")
+for key, value in null_counts.items():
+    print(f"{key} is none for {value}/{tp} products")
+print("\n\n Done")
 
 
+conn = psycopg2.connect(**CONFIG)
+with conn.cursor() as cur:
+    for category, products in results.items():
+        for prod in products:
+            cur.execute("""
+                INSERT INTO amzn_product_info
+                 (asin, name, img_url, url, currency, price, rating, priority)
+                VALUES (%s, %s, %s, %s, %s, %s, %s, 'medium')
+                ON CONFLICT (asin) DO NOTHING
+                    """, (
+                        prod["asin"], prod["title"], prod["img_url"], prod["product_url"], prod["currency"], prod["price"], prod["rating"],
+                    ))
+conn.commit()
+            

@@ -31,9 +31,10 @@ cur.execute("""
                     WHEN EXISTS (
                         SELECT 1 FROM price_alerts pa WHERE pa.asin = p.asin
                     ) THEN INTERVAL '1 day'
-                    WHEN p.priority = 'high'   THEN INTERVAL '3 days'
-                    WHEN p.priority = 'normal' THEN INTERVAL '7 days'
-                    ELSE INTERVAL '20 days'
+                    WHEN p.priority = 'high'   THEN INTERVAL '5 days'
+                    WHEN p.priority = 'medium' THEN INTERVAL '10 days'
+                    WHEN p.priority = 'normal' THEN INTERVAL '15 days'
+                    ELSE INTERVAL '30 days'
                 END
         )
             """)
