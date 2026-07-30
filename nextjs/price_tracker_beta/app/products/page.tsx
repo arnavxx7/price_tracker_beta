@@ -5,6 +5,7 @@ import { useSearchParams, useRouter } from "next/navigation";
 // import { parse } from "path";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import LoginModal from "../components/login_modal";
+import NavBar from "../components/nav_bar";
 import PriceIntelligence from "../components/price_intelligence";
 import { RechartsDevtools } from '@recharts/devtools';
 import { supabase } from "../utils/supabase";
@@ -304,33 +305,7 @@ export default function ProductPage() {
         }
 
         /* ── Nav ── */
-        .nav {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          padding: 16px 24px;
-          background: #1a1a21;
-          border-bottom: 1px solid #2a2a35;
-        }
-        .back-btn {
-          background: transparent;
-          border: none;
-          color: #9090a8;
-          font-size: 14px;
-          cursor: pointer;
-          font-family: inherit;
-          transition: color 0.15s;
-        }
-        .back-btn:hover { color: #e8e8f0; }
-        .logo {
-          font-size: 18px;
-          font-weight: 500;
-          color: #fff;
-          display: flex;
-          align-items: center;
-          gap: 8px;
-        }
-        .logo-icon { color: #3b82f6; font-size: 20px; } /* Blue hex icon */
+
 
         /* ── Layout ── */
         .dashboard-container {
@@ -611,14 +586,7 @@ export default function ProductPage() {
       `}</style>
 
       {/* ── Top Navigation ── */}
-      <nav className="nav">
-        <span className="logo">
-          <span className="logo-icon">⬡</span>PriceLens
-        </span>
-        <button className="back-btn" onClick={() => router.back()}>
-          ← Back to results
-        </button>
-      </nav>
+       <NavBar />
 
       <div className="dashboard-container">
         {loading && <div style={{ textAlign: "center", width: "100%", padding: "50px", color: "#888" }}>Fetching product details...</div>}

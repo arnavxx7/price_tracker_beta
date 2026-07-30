@@ -5,7 +5,9 @@ import { useRouter } from "next/navigation";
 import { supabase } from "./utils/supabase";
 import { Session } from "@supabase/supabase-js";
 import LoginModal from "./components/login_modal";
-
+import NavBar from "./components/nav_bar";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 
 export default function Home() {
   const [query, setQuery] = useState("");
@@ -13,44 +15,6 @@ export default function Home() {
   const cacheKey = `search_${query}`;
   const [urlError, setUrlError] = useState<string | null>(null);
   const [focused, setFocused] = useState(false);
-  const [session, setSession] = useState<Session | null>(null);
-  const [dropdownOpen, setDropdownOpen] = useState(false);
-  const dropdownRef = useRef<HTMLDivElement>(null);
-  const [isLoginModalOpen, setLoginModalOpen] = useState<boolean>(false);
-
-  useEffect(() => {
-    // get the current login status - check whether user is logged in or not
-      supabase.auth.getSession().then(({ data }) => setSession(data.session));
-    //  Keep watch for user login/logout
-      const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {
-        setSession(session);
-      });
-    // Stop watching once page is removed
-      return () => listener.subscription.unsubscribe();
-  }, []);
-
-  useEffect(() => {
-    // function checks if user clicked outside the dropdown - if yes then close the dropdown else keep it open
-    function handleClickOutside(e: MouseEvent) {
-      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
-        setDropdownOpen(false);
-      }
-    }
-    document.addEventListener("mousedown", handleClickOutside);  // event listener listens for mouse click, if clicked then fires the function 
-    return () => document.removeEventListener("mousedown", handleClickOutside);  // when page is removed, remove the listener
-  }, []);
-
-  async function handleLogin() {
-    if (!session) {
-        setLoginModalOpen(true);
-    }    
-  }
-
-  async function handleLogout() {
-    await supabase.auth.signOut();
-    setDropdownOpen(false);
-  }
-
 
 
   async function handleSearch() {
@@ -120,58 +84,77 @@ export default function Home() {
     
     setUrlError(null);
     return true;
-
   }
 
   return (
-        <main className="root">
-        
+        <main className="min-h-screen bg-slate-950 text-slate-50 selection:bg-amber-500/30 flex flex-col relative overflow-hidden">
+          
+          {/* Subtle Enterprise Background Glow */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[500px] opacity-20 pointer-events-none bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-amber-500/40 via-slate-950 to-slate-950"></div>
+
+          <NavBar />
        
       {/* Hero */}
-      <section className="hero">
-        <div className="eyebrow">Real prices. No manipulation.</div>
+      <section className="flex-1 flex flex-col items-center justify-center text-center px-6 pt-24 pb-16 mx-auto w-full max-w-4xl relative z-10">
+        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-amber-500/20 bg-amber-500/10 text-amber-500 text-sm font-semibold tracking-wide uppercase mb-8 shadow-[0_0_15px_rgba(245,158,11,0.1)]">
+          <Anchor className="w-4 h-4" />
+          Real prices. No manipulation.
+        </div>
 
-        <h1 className="headline">
-          Track anything and 
-          <br />
-          <span className="headline-accent">everything!</span>
+        <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight text-white mb-6 leading-[1.1]">
+          Navigate your way to <br className="hidden md:block" />
+          <span className="bg-gradient-to-br from-amber-300 via-amber-500 to-amber-600 bg-clip-text text-transparent">
+            the true price.
+          </span>
         </h1>
 
-        <p className="subhead">
-          Paste any Amazon, Walmart, Target, Best Buy, or Costco link —
-          or search by name — to see the full price history and find out.
+
+
+        <p className="text-lg md:text-xl text-slate-400 max-w-2xl mb-12 font-medium">
+          Paste any Amazon, Walmart, or Target link — or search by name — 
+          to cut through the fog and see the complete price history.
         </p>
 
         {/* Search */}
-        <div className="search-container">
-          <div className={`search-wrap  ${focused ? "search-wrap--focused" : ""}  ${urlError ? "search-wrap--error" : ""}`}>
-            <div className="search-inner">
-              <svg className="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <circle cx="11" cy="11" r="8" />
-                <line x1="21" y1="21" x2="16.65" y2="16.65" />
-              </svg>
-              <input
-                className={`search-input`}
-                type="text"
-                placeholder="Search a product or paste a URL…"
-                value={query}
-                onChange={(e) => {setQuery(e.target.value); validateInput(e.target.value);}}
-                onKeyDown={handleKeyDown}
-                onFocus={() => setFocused(true)}    // ← add this
-                onBlur={() => setFocused(false)}    // ← add this
-                autoComplete="off"
-                spellCheck={false}
-              />
-              {query && (
-                <button
-                  className="clear-btn"
-                  onClick={() => { setQuery(""); setUrlError(null); } }
-                  aria-label="Clear search"
-                >
-                  ✕
-                </button>
-              )}
-          </div>
+        <div className="w-full max-w-2xl flex flex-col items-start relative">
+          <div className={`relative w-full flex items-center transition-all duration-300 rounded-2xl bg-slate-900/50 border backdrop-blur-sm ${urlError ? 'border-red-500/50 shadow-[0_0_0_3px_rgba(239,68,68,0.1)]' : 'border-slate-800 focus-within:border-amber-500/50 focus-within:shadow-[0_0_0_4px_rgba(245,158,11,0.1)] focus-within:bg-slate-900/80'}`}>
+
+            <Search className="absolute left-4 w-5 h-5 text-slate-500" />
+
+            <Input
+              className="h-16 w-full pl-12 pr-[140px] text-lg bg-transparent border-none focus-visible:ring-0 focus-visible:ring-offset-0 placeholder:text-slate-500 text-slate-50"
+              type="text"
+              placeholder="Search a product or paste a URL…"
+              value={query}
+              onChange={(e) => { setQuery(e.target.value); validateInput(e.target.value); }}
+              onKeyDown={handleKeyDown}
+              autoComplete="off"
+              spellCheck={false}
+            />
+
+            {query && (
+              <button
+                onClick={() => { setQuery(""); setUrlError(null); }}
+                className="absolute right-[145px] text-slate-500 hover:text-slate-300 transition-colors p-1"
+                aria-label="Clear search"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            )}
+
+            <div className="absolute right-2 top-1/2 -translate-y-1/2">
+              <Button 
+                onClick={handleSearch}
+                disabled={!query.trim() || !!urlError || isLoading}
+                className="h-12 px-6 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-bold text-base shadow-lg transition-all"
+              >
+                {isLoading ? "Searching..." : "Illuminate"}
+                {!isLoading && <ArrowRight className="w-4 h-4 ml-2 opacity-80" />}
+              </Button>
+            </div>
+
+            
+           
           <button
             className="search-btn"
             onClick={handleSearch}
@@ -181,16 +164,15 @@ export default function Home() {
           </button>
 
         </div>
-        {urlError && (
-            <p className="search-error">{urlError}</p>
+            {/* Validation Error */}
+          {urlError && (
+            <div className="flex items-center gap-2 mt-3 ml-4 text-red-400 text-sm font-medium">
+              <AlertCircle className="w-4 h-4" />
+              {urlError}
+            </div>
           )}
       </div>
       </section>
-
-      <LoginModal 
-        isOpen={isLoginModalOpen} 
-        onClose={() => setLoginModalOpen(false)} 
-        /> 
 
 
       <style>{`
@@ -198,123 +180,15 @@ export default function Home() {
 
         .root {
           min-height: 100vh;
-          background: #0a0a0f;
-          color: #e8e8f0;
-          font-family: 'Inter', system-ui, -apple-system, sans-serif;
+          /* Midnight Ocean Background */
+          background: radial-gradient(circle at top center, #111A31 0%, #0B1121 100%);
+          color: #F8FAFC;
+          font-family: 'Outfit', 'Inter', system-ui, sans-serif;
           display: flex;
           flex-direction: column;
         }
-
         /* Nav */
-        .nav {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          padding: 20px 40px;
-          border-bottom: 1px solid rgba(255,255,255,0.06);
-        }
-        .logo {
-          display: flex;
-          align-items: center;
-          gap: 8px;
-          font-size: 17px;
-          font-weight: 700;
-          letter-spacing: -0.3px;
-          color: #fff;
-        }
-        .logo-icon {
-          font-size: 20px;
-          color: #7c6bff;
-        }
-        .nav-links {
-          display: flex;
-          align-items: center;
-          gap: 28px;
-        }
-        .nav-links a {
-          color: #9090a8;
-          text-decoration: none;
-          font-size: 14px;
-          font-weight: 500;
-          transition: color 0.15s;
-        }
-        .nav-links a:hover { color: #e8e8f0; }
 
-        .nav-cta:hover {
-          background: rgba(124, 107, 255, 0.25) !important;
-          color: #c4bcff !important;
-        }
-
-        .nav-cta {
-          background: linear-gradient(135deg, #7c6bff, #9f6bff);
-          color: #fff !important;
-          border: none;
-          font-family: inherit;
-          cursor: pointer;
-          font-weight: 600;
-        }
-
-        .profile-wrap {
-          position: relative;
-        }
-
-        .profile-btn {
-          width: 36px;
-          height: 36px;
-          border-radius: 50%;
-          background: linear-gradient(135deg, #7c6bff, #b06bff);
-          color: #fff;
-          border: none;
-          font-weight: 700;
-          font-size: 14px;
-          cursor: pointer;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-        }
-
-        .profile-dropdown {
-          position: absolute;
-          top: 46px;
-          right: 0;
-          background: #14141c;
-          border: 1px solid rgba(255,255,255,0.08);
-          border-radius: 12px;
-          padding: 6px;
-          min-width: 200px;
-          box-shadow: 0 10px 30px rgba(0,0,0,0.4);
-          z-index: 20;
-        }
-
-        .dropdown-email {
-          font-size: 12px;
-          color: #6e6e88;
-          padding: 8px 10px;
-          border-bottom: 1px solid rgba(255,255,255,0.06);
-          margin-bottom: 4px;
-          word-break: break-all;
-        }
-
-        .dropdown-item {
-          width: 100%;
-          text-align: left;
-          background: transparent;
-          border: none;
-          color: #e8e8f0;
-          font-size: 13px;
-          padding: 9px 10px;
-          border-radius: 8px;
-          cursor: pointer;
-          font-family: inherit;
-        }
-
-        .dropdown-item:hover {
-          background: rgba(255,255,255,0.06);
-        }
-
-        .dropdown-item--danger {
-          color: #e05555;
-        }
 
         /* Hero */
         .hero {
@@ -333,210 +207,186 @@ export default function Home() {
         .eyebrow {
           display: inline-flex;
           align-items: center;
-          gap: 6px;
-          background: rgba(124, 107, 255, 0.1);
-          border: 1px solid rgba(124, 107, 255, 0.25);
-          color: #a99fff;
-          font-size: 12px;
+          gap: 8px;
+          background: rgba(255, 184, 0, 0.1);
+          border: 1px solid rgba(255, 184, 0, 0.2);
+          color: #FFB800;
+          font-size: 13px;
           font-weight: 600;
-          letter-spacing: 0.08em;
+          letter-spacing: 0.1em;
           text-transform: uppercase;
-          padding: 6px 14px;
+          padding: 6px 16px;
           border-radius: 100px;
           margin-bottom: 32px;
+          box-shadow: 0 0 20px rgba(255, 184, 0, 0.05);
+        }
+        
+        .eyebrow-icon {
+          font-size: 14px;
         }
 
         .headline {
-          font-size: clamp(44px, 8vw, 80px);
+          font-size: clamp(40px, 7vw, 76px);
           font-weight: 800;
-          line-height: 1.05;
-          letter-spacing: -2.5px;
-          color: #ffffff;
-          margin-bottom: 20px;
+          line-height: 1.1;
+          letter-spacing: -2px;
+          color: #FFFFFF;
+          margin-bottom: 24px;
         }
+
+        /* The Lighthouse Beam Gradient */
         .headline-accent {
           color: transparent;
-          background: linear-gradient(135deg, #7c6bff 0%, #b06bff 50%, #ff6bbb 100%);
+          background: linear-gradient(135deg, #FFD166 0%, #FFB800 50%, #FF8A00 100%);
           -webkit-background-clip: text;
           background-clip: text;
         }
 
         .subhead {
-          font-size: 16px;
-          line-height: 1.65;
-          color: #6e6e88;
-          max-width: 520px;
-          margin-bottom: 44px;
+          font-size: 17px;
+          line-height: 1.6;
+          color: #94A3B8;
+          max-width: 540px;
+          margin-bottom: 48px;
+          font-weight: 400;
         }
 
         /* Search */
+        
+        
         .search-container {
           width: 100%;
           max-width: 660px;
           display: flex;
-          flex-direction: column;  /* stacks search-wrap and error vertically */
+          flex-direction: column;
         }
 
         .search-wrap {
-              width: 100%;           /* ← add this */
-              display: flex;
-              gap: 10px;
-              background: rgba(255,255,255,0.04);
-              border: 1.5px solid rgba(255,255,255,0.1);
-              border-radius: 16px;
-              padding: 6px 6px 6px 8px;
-        }  
+          width: 100%;
+          display: flex;
+          gap: 10px;
+          background: rgba(255, 255, 255, 0.03);
+          border: 1.5px solid rgba(255, 255, 255, 0.08);
+          border-radius: 16px;
+          padding: 8px 8px 8px 12px;
+          transition: all 0.3s ease;
+        }
+
         .search-wrap--focused {
-          border-color: rgba(124, 107, 255, 0.6);
-          box-shadow: 0 0 0 3px rgba(124, 107, 255, 0.12);
+          border-color: rgba(255, 184, 0, 0.5);
+          background: rgba(255, 255, 255, 0.05);
+          box-shadow: 0 0 0 4px rgba(255, 184, 0, 0.1), 0 10px 40px -10px rgba(255, 184, 0, 0.15);
         }
 
         .search-inner {
           flex: 1;
           display: flex;
           align-items: center;
-          gap: 10px;
+          gap: 12px;
           padding: 0 8px;
           min-width: 0;
         }
+
         .search-icon {
-          width: 18px;
-          height: 18px;
-          color: #4e4e66;
+          width: 20px;
+          height: 20px;
+          color: #64748B;
           flex-shrink: 0;
+          transition: color 0.3s ease;
         }
+
+        .search-wrap--focused .search-icon {
+          color: #FFB800;
+        }
+         
         .search-input {
           flex: 1;
           background: transparent;
           border: none;
           outline: none;
-          font-size: 15px;
-          color: #e8e8f0;
+          font-size: 16px;
+          color: #F8FAFC;
           min-width: 0;
           font-family: inherit;
         }
-        .search-input::placeholder { color: #3e3e56; }
+        
+        .search-input::placeholder { 
+          color: #64748B; 
+        }
 
         .search-error {
-          font-size: 12px;
-          color: #e05555;
-          margin: 6px 0 0 4px;
+          font-size: 13px;
+          color: #EF4444;
+          margin: 10px 0 0 16px;
+          text-align: left;
+          font-weight: 500;
         }
 
         .search-wrap--error {
-          border-color: rgba(224, 85, 85, 0.5);
-          box-shadow: 0 0 0 3px rgba(224, 85, 85, 0.08);
+          border-color: rgba(239, 68, 68, 0.5);
+          box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.1);
         }
 
         .clear-btn {
-          background: transparent;
+          background: rgba(255,255,255,0.05);
           border: none;
-          color: #4e4e66;
+          color: #94A3B8;
           cursor: pointer;
           font-size: 12px;
-          padding: 2px 4px;
-          border-radius: 4px;
-          transition: color 0.15s;
+          width: 24px;
+          height: 24px;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: all 0.2s;
           flex-shrink: 0;
         }
-        .clear-btn:hover { color: #9090a8; }
+        
+        .clear-btn:hover { 
+          background: rgba(255,255,255,0.1);
+          color: #F8FAFC; 
+        }
+
 
         .search-btn {
-          background: linear-gradient(135deg, #7c6bff, #9f6bff);
-          color: #fff;
+          background: linear-gradient(135deg, #FFB800 0%, #FF8A00 100%);
+          color: #0F172A;
           border: none;
-          border-radius: 11px;
-          padding: 12px 24px;
-          font-size: 14px;
-          font-weight: 600;
+          border-radius: 12px;
+          padding: 14px 28px;
+          font-size: 15px;
+          font-weight: 700;
           cursor: pointer;
           white-space: nowrap;
           flex-shrink: 0;
-          transition: opacity 0.15s, transform 0.1s;
+          transition: all 0.2s ease;
           font-family: inherit;
-          letter-spacing: -0.1px;
+          box-shadow: 0 4px 15px rgba(255, 138, 0, 0.2);
         }
+        
         .search-btn:hover:not(:disabled) {
-          opacity: 0.9;
-          transform: translateY(-1px);
+          transform: translateY(-2px);
+          box-shadow: 0 6px 20px rgba(255, 138, 0, 0.3);
         }
-        .search-btn:active:not(:disabled) { transform: translateY(0); }
+        
+        .search-btn:active:not(:disabled) { 
+          transform: translateY(0); 
+        }
+        
         .search-btn:disabled {
-          opacity: 0.35;
+          background: #1E293B;
+          color: #475569;
+          box-shadow: none;
           cursor: not-allowed;
         }
 
-        /* Quick links */
-        .quick-links {
-          display: flex;
-          align-items: center;
-          gap: 8px;
-          flex-wrap: wrap;
-          justify-content: center;
-        }
-        .quick-label {
-          font-size: 12px;
-          color: #3e3e56;
-          font-weight: 500;
-        }
-        .quick-chip {
-          background: transparent;
-          border: 1px solid rgba(255,255,255,0.08);
-          color: #5e5e7a;
-          font-size: 12px;
-          font-weight: 500;
-          padding: 5px 12px;
-          border-radius: 100px;
-          cursor: pointer;
-          transition: border-color 0.15s, color 0.15s;
-          font-family: inherit;
-        }
-        .quick-chip:hover {
-          border-color: rgba(124, 107, 255, 0.4);
-          color: #a99fff;
-        }
-
-        /* Stats bar */
-        .stats-bar {
-          display: flex;
-          justify-content: center;
-          gap: 0;
-          border-top: 1px solid rgba(255,255,255,0.06);
-          padding: 28px 24px;
-        }
-        .stat {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          gap: 3px;
-          padding: 0 48px;
-          border-right: 1px solid rgba(255,255,255,0.06);
-        }
-        .stat:last-child { border-right: none; }
-        .stat-value {
-          font-size: 22px;
-          font-weight: 800;
-          letter-spacing: -0.5px;
-          color: #fff;
-        }
-        .stat-label {
-          font-size: 11px;
-          color: #3e3e56;
-          font-weight: 500;
-          text-transform: uppercase;
-          letter-spacing: 0.06em;
-        }
-
-        /* Responsive */
+        /* ── Responsive ── */
         @media (max-width: 600px) {
-          .nav { padding: 16px 20px; }
-          .nav-links { gap: 16px; }
           .hero { padding: 60px 20px 36px; }
-          .search-wrap { flex-direction: column; gap: 8px; padding: 8px; }
+          .search-wrap { flex-direction: column; gap: 8px; padding: 10px; }
           .search-inner { padding: 8px 4px; }
-          .search-btn { width: 100%; justify-content: center; padding: 14px; }
-          .stat { padding: 0 24px; }
-          .stat-value { font-size: 18px; }
+          .search-btn { width: 100%; justify-content: center; padding: 16px; }
         }
       `}</style>
     </main>

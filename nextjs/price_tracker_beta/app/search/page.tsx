@@ -7,6 +7,7 @@ import { useRef, useEffect, useState } from "react";
 import { Session } from "@supabase/supabase-js";
 import LoginModal from "../components/login_modal";
 import { supabase } from "../utils/supabase";
+import NavBar from "../components/nav_bar";
 
 interface Product {
   asin: string | null;
@@ -834,6 +835,8 @@ export default function search_result() {
         }
 
       `}</style>
+
+      <NavBar />
 
       <div className="page">
         <div className="page-header">
