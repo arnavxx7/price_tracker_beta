@@ -11,6 +11,15 @@ import { RechartsDevtools } from '@recharts/devtools';
 import { supabase } from "../utils/supabase";
 import { useEffect, useMemo, useState } from "react";
 
+
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
+import { Star, Bell, ExternalLink, LineChart as LineChartIcon } from "lucide-react";
+
+
 interface Product {
   // From product page scraper
   name?: string | null;
@@ -584,20 +593,32 @@ export default function ProductPage() {
         .btn-buy:hover { background: #2563eb; }
 
       `}</style>
-
+      <div className="min-h-screen bg-slate-950 text-slate-50 selection:bg-amber-500/30">
       {/* ── Top Navigation ── */}
        <NavBar />
 
-      <div className="dashboard-container">
-        {loading && <div style={{ textAlign: "center", width: "100%", padding: "50px", color: "#888" }}>Fetching product details...</div>}
-        {error && <div style={{ textAlign: "center", width: "100%", padding: "50px", color: "#ef4444" }}>{error}</div>}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {loading && (
+            <div className="flex flex-col items-center justify-center py-20 text-slate-400">
+              <div className="w-8 h-8 border-4 border-amber-500/20 border-t-amber-500 rounded-full animate-spin mb-4" />
+              Fetching product details...
+            </div>
+          )}
+
+          {error && (
+            <div className="p-6 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-center max-w-lg mx-auto mt-10">
+              {error}
+            </div>
+          )}
+
 
         {!loading && !error && product && (
-          <>
+          <div className="grid grid-cols-1 xl:grid-cols-12 gap-8">
             {/* ── LEFT COLUMN ── */}
-            <div className="col-left">
+            <div className="xl:col-span-8 space-y-6">
               
               {/* Product Hero Card */}
+              <Card className="bg-slate-900/50 border-slate-800 backdrop-blur-sm overflow-hidden"></Card>
               <div className="card product-hero">
                 <div className="product-img-box">
                   {product.img_url ? (
@@ -742,7 +763,7 @@ export default function ProductPage() {
               )}
 
             </div>
-          </>
+          </div>
         )}
       </div>  
     
@@ -750,6 +771,7 @@ export default function ProductPage() {
         isOpen={isLoginModalOpen} 
         onClose={() => setLoginModalOpen(false)} 
         /> 
+      </div>
     </>
   );
 }

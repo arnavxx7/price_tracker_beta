@@ -4,7 +4,12 @@ import { useRouter, usePathname } from "next/navigation";
 import { supabase } from "../utils/supabase";
 import type { Session } from "@supabase/supabase-js";
 import LoginModal from "./login_modal";
-
+import { Button } from "@/components/ui/button";
+import {  DropdownMenu,
+          DropdownMenuTrigger,
+          DropdownMenuContent,
+          DropdownMenuItem,
+ } from "@/components/ui/dropdown-menu";
 
 export default function NavBar() {
   const [session, setSession] = useState<Session | null>(null);
@@ -50,54 +55,70 @@ export default function NavBar() {
   const isSearchPage = pathname?.startsWith("/search");
 
     return (
-        <nav className="nav">
-            <div className="nav-left">
+        <nav className="grid grid-cols-3 items-center px-6 py-5 border-b border-white/5 w-full bg-slate-950/80 backdrop-blur-md z-50">
+            {/* --- Left section ---- */}
+            <div className="justify-self-start flex items-center">
                 {isSearchPage ? (
-                  <button className="nav-back-btn" onClick={() => router.push("/")}>
+                  <button className="flex items-center gap-2 text-slate-400 hover:text-slate-50 transition-colors text-sm font-medium"
+                   onClick={() => router.push("/")}>
                       ⬅️ Back to Home
                   </button>
                 ) : isProductPage ? (
-                    <button className="nav-back-btn" onClick={() => router.back()}>
+                    <button className="flex items-center gap-2 text-slate-400 hover:text-slate-50 transition-colors text-sm font-medium" 
+                    onClick={() => router.back()}>
                       ⬅️ Back
                     </button>
                 ) : (
-                  <div className="logo">
-                    <span className="logo-icon">🚨</span>
+                  <div className="flex items-center gap-2 text-lg font-bold tracking-tight text-white">
+                    <span className="text-amber-500 text-xl">⚓</span>
                     FaroBuy
                   </div>
                 )} 
             </div>
-
-            <div className="nav-middle">
-                {isProductPage && <span className="nav-title">Product Lens</span>}
+             {/* --- Middle section ---- */}
+            <div className="justify-self-center">
+                {isProductPage && <span className="text-base font-semibold text-white tracking-wide">Product Lens</span>}
             </div>
-            
-            <div className="nav-right">
+             {/* --- Right Section ---- */}
+            <div className="justify-self-end">
               { session ? (
-                  <div className="profile-wrap" ref={dropdownRef}>
-                    <button
-                      className="profile-btn"
-                      onClick={() => setDropdownOpen((o) => !o)}
-                      aria-label="Account menu"
-                    >
-                      {session.user.email?.[0]?.toUpperCase() ?? "?"}
-                    </button>
-                    {dropdownOpen && (
-                      <div className="profile-dropdown">
-                        <div className="dropdown-email">{session.user.email}</div>
-                        <button className="dropdown-item" onClick={() => router.push("/tracked")}>
-                          Price Alerts
-                        </button>
-                        <button className="dropdown-item dropdown-item--danger" onClick={handleLogout}>
-                          Log out
-                        </button>
+
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <button
+                        className="w-10 h-10 rounded-full bg-gradient-to-br from-amber-500 to-amber-600 text-slate-950 border-none font-bold text-sm cursor-pointer flex items-center justify-center hover:shadow-[0_0_15px_rgba(245,158,11,0.3)] transition-all"
+                        aria-label="Account menu"
+                      >
+                        {session.user.email?.[0]?.toUpperCase() ?? "?"}
+                      </button>
+                    </DropdownMenuTrigger>
+                    {/* Shadcn Dropdown Content styled for Midnight theme */}
+                    <DropdownMenuContent align="end" className="w-56 bg-slate-900 border-slate-800 text-slate-50 mt-2">
+                      <div className="px-2 py-2 text-xs text-slate-400 truncate border-b border-slate-800/80 mb-1">
+                        {session.user.email}
                       </div>
-                    )}
-                  </div>
+                      <DropdownMenuItem 
+                        className="cursor-pointer font-medium focus:bg-slate-800 focus:text-slate-50 py-2"
+                        onClick={() => router.push("/tracked")}
+                      >
+                        Price Alerts
+                      </DropdownMenuItem>
+                      <DropdownMenuItem 
+                        className="cursor-pointer font-medium text-red-400 focus:bg-red-500/10 focus:text-red-400 py-2"
+                        onClick={handleLogout}
+                      >
+                        Log out
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>    
+                
                 ) : (
-                  <button className="nav-cta" onClick={handleLogin}>
+                  <Button 
+                    onClick={handleLogin}
+                    className="bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 font-bold hover:from-amber-400 hover:to-amber-500 shadow-md shadow-amber-500/10"
+                  >
                     Log in
-                  </button>
+                  </Button> 
                 )
               }
             </div>
@@ -107,155 +128,6 @@ export default function NavBar() {
               isOpen = {isLoginModalOpen}
               onClose={() => setLoginModalOpen(false)}
                 />
-
-            <style>{`
-                /* ── Core Nav Layout (Added to fix visibility) ── */
-              .nav {
-                display: grid;
-                grid-template-columns: 1fr auto 1fr; /* Ensures perfect center alignment for the middle section */
-                align-items: center;
-                padding: 20px 40px;
-                border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-                width: 100%;
-                box-sizing: border-box;
-                background: #0a0a0f; /* Match your app background */
-                z-index: 100;
-              }
-
-              .nav-left {
-                justify-self: start;
-                display: flex;
-                align-items: center;
-              }
-
-              .nav-middle {
-                justify-self: center;
-              }
-
-              .nav-right {
-                justify-self: end;
-              }
-
-              /* ── Dynamic Elements ── */
-              .logo {
-                display: flex;
-                align-items: center;
-                gap: 8px;
-                font-size: 17px;
-                font-weight: 700;
-                letter-spacing: -0.3px;
-                color: #fff;
-              }
-              
-              .logo-icon {
-                font-size: 20px;
-                color: #7c6bff;
-              }
-
-              .nav-back-btn {
-                background: transparent;
-                border: none;
-                color: #9090a8;
-                font-size: 14px;
-                font-weight: 500;
-                cursor: pointer;
-                display: flex;
-                align-items: center;
-                gap: 6px;
-                transition: color 0.15s;
-                padding: 0;
-              }
-              
-              .nav-back-btn:hover {
-                color: #e8e8f0;
-              }
-
-              .nav-title {
-                font-size: 16px;
-                font-weight: 600;
-                color: #fff;
-                letter-spacing: 0.5px;
-              }
-
-              /* ── Original Buttons & Dropdowns ── */
-              .nav-cta {
-                background: linear-gradient(135deg, #7c6bff, #9f6bff);
-                color: #fff !important;
-                border: none;
-                font-family: inherit;
-                cursor: pointer;
-                font-weight: 600;
-                padding: 8px 16px;
-                border-radius: 8px;
-              }
-
-              .profile-wrap {
-                position: relative;
-              }
-
-              .profile-btn {
-                width: 36px;
-                height: 36px;
-                border-radius: 50%;
-                background: linear-gradient(135deg, #7c6bff, #b06bff);
-                color: #fff;
-                border: none;
-                font-weight: 700;
-                font-size: 14px;
-                cursor: pointer;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-              }
-
-              .profile-dropdown {
-                position: absolute;
-                top: 46px;
-                right: 0;
-                background: #14141c;
-                border: 1px solid rgba(255, 255, 255, 0.08);
-                border-radius: 12px;
-                padding: 6px;
-                min-width: 200px;
-                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
-                z-index: 20;
-              }
-
-              .dropdown-email {
-                font-size: 12px;
-                color: #6e6e88;
-                padding: 8px 10px;
-                border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-                margin-bottom: 4px;
-                word-break: break-all;
-              }
-
-              .dropdown-item {
-                width: 100%;
-                text-align: left;
-                background: transparent;
-                border: none;
-                color: #e8e8f0;
-                font-size: 13px;
-                padding: 9px 10px;
-                border-radius: 8px;
-                cursor: pointer;
-                font-family: inherit;
-              }
-
-              .dropdown-item:hover {
-                background: rgba(255, 255, 255, 0.06);
-              }
-
-              .dropdown-item--danger {
-                color: #e05555;
-              }
-
-              /* ── Mobile Responsiveness ── */
-              @media (max-width: 600px) {
-                .nav { padding: 16px 20px; }
-              }
-            `}</style>
 
         </nav>
 
