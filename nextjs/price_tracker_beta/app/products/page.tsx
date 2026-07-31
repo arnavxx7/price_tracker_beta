@@ -304,295 +304,7 @@ export default function ProductPage() {
   
   return (
     <>
-      <style>{`
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-        body {
-          background: #111116;
-          color: #e8e8f0;
-          font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-        }
-
-        /* ── Nav ── */
-
-
-        /* ── Layout ── */
-        .dashboard-container {
-          max-width: 1100px;
-          margin: 0 auto;
-          padding: 24px 16px 60px;
-          display: grid;
-          grid-template-columns: 1.4fr 1fr;
-          gap: 20px;
-          align-items: start;
-        }
-        @media (max-width: 860px) {
-          .dashboard-container { grid-template-columns: 1fr; }
-        }
-
-        /* ── Shared Card Styles ── */
-        .card {
-          background: #1c1c22;
-          border: 1px solid #2a2a35;
-          border-radius: 12px;
-          padding: 24px;
-          display: flex;
-          flex-direction: column;
-        }
-        .card-header {
-          font-size: 0.75rem;
-          font-weight: 600;
-          text-transform: uppercase;
-          letter-spacing: 0.08em;
-          color: #9090a8;
-          margin-bottom: 16px;
-        }
-        
-        .col-left { display: flex; flex-direction: column; gap: 20px; }
-        .col-right { display: flex; flex-direction: column; gap: 20px; }
-
-        /* ── Product Hero Card ── */
-        .product-hero {
-          display: flex;
-          gap: 24px;
-        }
-        .product-img-box {
-          width: 140px;
-          height: 140px;
-          background: #111116;
-          border-radius: 8px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          flex-shrink: 0;
-          border: 1px solid #2a2a35;
-          padding: 12px;
-        }
-        .product-img-box img {
-          max-width: 100%;
-          max-height: 100%;
-          object-fit: contain;
-        }
-        .product-info {
-          display: flex;
-          flex-direction: column;
-          gap: 8px;
-        }
-        .badges-row { display: flex; gap: 8px; align-items: center; margin-bottom: 4px; }
-        .badge {
-          font-size: 0.7rem;
-          padding: 2px 8px;
-          border-radius: 4px;
-          font-weight: 500;
-        }
-        .badge-domain { background: #115e59; color: #4ade80; } /* Dark green bg, light green text */
-        .badge-prime { color: #f59e0b; font-weight: 600; font-size: 0.8rem; }
-        
-        .product-title {
-          font-size: 1.25rem;
-          font-weight: 600;
-          line-height: 1.3;
-          color: #fff;
-          margin-bottom: 4px;
-        }
-        
-        .price-row {
-          display: flex;
-          align-items: baseline;
-          gap: 12px;
-          margin: 4px 0;
-        }
-        .current-price { font-size: 2.2rem; font-weight: 700; color: #fff; }
-        .original-price { font-size: 1.1rem; color: #6b7280; text-decoration: line-through; }
-        
-        .discount-pill {
-          background: #064e3b;
-          color: #22c55e;
-          font-size: 0.75rem;
-          font-weight: 600;
-          padding: 4px 10px;
-          border-radius: 6px;
-          width: fit-content;
-          margin-bottom: 8px;
-        }
-
-        .meta-row {
-          display: flex;
-          align-items: center;
-          gap: 8px;
-          font-size: 0.85rem;
-          color: #9ca3af;
-        }
-        .rating-flex { display: flex; align-items: center; gap: 6px; }
-        .stars { color: #fbbf24; font-size: 1rem; }
-
-        /* ── Stats Grid ── */
-        .stats-grid {
-          display: grid;
-          grid-template-columns: repeat(3, 1fr);
-          gap: 20px;
-        }
-        .stat-card {
-          background: #1c1c22;
-          border: 1px solid #2a2a35;
-          border-radius: 12px;
-          padding: 20px;
-          text-align: center;
-          display: flex;
-          flex-direction: column;
-          gap: 8px;
-        }
-        .stat-label { font-size: 0.75rem; color: #9090a8; text-transform: uppercase; font-weight: 600; }
-        .stat-val { font-size: 1.75rem; font-weight: 600; }
-        .val-low { color: #22c55e; }
-        .val-avg { color: #fff; }
-        .val-high { color: #ef4444; }
-
-        /* ── Price History Chart ── */
-        .chart-header {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          margin-bottom: 20px;
-        }
-        .chart-title { font-size: 1rem; font-weight: 600; color: #fff; }
-        .chart-filters {
-          display: flex;
-          background: #111116;
-          border-radius: 6px;
-          border: 1px solid #2a2a35;
-          overflow: hidden;
-        }
-        .filter-btn {
-          background: transparent;
-          border: none;
-          color: #9090a8;
-          padding: 6px 14px;
-          font-size: 0.8rem;
-          cursor: pointer;
-          border-right: 1px solid #2a2a35;
-        }
-        .filter-btn:last-child { border-right: none; }
-        .filter-btn.active { background: #1e3a8a; color: #fff; } /* Dark blue */
-        
-        .chart-area {
-          height: 250px;
-          background: #111116;
-          border-radius: 8px;
-          border: 1px dashed #2a2a35;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-        }
-
-        /* ── Product Details Grid ── */
-        .details-grid {
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 0;
-          border: 1px solid #2a2a35;
-          border-radius: 8px;
-          overflow: hidden;
-        }
-        .detail-item {
-          padding: 16px;
-          background: #111116;
-          display: flex;
-          flex-direction: column;
-          gap: 6px;
-          border-right: 1px solid #2a2a35;
-          border-bottom: 1px solid #2a2a35;
-        }
-        .detail-item:nth-child(even) { border-right: none; }
-        .detail-item:nth-last-child(-n+2) { border-bottom: none; }
-        .d-label { font-size: 0.7rem; color: #9090a8; text-transform: uppercase; }
-        .d-value { font-size: 1rem; color: #fff; font-weight: 500; }
-
-        /* ── Deal Score ── */
-        .gauge-container {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
-          margin: 10px 0;
-        }
-        .gauge-svg { width: 200px; height: 100px; }
-        .score-val { font-size: 2rem; font-weight: 700; color: #fff; margin-top: -40px; text-align: center; }
-        .score-sub { font-size: 0.8rem; color: #9090a8; }
-        .score-text { font-size: 1.1rem; color: #22c55e; font-weight: 500; margin-top: 8px; }
-        .score-desc { font-size: 0.85rem; color: #9090a8; margin-top: 4px; }
-
-        /* ── Best Time To Buy ── */
-        .time-filters { display: flex; gap: 8px; margin-bottom: 16px; }
-        .time-pill {
-          background: #111116;
-          border: 1px solid #2a2a35;
-          color: #9090a8;
-          padding: 6px 14px;
-          border-radius: 6px;
-          font-size: 0.85rem;
-          cursor: pointer;
-        }
-        .time-pill.active { background: #1e3a8a; color: #fff; border-color: #1e3a8a; }
-        .prediction-box {
-          background: #052e16;
-          border: 1px solid #064e3b;
-          border-radius: 8px;
-          padding: 16px;
-        }
-        .pred-title { color: #22c55e; font-weight: 500; font-size: 0.95rem; margin-bottom: 4px; }
-        .pred-desc { color: #16a34a; font-size: 0.85rem; }
-
-        /* ── Set Price Alert ── */
-        .alert-form { display: flex; flex-direction: column; gap: 12px; }
-        .input-group {
-          display: flex;
-          align-items: center;
-          background: #111116;
-          border: 1px solid #2a2a35;
-          border-radius: 8px;
-          padding: 0 12px;
-          height: 44px;
-        }
-        .input-group span { color: #9090a8; font-size: 1rem; margin-right: 8px; }
-        .input-group input {
-          background: transparent;
-          border: none;
-          color: #fff;
-          font-size: 1rem;
-          width: 100%;
-          outline: none;
-        }
-        .input-group input::placeholder { color: #6b7280; }
-        .btn-outline {
-          background: transparent;
-          border: 1px solid #1e3a8a;
-          color: #60a5fa;
-          height: 44px;
-          border-radius: 8px;
-          font-size: 0.95rem;
-          font-weight: 500;
-          cursor: pointer;
-          transition: all 0.2s;
-        }
-        .btn-outline:hover { background: #1e3a8a; color: #fff; }
-
-        /* ── Buy Button ── */
-        .btn-buy {
-          background: #3b82f6; /* Bright blue */
-          color: #fff;
-          border: none;
-          height: 54px;
-          border-radius: 8px;
-          font-size: 1.1rem;
-          font-weight: 600;
-          cursor: pointer;
-          width: 100%;
-          transition: background 0.2s;
-        }
-        .btn-buy:hover { background: #2563eb; }
-
-      `}</style>
       <div className="min-h-screen bg-slate-950 text-slate-50 selection:bg-amber-500/30">
       {/* ── Top Navigation ── */}
        <NavBar />
@@ -618,114 +330,152 @@ export default function ProductPage() {
             <div className="xl:col-span-8 space-y-6">
               
               {/* Product Hero Card */}
-              <Card className="bg-slate-900/50 border-slate-800 backdrop-blur-sm overflow-hidden"></Card>
-              <div className="card product-hero">
-                <div className="product-img-box">
-                  {product.img_url ? (
-                    <img src={product.img_url} alt={displayName ?? "Product"} />
-                  ) : (
-                    <span style={{ fontSize: "24px", color: "#444" }}>No Image</span>
-                  )}
-                </div>
-                <div className="product-info">
-                  <div className="badges-row">
-                    <span className="badge badge-domain">amazon.{displayCountryCode}</span>
-                    {product.prime && <span className="badge badge-prime">✓ Prime</span>}
-                  </div>
-                  <h1 className="product-title">{displayName ?? "Name unavailable"}</h1>
-                  
-                  <div className="price-row">
-                    <span className="current-price">{currencySymbol}{(product.price ?? 0).toLocaleString()}</span>
-                    {product.org_price != null && product.price != null && product.org_price > product.price && (
-                      <span className="original-price">{currencySymbol}{product.org_price.toLocaleString()}</span>
-                    )}
-                  </div>
-                  
-                  {product.discount_percent != null && product.discount_percent > 0 && (
-                    <div className="discount-pill">{product.discount_percent}% off</div>
-                  )}
+              <Card className="bg-slate-900/50 border-slate-800 backdrop-blur-sm overflow-hidden">
+                <CardContent className="p-6 sm:p-8">
+                  <div className="flex flex-col md:flex-row gap-8">
+                    {/*  Product Image  */}
+                    <div className="w-full md:w-1/3 flex-shrink-0 bg-white rounded-xl p-4 flex items-center justify-center aspect-square">
+                      {product.img_url ? (
+                        <img src={product.img_url} alt={displayName ?? "Product"} className="object-contain w-full h-full mix-blend-multiply"/>
+                      ) : (
+                        <span className="text-slate-400 font-medium">No Image</span>
+                      )}
+                    </div>
 
-                  <div className="meta-row">
-                    {product.rating != null && renderStars(product.rating)}
-                    <span>·</span>
-                    <span>{product.brand_name ?? "Unknown Brand"}</span>
-                    <span>·</span>
-                    <span>ASIN: {product.asin ?? "N/A"}</span>
-                  </div>
-                </div>
-              </div>
+                    {/* Product Info  */}
+                    <div className="flex flex-col justify-center flex-1">
+                      <div className="flex flex-wrap gap-2 mb-3">
+                        <Badge variant="outline" className="border-slate-700 text-slate-300">
+                            amazon.{displayCountryCode}
+                        </Badge>
+                        {product.prime && (
+                          <Badge className="bg-blue-500/10 text-blue-400 border border-blue-500/20 hover:bg-blue-500/20">
+                              ✓ Prime
+                            </Badge>
+                        )}
+                      </div>
 
-              {/* Price History Chart */}
-              <div className="card">
-                <div className="chart-header">
-                  <span className="chart-title">Price history</span>
-                  <div className="chart-filters">
-                    <button className="filter-btn active">1M</button>
-                    <button className="filter-btn">3M</button>
-                    <button className="filter-btn">All</button>
-                  </div>
+                      <h1 className="text-2xl sm:text-3xl font-bold text-white leading-tight mb-4">
+                        {displayName ?? "Name unavailable"}
+                      </h1>
+                      
+                      <div className="flex items-end gap-3 mb-4">
+                         <span className="text-4xl font-extrabold text-amber-500 tracking-tight">
+                          {currencySymbol}{(product.price ?? 0).toLocaleString()}
+                         </span>
+                         {product.org_price != null && product.price != null && product.org_price > product.price && (
+                         <span className="text-lg text-slate-500 line-through mb-1">
+                          {currencySymbol}{product.org_price.toLocaleString()}
+                         </span>
+                         )}
+                          {product.discount_percent != null && product.discount_percent > 0 && (
+                            <Badge className="mb-2 bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                              {product.discount_percent}% off
+                            </Badge>
+                         )}
+                      </div>
+                      
+
+                      <div className="flex items-center gap-2 text-sm text-slate-400 font-medium">
+                        {product.rating != null && (
+                          <div className="flex items-center text-amber-500">
+                              <Star className="w-4 h-4 fill-current mr-1" />
+                              <span className="text-slate-300">{product.rating}</span>
+                            </div>
+                        )}
+                        <span>·</span>
+                        <span className="truncate">{product.brand_name ?? "Unknown Brand"}</span>
+                        <span>·</span>
+                        <span className="font-mono text-xs text-slate-500">ASIN: {product.asin ?? "N/A"}</span>
+                      </div>
+                    </div>
                 </div>
-                
-                <div className="chart-area" style={{ padding: price_points.length > 0 ? "10px" : "0" }}>
+                </CardContent>
+              </Card>
+
+              {/* 2. Shadcn Price History Chart */}
+              <Card className="bg-slate-900/50 border-slate-800">
+                <CardHeader className="flex flex-row items-center justify-between pb-2 border-b border-slate-800/50">
+                  <CardTitle className="text-lg font-semibold text-white">Price History</CardTitle>
+                    <div className="flex bg-slate-950 rounded-lg p-1 border border-slate-800">
+                        <button className="px-3 py-1 text-xs font-medium rounded-md bg-slate-800 text-white shadow-sm">1M</button>
+                        <button className="px-3 py-1 text-xs font-medium rounded-md text-slate-400 hover:text-white transition-colors">3M</button>
+                        <button className="px-3 py-1 text-xs font-medium rounded-md text-slate-400 hover:text-white transition-colors">All</button>
+                    </div>
+                </CardHeader>
+                <CardContent className="pt-6">
                   {price_points.length > 0 ? (
-                    <ResponsiveContainer width="100%" height="100%">
-                      <LineChart
-                        data={price_points}
-                        margin={{ top: 5, right: 0, left: -20, bottom: 5 }}
-                      >
-                        <CartesianGrid strokeDasharray="3 3" stroke="#2a2a35" vertical={false} />
-                        <XAxis dataKey="date_yaxis" stroke="#6b7280" fontSize={12} tickLine={false} axisLine={false} />
-                        <YAxis stroke="#6b7280" fontSize={12} tickLine={false} axisLine={false} tickFormatter={(val) => `${currencySymbol}${val}`} />
-                        <Tooltip
-                          contentStyle={{ backgroundColor: '#1c1c22', borderColor: '#2a2a35', color: '#fff' }}
-                          itemStyle={{ color: '#60a5fa' }}
-                        />
-                        <Line
-                          type="monotone"
-                          dataKey="price"
-                          stroke="#3b82f6"
-                          strokeWidth={2}
-                          dot={false}
-                          activeDot={{ r: 6, fill: '#3b82f6', stroke: '#111116', strokeWidth: 2 }}
-                        />
-                      </LineChart>
-                    </ResponsiveContainer>
-                  ) : (
-                    <div style={{ textAlign: "center", color: "#6b7280" }}>
-                      <span style={{ fontSize: "24px", display: "block", marginBottom: "8px" }}>📈</span>
-                      Chart data unavailable
+                    <div className="h-[300px] w-full">
+                      {/* Shadcn Chart Wrapper */}
+                        <ChartContainer 
+                          config={{ price: { label: "Price", color: "#FFB800" } }}
+                          className="h-full w-full"
+                        >
+                            <LineChart data={price_points} margin={{ top: 5, right: 10, left: -20, bottom: 0 }}>
+                              <CartesianGrid strokeDasharray="3 3" stroke="#1E293B" vertical={false} />
+                              <XAxis 
+                                dataKey="date_yaxis" 
+                                stroke="#64748B" 
+                                fontSize={12} 
+                                tickLine={false} 
+                                axisLine={false} 
+                              />
+                              <YAxis 
+                                stroke="#64748B" 
+                                fontSize={12} 
+                                tickLine={false} 
+                                axisLine={false} 
+                                tickFormatter={(val) => `${currencySymbol}${val}`} 
+                              />
+                              <ChartTooltip 
+                              content={<ChartTooltipContent indicator="line" />} 
+                              cursor={{ stroke: '#334155', strokeWidth: 1 }}
+                              />
+                              <Line
+                                type="stepAfter" // stepAfter is often better for exact price drops
+                                dataKey="price"
+                                stroke="var(--color-price)"
+                                strokeWidth={2.5}
+                                dot={false}
+                                activeDot={{ r: 6, fill: '#FFB800', stroke: '#0B1121', strokeWidth: 2 }}
+                              />
+                            </LineChart>
+                        </ChartContainer>
+                    </div>
+                  ): (
+                    <div className="h-[300px] flex flex-col items-center justify-center text-slate-500">
+                        <LineChartIcon className="w-10 h-10 mb-2 opacity-50" />
+                        <p>Chart data unavailable</p>
                     </div>
                   )}
+                </CardContent>
+              </Card>
+
+              {/* 3. Product Details */}
+              <div>
+                  <h3 className="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-4 px-1">
+                    Technical Details
+                  </h3>
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                    {[
+                      { label: "Brand", value: product.brand_name ?? "Unavailable" },
+                      { label: "Currency", value: product.currency ? `${product.currency} (${currencySymbol})` : "Unavailable" },
+                      { label: "ASIN", value: product.asin ?? "Unavailable" },
+                      { label: "Marketplace", value: `amazon.${displayCountryCode}` }
+                    ].map((item, i) => (
+                      <div key={i} className="p-4 rounded-xl bg-slate-900/30 border border-slate-800">
+                        <p className="text-xs text-slate-500 mb-1">{item.label}</p>
+                        <p className="text-sm font-medium text-slate-200 truncate">{item.value}</p>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
 
-              {/* Product Details */}
-              <div className="card" style={{ padding: "0", background: "transparent", border: "none" }}>
-                <span className="card-header" style={{ marginBottom: "12px" }}>Product Details</span>
-                <div className="details-grid">
-                  <div className="detail-item">
-                    <span className="d-label">Brand</span>
-                    <span className="d-value">{product.brand_name ?? "Unavailable"}</span>
-                  </div>
-                  <div className="detail-item">
-                    <span className="d-label">Currency</span>
-                    <span className="d-value">{product.currency ? `${product.currency} (${currencySymbol})` : "Unavailable"}</span>
-                  </div>
-                  <div className="detail-item">
-                    <span className="d-label">ASIN</span>
-                    <span className="d-value">{product.asin ?? "Unavailable"}</span>
-                  </div>
-                  <div className="detail-item">
-                    <span className="d-label">Marketplace</span>
-                    <span className="d-value">amazon.{displayCountryCode}</span>
-                  </div>
-                </div>
-              </div>
 
-            </div>
 
-            {/* ── RIGHT COLUMN ── */}
-            <div className="col-right">
+              {/* ── RIGHT COLUMN ── */}
+            <div className="xl:col-span-4 space-y-6">
                 
               {/* Price Intelligence */}
               <PriceIntelligence
@@ -736,7 +486,37 @@ export default function ProductPage() {
               />
 
               {/* Set Price Alert */}
-              <div className="card">
+              <Card className="bg-slate-900/50 border-slate-800">
+                <CardHeader className="pb-4">
+                  <CardTitle className="text-lg font-semibold flex items-center gap-2">
+                      <Bell className="w-5 h-5 text-amber-500" />
+                      Set Price Alert
+                   </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="flex gap-3">
+                    <div className="relative flex-1">
+                        <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 font-medium">
+                          {currencySymbol}
+                        </span>
+                        <Input 
+                          type="number" 
+                          value={targetPrice} 
+                          onChange={(e) => setTargetPrice(parseFloat(e.target.value))}
+                          className="pl-8 bg-slate-950 border-slate-800 focus-visible:ring-amber-500 text-slate-100"
+                        />
+                     </div>
+                     <Button 
+                        variant={userLoggedInFlag ? "default" : "outline"}
+                        className={userLoggedInFlag ? "bg-slate-100 text-slate-900 hover:bg-slate-300" : "border-slate-700 text-slate-300 hover:bg-slate-800 hover:text-white"}
+                        onClick={userLoggedInFlag ? () => handlePriceAlert(targetPrice) : handleLogin}
+                      >
+                        {userLoggedInFlag ? "🔔 Alert me at this price" : "👤 Log In and Set Price Alert"}
+                      </Button>
+                  </div>
+                </CardContent>
+              </Card>
+              {/* <div className="card">
                 <span className="card-header">
                   Set Price Alert
                 </span>
@@ -750,28 +530,30 @@ export default function ProductPage() {
                    {userLoggedInFlag ? "🔔 Alert me at this price" : "👤 Log In and Set Price Alert"}
                   </button>
                 </div>
-              </div>
+              </div> */}
 
               {/* Buy Button */}
               {displayUrl && (
-                <button 
-                  className="btn-buy" 
-                  onClick={() => window.open(displayUrl, "_blank", "noopener noreferrer")}
-                >
-                  Buy on Amazon →
-                </button>
+                <Button 
+                    className="w-full h-14 text-lg font-bold bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 shadow-[0_0_20px_rgba(245,158,11,0.2)] hover:shadow-[0_0_25px_rgba(245,158,11,0.4)] transition-all"
+                    onClick={() => window.open(displayUrl, "_blank", "noopener noreferrer")}
+                  >
+                    Buy on Amazon
+                    <ExternalLink className="w-5 h-5 ml-2 opacity-80" />
+                 </Button>
               )}
 
             </div>
           </div>
         )}
-      </div>  
+ 
     
       <LoginModal 
         isOpen={isLoginModalOpen} 
         onClose={() => setLoginModalOpen(false)} 
         /> 
       </div>
+     </div>
     </>
   );
 }
